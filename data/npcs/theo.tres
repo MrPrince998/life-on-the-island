@@ -1,0 +1,88 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_theo.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_theo_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(-92.4, 0, 36.6)
+facing_degrees = 98
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 12
+position = Vector3(-104.2, 0, 13)
+facing_degrees = 300
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 17
+position = Vector3(-70.6, 0, 51.2)
+facing_degrees = 217
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_3"]
+script = ExtResource("2_entry")
+from_hour = 21
+position = Vector3(-92.4, 0, 36.6)
+facing_degrees = 98
+activity = &"idle"
+
+[sub_resource type="Resource" id="Early_0"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(-70.6, 0, 51.2)
+facing_degrees = 217
+activity = &"idle"
+
+[sub_resource type="Resource" id="Early_1"]
+script = ExtResource("2_entry")
+from_hour = 13
+position = Vector3(-63.5, 0, 55.5)
+facing_degrees = 230
+activity = &"idle"
+
+[sub_resource type="Resource" id="Early_2"]
+script = ExtResource("2_entry")
+from_hour = 19
+position = Vector3(-70.6, 0, 51.2)
+facing_degrees = 217
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"theo"
+display_name = "Theo"
+role = "Carpenter"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.84
+walk_speed = 1.15
+intro_lines = PackedStringArray("...Oh. Hello.", "I'm Theo. Carpenter. Mostly I fix the things nobody notices are broken.", "The bridge over the creek was your grandfather's favourite. The storm took half of it.", "With enough planks and stone, I'd rebuild it. Maybe someday.")
+later_lines = PackedStringArray("Wood remembers how it wants to be cut. You just have to listen.", "The old oak in the forest hasn't leafed in years. It's only sleeping, I think.", "Bring me good planks and I'll make something that lasts.", "Quiet day. I like quiet days.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2"), SubResource("Entry_3")])
+schedule_flag = &"restored_bridge"
+early_schedule = Array[ExtResource("2_entry")]([SubResource("Early_0"), SubResource("Early_1"), SubResource("Early_2")])
+story_lines = {
+&"met_theo": PackedStringArray("The bridge needs fifteen good planks and ten stones. I'd do it myself, but... it's a two-person job.", "Saw branches into planks at your grandpa's sawhorse. Stone's easy to find up in the hills. Bring them to the bridge and we'll start."),
+&"restored_bridge": PackedStringArray("Feels good to stand on it again, doesn't it?", "My workshop's open now, just over the bridge. And the old oak past the clearing... I've got three saplings I've been saving for it.", "Meet me at the oak. We'll plant them in a ring, the way the old foresters did."),
+&"ch2_saplings_planted": PackedStringArray("Now we wait. Trees don't like being rushed.", "Get some sleep. Come and see it in the morning."),
+&"ch2_tree_restored": PackedStringArray("Did you see it? Every branch green. I've never heard the forest this loud with birds.", "The sun's reaching the old shrine for the first time in years. You should go and look."),
+&"shard_2": PackedStringArray("Another glowing stone? Your grandpa spent his last years looking for those.", "If you ever need something built or mended, my workshop's always open to you."),
+&"shard_3": PackedStringArray("Heard part of the cliff came down by the old footbridge in the storm. The rocks smashed your grandpa's footbridge to Lighthouse Isle, and Luna's been cut off out there ever since.", "I've got timber, rope and a free afternoon. Meet me at the broken bridge, at the end of the coast path?"),
+&"ch4_rockfall_cleared": PackedStringArray("Good work on that bridge. Those boulders! My back will be complaining for a week.", "Say hello to Luna for me. She doesn't get many visitors.")
+}
+friend_lines = PackedStringArray("You're easy to work alongside. Quiet. I like that.", "I'm carving something for your cottage. Don't ask what.")
+loved_items = Array[StringName]([&"wooden_plank"])
+liked_items = Array[StringName]([&"bread", &"sunfish", &"stone"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([])
+loved_line = "Good, straight grain. You've got an eye for timber."
+liked_line = "Thanks. That'll keep me going till supper."
+neutral_line = "Hm. Thank you."
+disliked_line = "Not really my thing. But thank you."

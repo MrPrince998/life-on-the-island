@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UpgradeCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_catalog.gd" id="1_cat"]
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="2_up"]
+[ext_resource type="Resource" path="res://data/upgrades/tool_rod_oak.tres" id="u0"]
+[ext_resource type="Resource" path="res://data/upgrades/tool_rod_moonwood.tres" id="u1"]
+[ext_resource type="Resource" path="res://data/upgrades/tool_can_copper.tres" id="u2"]
+[ext_resource type="Resource" path="res://data/upgrades/tool_bag_satchel.tres" id="u3"]
+[ext_resource type="Resource" path="res://data/upgrades/tool_bag_pack.tres" id="u4"]
+[ext_resource type="Resource" path="res://data/upgrades/home_plants.tres" id="u5"]
+[ext_resource type="Resource" path="res://data/upgrades/home_barrel.tres" id="u6"]
+[ext_resource type="Resource" path="res://data/upgrades/home_trophy.tres" id="u7"]
+[ext_resource type="Resource" path="res://data/upgrades/home_paintings.tres" id="u8"]
+[ext_resource type="Resource" path="res://data/upgrades/home_bench.tres" id="u9"]
+[ext_resource type="Resource" path="res://data/upgrades/home_beehive.tres" id="u10"]
+[ext_resource type="Resource" path="res://data/upgrades/home_lantern.tres" id="u11"]
+[ext_resource type="Resource" path="res://data/upgrades/farm_beds_1.tres" id="u12"]
+[ext_resource type="Resource" path="res://data/upgrades/farm_beds_2.tres" id="u13"]
+[ext_resource type="Resource" path="res://data/upgrades/village_flowers.tres" id="u14"]
+[ext_resource type="Resource" path="res://data/upgrades/village_benches.tres" id="u15"]
+[ext_resource type="Resource" path="res://data/upgrades/village_lamps.tres" id="u16"]
+[ext_resource type="Resource" path="res://data/upgrades/village_bunting.tres" id="u17"]
+
+[resource]
+script = ExtResource("1_cat")
+upgrades = Array[ExtResource("2_up")]([ExtResource("u0"), ExtResource("u1"), ExtResource("u2"), ExtResource("u3"), ExtResource("u4"), ExtResource("u5"), ExtResource("u6"), ExtResource("u7"), ExtResource("u8"), ExtResource("u9"), ExtResource("u10"), ExtResource("u11"), ExtResource("u12"), ExtResource("u13"), ExtResource("u14"), ExtResource("u15"), ExtResource("u16"), ExtResource("u17")])

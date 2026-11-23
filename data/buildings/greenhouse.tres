@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/building_data.gd" id="1_building"]
+
+[resource]
+script = ExtResource("1_building")
+id = &"greenhouse"
+display_name = "Greenhouse"
+description = "Grandpa's old greenhouse by the fields. The frames are loose and the glass is grimy, but it could be lovely again."
+cost_coins = 250
+materials = {"wooden_plank": 8}
+work_minutes = 120
+restored_message = "The greenhouse is mended and the glass sparkles again! Each morning it grows a tray of seedlings for you to take."
+ruined_model_path = "res://source_assets/tripo/greenhouse_ruined.glb"

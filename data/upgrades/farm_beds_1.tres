@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"farm_beds_1"
+display_name = "Four More Garden Beds"
+description = "Mia clears a new row of four garden beds on the farm, ready to dig."
+category = 2
+price = 400
+requires_upgrade = &""
+requires_flag = &""
+requires_text = ""
+bought_message = "Mia and you clear a new row of four beds on the south side of the farm. Dig them over and they're ready!"

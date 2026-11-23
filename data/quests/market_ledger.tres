@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Talk to Emma about the old market"
+kind = 4
+target = &"emma"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray("Can I tell you something? This square used to be the busiest place on the island.", "Every week: fishermen, farmers, music till midnight. Then the lighthouse went dark, the boats stopped coming, and the market just... faded.", "You've brought the fields and the forest back to life. Maybe the market's next?", "Your grandpa kept a supplier ledger. Mr. Ambrose at the library has his old papers. Ask him about it.")
+minutes = 0
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+text = "Ask Mr. Ambrose about Grandpa's ledger"
+kind = 4
+target = &"ambrose"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray("Ah, the ledger! Your grandfather's shorthand is dreadful, but I've had years to practise.", "Page five: \"Fish from Oliver, roots from the fields, flowers from the meadow. Stalls by the well, lamps on every path.\"", "Page six: \"When the stalls are mended and full, the island will remember how to gather.\"", "So: mend the stalls by the well, then fill them. Planks, stone, a few coins... and good things to sell.")
+minutes = 0
+
+[resource]
+script = ExtResource("1_quest")
+id = &"market_ledger"
+title = "Ch. 3: Grandpa's Ledger"
+giver = "Emma"
+description = "The village square used to hold a busy market every week. Emma wonders if it could again."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2")])
+starts_active = false
+start_flag = &"shard_2"
+next_quest = &"market_day"
+reward_coins = 0
+reward_items = {}
+reward_flags = Array[StringName]([&"journal_page_5", &"journal_page_6"])
+reward_friendship = 0
+giver_id = &""
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray()
+complete_message = "Mr. Ambrose translated Grandpa's ledger: journal pages 5 and 6."

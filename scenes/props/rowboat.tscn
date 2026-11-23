@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://source_assets/tripo/rowboat.glb" id="1_model"]
+[ext_resource type="Script" path="res://scripts/world/float_bob.gd" id="2_bob"]
+
+[node name="Rowboat" type="Node3D" groups=["keep_clear"]]
+metadata/clear_radius = 3.0
+
+[node name="Floating" type="Node3D" parent="."]
+script = ExtResource("2_bob")
+
+[node name="Model" parent="Floating" instance=ExtResource("1_model")]
+transform = Transform3D(3.3, 0, 0, 0, 3.3, 0, 0, 0, 3.3, 0, 0, 0)

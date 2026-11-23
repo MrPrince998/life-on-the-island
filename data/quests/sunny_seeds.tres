@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Bring Mia a turnip, a carrot and a sunflower"
+kind = 5
+target = &"mia"
+amount = 1
+or_event = &""
+items = {"turnip": 1, "carrot": 1, "sunflower": 1}
+lines = PackedStringArray("They're perfect! Just like the ones he used to grow.", "Come look by the farm path. I planted a whole row of sunflowers for you while you were busy!")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"sunny_seeds"
+title = "Sunny Seeds"
+giver = "Mia"
+description = "Mia wants to see one of each crop grown on Grandpa's beds again."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 0
+reward_items = {"sunflower_seeds": 5}
+reward_flags = Array[StringName]([&"mia_sunny_seeds_done"])
+reward_friendship = 100
+giver_id = &"mia"
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray("I've been dreaming of something. Grandpa's beds growing all three crops again: turnips, carrots and sunflowers.", "Grow one of each and bring them to me? I'll show you a little surprise.")
+complete_message = "Sunflowers now line the path to the farm."

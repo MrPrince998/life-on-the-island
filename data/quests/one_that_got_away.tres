@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Bring Oliver a Moonfin Koi (it bites at night)"
+kind = 5
+target = &"oliver"
+amount = 1
+or_event = &""
+items = {"moonfin_koi": 1}
+lines = PackedStringArray("Oh… it's real. It's really real. Look at it glow.", "He'd have been so proud of you. Here, take his lucky coin purse. It's yours now.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"one_that_got_away"
+title = "The One That Got Away"
+giver = "Oliver"
+description = "Grandpa once hooked a glowing koi at night and lost it. Oliver would love to see one."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 120
+reward_items = {}
+reward_flags = Array[StringName]([&"oliver_koi_done"])
+reward_friendship = 100
+giver_id = &"oliver"
+offer_hearts = 2
+requires_quest = &"fish_tales"
+requires_flag = &""
+offer_lines = PackedStringArray("Your grandpa swore he hooked a koi that glowed like the moon. Lost it at the last second.", "Never stopped talking about it. If you ever catch one at night… I'd love to see it.")
+complete_message = "Grandpa's koi story finally has an ending."

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"bread"
+display_name = "Island Bread"
+description = "A warm loaf from the bakery oven. Good for a picnic by the lake."
+category = 4
+buy_price = 12
+sell_price = 4
+max_stack = 20
+unique = false

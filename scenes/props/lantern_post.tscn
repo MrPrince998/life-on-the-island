@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/lantern_post.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/world/night_light.gd" id="3_night"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_post"]
+height = 2.6
+radius = 0.16
+
+[node name="LanternPost" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+height_offset = -0.05
+metadata/clear_radius = 1.8
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(2.6, 0, 0, 0, 2.6, 0, 0, 0, 2.6, 0, 0, 0)
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42, 1.62, 0)
+light_color = Color(1, 0.76, 0.45, 1)
+light_energy = 1.8
+omni_range = 9.0
+omni_attenuation = 1.4
+script = ExtResource("3_night")
+on_energy = 1.8
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 1.3, 0)
+shape = SubResource("CylinderShape3D_post")

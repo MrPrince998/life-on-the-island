@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="FoliageLayer" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/foliage_layer.gd" id="1_layer"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/pine_tree.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_layer")
+id = &"tree_pine"
+model = ExtResource("2_model")
+blocks_others = true
+cast_shadows = true
+tint_variation = 0.1
+sink = 0.02
+count = 80
+scale_range = Vector2(7.5, 11.5)
+spacing = 5.5
+hills = 0.9
+forest = 0.25
+collision_radius = 0.035
+collision_height = 0.4
+wind_strength = 0.015
+sway_start = 0.35
+autumn_leaves = false

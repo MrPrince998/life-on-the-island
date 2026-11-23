@@ -1,0 +1,126 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/rest_spot.gd" id="1_rest"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/platform.glb" id="2_platform"]
+[ext_resource type="PackedScene" path="res://scenes/props/lantern_post.tscn" id="3_lantern"]
+[ext_resource type="PackedScene" path="res://scenes/props/wooden_crate.tscn" id="4_crate"]
+[ext_resource type="PackedScene" path="res://scenes/props/wooden_barrel.tscn" id="5_barrel"]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="6_fitted"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/mooring-post.glb" id="7_mooring"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_walk"]
+size = Vector3(2.6, 0.3, 13.0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_end"]
+size = Vector3(5.200, 0.3, 5.461)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_post"]
+height = 0.6
+radius = 0.22
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_seat"]
+radius = 1.6
+
+[node name="BeachJetty" type="Node3D"]
+
+[node name="Sections" type="Node3D" parent="."]
+
+[node name="Walk1" parent="Sections" instance=ExtResource("2_platform")]
+transform = Transform3D(2.7320, 0, 0, 0, 2.7320, 0, 0, 0, 2.7320, 0, -0.9912, -0.900)
+
+[node name="Walk2" parent="Sections" instance=ExtResource("2_platform")]
+transform = Transform3D(2.7320, 0, 0, 0, 2.7320, 0, 0, 0, 2.7320, 0, -0.9912, -3.500)
+
+[node name="Walk3" parent="Sections" instance=ExtResource("2_platform")]
+transform = Transform3D(2.7320, 0, 0, 0, 2.7320, 0, 0, 0, 2.7320, 0, -0.9912, -6.100)
+
+[node name="Walk4" parent="Sections" instance=ExtResource("2_platform")]
+transform = Transform3D(2.7320, 0, 0, 0, 2.7320, 0, 0, 0, 2.7320, 0, -0.9912, -8.700)
+
+[node name="Walk5" parent="Sections" instance=ExtResource("2_platform")]
+transform = Transform3D(2.7320, 0, 0, 0, 2.7320, 0, 0, 0, 2.7320, 0, -0.9912, -11.300)
+
+[node name="EndPlatform" parent="Sections" instance=ExtResource("2_platform")]
+transform = Transform3D(5.4639, 0, 0, 0, 5.4639, 0, 0, 0, 5.4639, 0, -1.9823, -15.200)
+
+[node name="DeckCollision" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="Walkway" type="CollisionShape3D" parent="DeckCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, -6.1)
+shape = SubResource("BoxShape3D_walk")
+
+[node name="End" type="CollisionShape3D" parent="DeckCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, -15.2)
+shape = SubResource("BoxShape3D_end")
+
+[node name="Post1" type="CollisionShape3D" parent="DeckCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.404, 0.3, -12.796)
+shape = SubResource("CylinderShape3D_post")
+
+[node name="Post2" type="CollisionShape3D" parent="DeckCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.404, 0.3, -12.796)
+shape = SubResource("CylinderShape3D_post")
+
+[node name="Post3" type="CollisionShape3D" parent="DeckCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.404, 0.3, -17.604)
+shape = SubResource("CylinderShape3D_post")
+
+[node name="Post4" type="CollisionShape3D" parent="DeckCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.404, 0.3, -17.604)
+shape = SubResource("CylinderShape3D_post")
+
+[node name="LanternPost" parent="." instance=ExtResource("3_lantern")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.2, 0, -15.2)
+snap_to_ground = false
+
+[node name="WatchTheWater" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -15.6)
+script = ExtResource("1_rest")
+mode = 2
+interaction_id = &"beach_jetty_watch"
+prompt_text = "Sit and watch the sea"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WatchTheWater"]
+shape = SubResource("SphereShape3D_seat")
+
+[node name="Seat" type="Marker3D" parent="WatchTheWater"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.6, -0.82, -1.95)
+
+[node name="StandPoint" type="Marker3D" parent="WatchTheWater"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.85, -0.9)
+
+[node name="Crate" parent="." instance=ExtResource("4_crate")]
+transform = Transform3D(0.966, 0, 0.259, 0, 1, 0, -0.259, 0, 0.966, -1.8, 0, -16.6)
+snap_to_ground = false
+
+[node name="Barrel" parent="." instance=ExtResource("5_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, 0, -14.1)
+snap_to_ground = false
+
+[node name="MooringPost1" type="Node3D" parent="."]
+transform = Transform3D(1.0000, 0, 0.0000, 0, 1, 0, -0.0000, 0, 1.0000, 2.25, 0, -13.5)
+script = ExtResource("6_fitted")
+model = ExtResource("7_mooring")
+size = 0.8
+fit = 1
+collision_fraction = Vector3(0.6, 1, 0.6)
+snap_to_ground = false
+
+[node name="MooringPost2" type="Node3D" parent="."]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1, 0, -1.0000, 0, 0.0000, 2.25, 0, -17.0)
+script = ExtResource("6_fitted")
+model = ExtResource("7_mooring")
+size = 0.8
+fit = 1
+collision_fraction = Vector3(0.6, 1, 0.6)
+snap_to_ground = false
+
+[node name="MooringPost3" type="Node3D" parent="."]
+transform = Transform3D(-0.9397, 0, -0.3420, 0, 1, 0, 0.3420, 0, -0.9397, 1.05, 0, -4.0)
+script = ExtResource("6_fitted")
+model = ExtResource("7_mooring")
+size = 0.8
+fit = 1
+collision_fraction = Vector3(0.6, 1, 0.6)
+snap_to_ground = false

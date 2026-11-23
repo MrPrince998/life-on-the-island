@@ -1,0 +1,72 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/signpost.glb" id="2_model"]
+[ext_resource type="FontFile" path="res://assets/ui/fonts/Fredoka.ttf" id="3_fredoka"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_post"]
+height = 2.5
+radius = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_boards"]
+size = Vector3(1.1, 1.4, 0.5)
+
+[sub_resource type="FontVariation" id="FontVariation_sign"]
+base_font = ExtResource("3_fredoka")
+variation_opentype = {2003265652: 700}
+
+[node name="Signpost" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+height_offset = -0.05
+metadata/clear_radius = 2.0
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(2.6, 0, 0, 0, 2.6, 0, 0, 0, 2.6, 0, 0, 0)
+
+[node name="TopBoard" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, 2.04, 0.285)
+pixel_size = 0.0026
+double_sided = false
+modulate = Color(0.24, 0.15, 0.08, 1)
+outline_modulate = Color(1, 0.97, 0.9, 1)
+text = "Sunflower
+Fields"
+font = SubResource("FontVariation_sign")
+font_size = 56
+outline_size = 12
+line_spacing = -14.0
+
+[node name="MiddleBoard" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 1.51, 0.29)
+pixel_size = 0.0026
+double_sided = false
+modulate = Color(0.24, 0.15, 0.08, 1)
+outline_modulate = Color(1, 0.97, 0.9, 1)
+text = "Fernwood
+Forest"
+font = SubResource("FontVariation_sign")
+font_size = 56
+outline_size = 12
+line_spacing = -14.0
+
+[node name="BottomBoard" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, 1.0, 0.3)
+pixel_size = 0.0026
+double_sided = false
+modulate = Color(0.24, 0.15, 0.08, 1)
+outline_modulate = Color(1, 0.97, 0.9, 1)
+text = "Lighthouse"
+font = SubResource("FontVariation_sign")
+font_size = 52
+outline_size = 12
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="Post" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("CylinderShape3D_post")
+
+[node name="Boards" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, 1.55, 0)
+shape = SubResource("BoxShape3D_boards")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/building_data.gd" id="1_building"]
+
+[resource]
+script = ExtResource("1_building")
+id = &"market"
+display_name = "Market Stalls"
+description = "Four old stalls round the village well, their awnings collapsed since the market closed."
+cost_coins = 300
+materials = {"stone": 6, "wooden_plank": 12}
+work_minutes = 120
+restored_message = "The four market stalls stand straight again under bright striped awnings. Now they just need something to sell!"

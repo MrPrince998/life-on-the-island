@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Restore the market stalls: 12 planks, 6 stone, 300 coins"
+kind = 0
+target = &"restored_market"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+text = "Stock the market: sell 10 fish to Emma"
+kind = 3
+target = &"sell_fish"
+amount = 10
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[sub_resource type="Resource" id="Step_3"]
+script = ExtResource("2_step")
+text = "Stock the market: sell 10 crops to Emma"
+kind = 3
+target = &"sell_crop"
+amount = 10
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[sub_resource type="Resource" id="Step_4"]
+script = ExtResource("2_step")
+text = "Tell Emma the market is ready"
+kind = 4
+target = &"emma"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray("Ten fish, ten baskets of crops, four stalls... it's really happening!", "Tonight we light the lamps. Market Day! Oh, I have to tell Nana Bea!")
+minutes = 0
+
+[resource]
+script = ExtResource("1_quest")
+id = &"market_day"
+title = "Ch. 3: Market Day"
+giver = "Emma"
+description = "Mend the four market stalls by the well and stock them with fish and crops, and Willowbrook can hold a market again."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2"), SubResource("Step_3"), SubResource("Step_4")])
+starts_active = false
+start_flag = &""
+next_quest = &"well_light"
+reward_coins = 120
+reward_items = {}
+reward_flags = Array[StringName]([&"ch3_market_day", &"restored_inn", &"restored_house_1", &"restored_house_2"])
+reward_friendship = 0
+giver_id = &""
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray()
+complete_message = "Market Day! The lamps are lit along every path, the stalls are full, Nana Bea has reopened her inn and two families have moved back into their houses. Willowbrook is waking up."

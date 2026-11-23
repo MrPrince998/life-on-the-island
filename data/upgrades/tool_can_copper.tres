@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"tool_can_copper"
+display_name = "Copper Watering Can"
+description = "A big copper can. Watering a bed soaks the beds right next to it too, in the same few minutes."
+category = 0
+price = 450
+requires_upgrade = &""
+requires_flag = &""
+requires_text = ""
+bought_message = "Emma's cousin made it: a gleaming copper can that holds enough water for three beds at once."

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"tool_rod_moonwood"
+display_name = "Moonwood Rod"
+description = "Oliver's finest: pale moonwood that hums in the water. Fish fight much less, and rare fish bite far more often."
+category = 0
+price = 1500
+requires_upgrade = &"tool_rod_oak"
+requires_flag = &""
+requires_text = ""
+bought_message = "The moonwood rod is cool and light in your hands. Oliver says it was carved from a tree that grew by the Moonwell."

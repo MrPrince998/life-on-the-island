@@ -1,0 +1,69 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/garden_shed.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/world/item_pickup.gd" id="3_pickup"]
+[ext_resource type="Script" path="res://scripts/systems/farming/watering_can_prop.gd" id="4_can"]
+[sub_resource type="BoxShape3D" id="Shape_body"]
+size = Vector3(2.55, 3.0, 2.65)
+
+[sub_resource type="SphereShape3D" id="Shape_pickup"]
+radius = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_packet_a"]
+albedo_color = Color(0.93, 0.85, 0.62, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_packet_b"]
+albedo_color = Color(0.6, 0.42, 0.65, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_packet_a"]
+material = SubResource("Mat_packet_a")
+size = Vector3(0.13, 0.18, 0.02)
+
+[sub_resource type="BoxMesh" id="Mesh_packet_b"]
+material = SubResource("Mat_packet_b")
+size = Vector3(0.13, 0.06, 0.022)
+
+[node name="GardenShed" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+metadata/clear_radius = 3.0
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(3.2, 0, 0.0, 0, 3.2, 0, -0.0, 0, 3.2, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("Shape_body")
+
+[node name="GrandpasCan" type="Area3D" parent="."]
+transform = Transform3D(1.35, 0, 0, 0, 1.35, 0, 0, 0, 1.35, 0.75, 0, 2.0)
+script = ExtResource("3_pickup")
+interaction_id = &"farm_shed_grandpas_can"
+prompt_text = "Take Grandpa's watering can and seeds"
+items = {"turnip_seeds": 3, "watering_can": 1}
+message = "You found Grandpa's old watering can and three packets of turnip seeds. The garden beds are waiting!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GrandpasCan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("Shape_pickup")
+
+[node name="Can" type="MeshInstance3D" parent="GrandpasCan"]
+transform = Transform3D(0.5657, 0, 0.5657, 0, 0.8, 0, -0.5657, 0, 0.5657, 0.05, 0, 0)
+script = ExtResource("4_can")
+
+[node name="PacketA" type="MeshInstance3D" parent="GrandpasCan"]
+transform = Transform3D(0.9659, 0, 0.2588, -0.0670, 0.9659, 0.25, -0.25, -0.2588, 0.9330, -0.25, 0.09, -0.05)
+mesh = SubResource("Mesh_packet_a")
+
+[node name="PacketALabel" type="MeshInstance3D" parent="GrandpasCan/PacketA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0.002)
+mesh = SubResource("Mesh_packet_b")
+
+[node name="PacketB" type="MeshInstance3D" parent="GrandpasCan"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -0.18, 0.012, 0.2)
+mesh = SubResource("Mesh_packet_a")

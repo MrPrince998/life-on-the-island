@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"village_bunting"
+display_name = "Festival Bunting"
+description = "Strings of bright flags across the square, like in Grandpa's day."
+category = 3
+price = 600
+requires_upgrade = &""
+requires_flag = &"ch3_market_day"
+requires_text = "Willowbrook needs its market back first."
+bought_message = "Strings of bright flags flutter across the square. Emma says it feels like Market Day every day."

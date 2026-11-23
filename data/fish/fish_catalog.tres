@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FishCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="2_fish"]
+[ext_resource type="Resource" path="res://data/fish/silver_minnow.tres" id="f_silver_minnow"]
+[ext_resource type="Resource" path="res://data/fish/sunfish.tres" id="f_sunfish"]
+[ext_resource type="Resource" path="res://data/fish/moonfin_koi.tres" id="f_moonfin_koi"]
+[ext_resource type="Resource" path="res://data/fish/sea_bream.tres" id="f_sea_bream"]
+[ext_resource type="Resource" path="res://data/fish/blue_mackerel.tres" id="f_blue_mackerel"]
+[ext_resource type="Resource" path="res://data/fish/flying_fish.tres" id="f_flying_fish"]
+[ext_resource type="Resource" path="res://data/fish/azure_manta.tres" id="f_azure_manta"]
+
+[resource]
+script = ExtResource("1_catalog")
+fish = Array[ExtResource("2_fish")]([ExtResource("f_silver_minnow"), ExtResource("f_sunfish"), ExtResource("f_moonfin_koi"), ExtResource("f_sea_bream"), ExtResource("f_blue_mackerel"), ExtResource("f_flying_fish"), ExtResource("f_azure_manta")])

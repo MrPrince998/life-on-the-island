@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"pumpkin_seeds"
+display_name = "Pumpkin Seeds"
+description = "Plant in autumn and wait for something big and orange."
+category = 1
+buy_price = 60
+sell_price = 24
+max_stack = 99
+unique = false
+

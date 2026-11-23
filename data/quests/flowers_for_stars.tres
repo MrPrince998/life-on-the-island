@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Bring Luna 3 sunflowers"
+kind = 5
+target = &"luna"
+amount = 1
+or_event = &""
+items = {"sunflower": 3}
+lines = PackedStringArray("They're glowing in the window already! Thank you.", "On clear nights I'll leave a light on for you.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"flowers_for_stars"
+title = "Flowers for the Stars"
+giver = "Luna"
+description = "Luna wants sunflowers for the lighthouse windowsill."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 50
+reward_items = {}
+reward_flags = Array[StringName]([&"luna_flowers_done"])
+reward_friendship = 100
+giver_id = &"luna"
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray("Sunflowers turn to follow the sun all day. I turn to follow the stars all night.", "Would you bring me three? They'd keep me company up in the lighthouse.")
+complete_message = "Sunflowers brighten the lighthouse window."

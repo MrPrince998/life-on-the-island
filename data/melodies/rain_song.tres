@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MelodyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/melody_data.gd" id="1_melody"]
+
+[resource]
+script = ExtResource("1_melody")
+id = &"rain_song"
+title = "Rain Song"
+notes = PackedInt32Array(8, 7, 5, 3, 1)
+effect = &"rain"
+description = "Calls a soft rain over the island that waters every garden bed. Once a day."
+learn_flag = &"journal_page_2"
+hint = "Grandpa's journal page by the garden shed."

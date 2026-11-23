@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FishData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_fish"]
+
+[resource]
+script = ExtResource("1_fish")
+id = &"moonfin_koi"
+display_name = "Moonfin Koi"
+description = "Its fins glow faintly blue. Grandpa's journal says they only rise when the moon is out."
+rarity = 2
+water_ids = PackedStringArray("moonlit_lake")
+start_hour = 19
+end_hour = 5
+weight = 10.0
+difficulty = 0.75
+min_size_cm = 35.0
+max_size_cm = 70.0
+sell_price = 60
+ui_color = Color(0.55, 0.75, 1, 1)
+seasons = Array[StringName]([&"autumn", &"winter", &"spring"])

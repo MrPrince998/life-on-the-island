@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MelodyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/melody_data.gd" id="1_melody"]
+
+[resource]
+script = ExtResource("1_melody")
+id = &"lake_lullaby"
+title = "Lake Lullaby"
+notes = PackedInt32Array(3, 5, 6, 5, 3)
+effect = &"lullaby"
+description = "Hum the fish to the surface. Play it by the water and your next cast gets a quick bite."
+learn_flag = &"journal_page_3"
+hint = "Grandpa's journal page in Fernwood Forest."

@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_nana_bea.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_nana_bea_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 7
+position = Vector3(-26.4, 0, 121.4)
+facing_degrees = 102
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 12
+position = Vector3(-4.6, 0, 118.6)
+facing_degrees = 128.047
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 17
+position = Vector3(-26.4, 0, 121.4)
+facing_degrees = 102
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"nana_bea"
+display_name = "Nana Bea"
+role = "Innkeeper"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.55
+walk_speed = 0.9
+intro_lines = PackedStringArray("Well now, aren't you a sight for old eyes! Come here, dear.", "I'm Bea. Everyone calls me Nana. I ran the inn when this square was full of sailors and songs.", "The shutters stay closed for now. But when the market's back, I'll bake my honey loaf again.")
+later_lines = PackedStringArray("Your grandfather never once said no to a second slice of pie.", "When the lamps were lit, you could hear the music from the inn all the way to the lake.", "Don't you work too hard, dear. The island isn't going anywhere.", "I still keep the inn's kettle polished. Just in case.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2")])
+story_lines = {
+&"restored_inn": PackedStringArray("The inn's open again, dear! I've polished every cup twice.", "The kettle's always on. Come by any evening and tell me about your day.")
+}
+friend_lines = PackedStringArray("You remind me so much of Elias when he was young.", "When the inn opens again, your first supper is on the house.")
+loved_items = Array[StringName]([&"carrot", &"turnip", &"garden_pie"])
+liked_items = Array[StringName]([&"bread", &"sunfish", &"sea_bream", &"turnip_soup", &"roasted_carrots"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([])
+loved_line = "Oh, these will make a lovely soup! Come by for a bowl, dear."
+liked_line = "Thank you, sweetheart. You're as kind as your grandpa."
+neutral_line = "Aren't you thoughtful. Thank you, dear."
+disliked_line = "Well! I'm sure it's useful for something. Thank you, dear."

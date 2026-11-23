@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="Script" path="res://scripts/world/journal_page.gd" id="2_page"]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="3_fitted"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/journal_page.glb" id="4_model"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_read"]
+radius = 1.1
+
+[node name="JournalPage" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+metadata/clear_radius = 1.0
+
+[node name="Page" type="Area3D" parent="."]
+script = ExtResource("2_page")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Page"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_read")
+
+[node name="Model" type="Node3D" parent="Page"]
+transform = Transform3D(0.9659, 0, 0.2588, 0.0670, 0.9659, -0.25, -0.25, 0.2588, 0.9330, 0, 0.02, 0)
+script = ExtResource("3_fitted")
+model = ExtResource("4_model")
+size = 0.4
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="Glow" type="OmniLight3D" parent="Page"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+light_color = Color(1, 0.88, 0.6, 1)
+light_energy = 0.7
+omni_range = 2.2

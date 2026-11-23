@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MelodyCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/melody_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/resources/melody_data.gd" id="2_melody"]
+[ext_resource type="Resource" path="res://data/melodies/sunset_song.tres" id="m_sunset_song"]
+[ext_resource type="Resource" path="res://data/melodies/serenade.tres" id="m_serenade"]
+[ext_resource type="Resource" path="res://data/melodies/rain_song.tres" id="m_rain_song"]
+[ext_resource type="Resource" path="res://data/melodies/lake_lullaby.tres" id="m_lake_lullaby"]
+[ext_resource type="Resource" path="res://data/melodies/starlight_song.tres" id="m_starlight_song"]
+
+[resource]
+script = ExtResource("1_catalog")
+melodies = Array[ExtResource("2_melody")]([ExtResource("m_sunset_song"), ExtResource("m_serenade"), ExtResource("m_rain_song"), ExtResource("m_lake_lullaby"), ExtResource("m_starlight_song")])

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FishData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_fish"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/minnow.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_fish")
+id = &"silver_minnow"
+display_name = "Silver Minnow"
+description = "A quick little fish that flashes silver in the shallows. Every angler's first friend."
+rarity = 0
+water_ids = PackedStringArray("moonlit_lake")
+start_hour = 0
+end_hour = 24
+weight = 60.0
+difficulty = 0.15
+min_size_cm = 6.0
+max_size_cm = 14.0
+sell_price = 5
+ui_color = Color(0.78, 0.84, 0.9, 1)
+model = ExtResource("2_model")
+model_yaw_degrees = 90.0

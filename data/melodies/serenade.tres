@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MelodyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/melody_data.gd" id="1_melody"]
+
+[resource]
+script = ExtResource("1_melody")
+id = &"serenade"
+title = "Serenade"
+notes = PackedInt32Array(1, 3, 5, 8, 5)
+effect = &"serenade"
+description = "Play it for a villager standing nearby. It brightens their day (a little friendship, once a day each)."
+learn_flag = &""
+hint = "Written inside the ukulele case."

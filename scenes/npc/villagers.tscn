@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/npc/villager.tscn" id="1_villager"]
+[ext_resource type="Resource" path="res://data/npcs/oliver.tres" id="2_oliver"]
+[ext_resource type="Resource" path="res://data/npcs/mia.tres" id="3_mia"]
+[ext_resource type="Script" path="res://scripts/npc/villagers.gd" id="4_villagers"]
+[ext_resource type="Resource" path="res://data/npcs/emma.tres" id="10_emma"]
+[ext_resource type="Resource" path="res://data/npcs/theo.tres" id="11_theo"]
+[ext_resource type="Resource" path="res://data/npcs/luna.tres" id="12_luna"]
+[ext_resource type="Resource" path="res://data/npcs/nana_bea.tres" id="13_nana_bea"]
+[ext_resource type="Resource" path="res://data/npcs/pip.tres" id="14_pip"]
+[ext_resource type="Resource" path="res://data/npcs/ambrose.tres" id="15_ambrose"]
+
+[node name="Villagers" type="Node3D"]
+script = ExtResource("4_villagers")
+
+[node name="Oliver" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("2_oliver")
+
+[node name="Mia" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("3_mia")
+
+[node name="Emma" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("10_emma")
+
+[node name="Theo" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("11_theo")
+
+[node name="Luna" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("12_luna")
+
+[node name="NanaBea" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("13_nana_bea")
+
+[node name="Pip" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("14_pip")
+
+[node name="MrAmbrose" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("15_ambrose")

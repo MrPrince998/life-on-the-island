@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Bring Emma 2 sunfish and 3 turnips"
+kind = 5
+target = &"emma"
+amount = 1
+or_event = &""
+items = {"sunfish": 2, "turnip": 3}
+lines = PackedStringArray("Wonderful! The counter looks alive again.", "Here's a little something for the trouble, and you'll always get a smile from me.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"back_in_stock"
+title = "Back in Stock"
+giver = "Emma"
+description = "Emma's shelves are looking bare. Fresh fish and crops would help."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 90
+reward_items = {}
+reward_flags = Array[StringName]([&"emma_back_in_stock"])
+reward_friendship = 100
+giver_id = &"emma"
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray("Between you and me, my shelves look a bit sad. The supply boat hardly comes anymore.", "Could you bring me two sunfish and three turnips? Fresh things bring people in.")
+complete_message = "Emma's shop is stocked with fresh island food."

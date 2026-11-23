@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/garden_pie.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"garden_pie"
+display_name = "Nana's Garden Pie"
+description = "Nana Bea's famous pie: carrots and turnips under a golden crust. \"The secret is patience, dear.\""
+category = 4
+buy_price = 0
+sell_price = 85
+max_stack = 20
+unique = false
+icon = ExtResource("2_icon")

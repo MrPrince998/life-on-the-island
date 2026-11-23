@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CropData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/crop_data.gd" id="1_crop"]
+[ext_resource type="PackedScene" path="res://scenes/props/crops/turnip_growing.tscn" id="2_growing"]
+[ext_resource type="PackedScene" path="res://scenes/props/crops/turnip_ready.tscn" id="3_ready"]
+
+[resource]
+script = ExtResource("1_crop")
+id = &"turnip"
+display_name = "Turnips"
+seed_item_id = &"turnip_seeds"
+harvest_item_id = &"turnip"
+harvest_amount = 3
+grow_hours = 18.0
+look = &"turnip"
+plants_per_row = 3
+plant_scale = 1.45
+seasons = Array[StringName]([&"spring", &"autumn"])
+stage_models = Array[PackedScene]([null, null, ExtResource("2_growing"), ExtResource("3_ready")])

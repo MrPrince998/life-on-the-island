@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_pip.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_pip_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 7
+position = Vector3(3.6, 0, 111.4)
+facing_degrees = 315
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 12
+position = Vector3(15.4, 0, 61.2)
+facing_degrees = 200
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 17
+position = Vector3(3.6, 0, 111.4)
+facing_degrees = 315
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"pip"
+display_name = "Pip"
+role = "Emma's nephew"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.25
+walk_speed = 1.45
+intro_lines = PackedStringArray("Hi! Are you new? I'm Pip! Aunt Emma says I'm visiting for the whole summer!", "I collect shells. And rocks. And secrets. Mostly secrets.", "Did you know the lake glows at night? Nobody believes me. But it does!")
+later_lines = PackedStringArray("I saw a giant fish in the lake! Maybe. It was really far away.", "There's a cave under the cliffs by the lighthouse. I'm not allowed to go in alone.", "If you find a shell with stripes, can I see it?", "Aunt Emma says the old well is too deep to look into. I looked anyway.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2")])
+story_lines = {
+&"ch3_well_glow": PackedStringArray("Look! LOOK! The well is glowing! I saw it first! Nobody believed me!", "Go on, you look. It's too deep for me. Aunt Emma said."),
+&"shard_3": PackedStringArray("You found a glowing stone in the well?! I KNEW there were secrets on this island!")
+}
+friend_lines = PackedStringArray("You're my best friend on the whole island. Don't tell Auntie Emma.", "When I grow up I'm going to be a fisher AND an explorer. Like you!")
+loved_items = Array[StringName]([&"flying_fish", &"sunflower", &"grilled_fish"])
+liked_items = Array[StringName]([&"silver_minnow", &"sunfish", &"bread", &"sunflower_loaf"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([&"fertilizer", &"turnip"])
+loved_line = "WOW! A flying fish?! Can it really fly? This is the best!"
+liked_line = "Cool! Thanks!"
+neutral_line = "Oh, thanks!"
+disliked_line = "Ew! …I mean, thank you."

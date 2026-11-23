@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="2_fitted"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/crystal_shard.glb" id="3_model"]
+
+[node name="GlowstoneShard" type="Node3D"]
+script = ExtResource("1_snap")
+height_offset = -0.05
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(0.9848, -0.1736, 0, 0.1736, 0.9848, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("2_fitted")
+model = ExtResource("3_model")
+size = 0.75
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="Glow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+light_color = Color(0.55, 0.8, 1, 1)
+light_energy = 1.3
+omni_range = 4.0

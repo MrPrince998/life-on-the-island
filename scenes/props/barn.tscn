@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/small_barn.glb" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="Shape_body"]
+size = Vector3(6.0, 7.5, 5.8)
+
+[node name="Barn" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+metadata/clear_radius = 6.5
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(8.0, 0, 0.0, 0, 8.0, 0, -0.0, 0, 8.0, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75, 0)
+shape = SubResource("Shape_body")

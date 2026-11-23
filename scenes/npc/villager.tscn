@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/npc/villager.gd" id="1_villager"]
+[ext_resource type="Script" path="res://scripts/npc/talk_spot.gd" id="2_talk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_talk"]
+radius = 1.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.28
+height = 1.7
+
+[node name="Villager" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_villager")
+metadata/clear_radius = 1.5
+
+[node name="TalkSpot" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_talk")
+prompt_text = "Talk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TalkSpot"]
+shape = SubResource("SphereShape3D_talk")
+
+[node name="Body" type="AnimatableBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="NameLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+pixel_size = 0.0045
+billboard = 1
+no_depth_test = true
+render_priority = 10
+outline_render_priority = 9
+font_size = 44
+outline_size = 16
+vertical_alignment = 0
+
+[node name="Bubble" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+pixel_size = 0.0045
+billboard = 1
+no_depth_test = true
+render_priority = 10
+outline_render_priority = 9
+font_size = 44
+outline_size = 16
+vertical_alignment = 2
+autowrap_mode = 3
+width = 620.0

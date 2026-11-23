@@ -1,0 +1,21 @@
+# Godot cache and builds
+/.godot/
+/exports/
+*.tmp
+
+# macOS
+.DS_Store
+
+# Local tools and AI-assistant files (not part of the game)
+/graphify-out/
+/.agents/
+/.claude/
+/CLAUDE.md
+/task.md
+
+# Raw Mixamo files may not be shared on their own; the game uses the
+# animation libraries baked from them (resources/animations/).
+/source_assets/mixamo/
+
+# Stray duplicates made by Finder
+* copy*

@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="1_fitted"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/street_lamp.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/world/night_light.gd" id="3_night"]
+
+[node name="StreetLamp" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_fitted")
+model = ExtResource("2_model")
+size = 3.4
+fit = 1
+collision_fraction = Vector3(0.3, 1, 0.3)
+view_distance = 220.0
+metadata/clear_radius = 1.2
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
+light_color = Color(1, 0.78, 0.5, 1)
+light_energy = 0.0
+omni_range = 10.0
+omni_attenuation = 1.4
+distance_fade_enabled = true
+distance_fade_begin = 90.0
+distance_fade_length = 30.0
+script = ExtResource("3_night")
+on_energy = 1.7
+requires_flag = &"ch3_market_day"

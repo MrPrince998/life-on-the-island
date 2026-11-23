@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/garden_bench.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/world/rest_spot.gd" id="3_rest"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bench"]
+size = Vector3(1.5, 0.55, 0.7)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sit"]
+radius = 1.3
+
+[node name="GardenBench" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+height_offset = -0.03
+metadata/clear_radius = 2.5
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+shape = SubResource("BoxShape3D_bench")
+
+[node name="SitRest" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.6)
+script = ExtResource("3_rest")
+mode = 2
+interaction_id = &"lake_bench"
+prompt_text = "Sit on the bench"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SitRest"]
+shape = SubResource("SphereShape3D_sit")
+
+
+[node name="Seat" type="Marker3D" parent="SitRest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.26, -0.55)
+
+[node name="StandPoint" type="Marker3D" parent="SitRest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.7, 0.2)

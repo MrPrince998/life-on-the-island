@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_luna.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_luna_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(200.5, 0, -161.9)
+facing_degrees = 34
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 12
+position = Vector3(201.9, 0, -163.8)
+facing_degrees = 60
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 17
+position = Vector3(201.3, 0, -149.2)
+facing_degrees = 335
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_3"]
+script = ExtResource("2_entry")
+from_hour = 21
+position = Vector3(201.9, 0, -163.8)
+facing_degrees = 60
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"luna"
+display_name = "Luna"
+role = "Lighthouse keeper"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.65
+walk_speed = 1.3
+intro_lines = PackedStringArray("Oh! A visitor! Nobody walks all the way out here.", "I'm Luna. I keep the lighthouse... well, I keep it company. It hasn't shone since the storm.", "The lens cracked into five pieces. I think they still glow, somewhere out there.", "Come back on a clear night. The stars from the headland are the best on the island.")
+later_lines = PackedStringArray("Some nights the sea glows a little, right where the beam used to sweep.", "I've mapped every star you can see from here. Nearly every one.", "The tide pools under the cliffs empty out in the mornings. Have you looked?", "Your grandfather used to bring me cocoa and tell me about the Moonwell. I thought he was making it up.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2"), SubResource("Entry_3")])
+story_lines = {
+&"shard_4": PackedStringArray("You found it in the cave? I KNEW the tide pools hid something!", "Grandpa Elias once said the last stone 'went down with the old ship'. The wreck on the west beach, maybe?"),
+&"shard_5": PackedStringArray("Five shards. All five! I never thought I'd see them together.", "With Theo's help, the lens could be mended. The lighthouse could shine again..."),
+&"journal_page_9": PackedStringArray("Oliver had a page all along? Then it's time. Bring the five shards, and some planks and stone for a new frame. Theo's on his way."),
+&"restored_lighthouse": PackedStringArray("The lens is ready! Tonight we light it. Come and watch after dark!"),
+&"lighthouse_lit": PackedStringArray("It's shining. It's REALLY shining!", "Ships will see it from miles away. Captain Marlow says he'll come every week now.", "And did you see the lake? It's glowing too... just like your grandpa said it would.")
+}
+friend_lines = PackedStringArray("On clear nights I can see your cottage lamp from up here.", "Want to know a secret? The brightest star is called Elias. I named it.")
+loved_items = Array[StringName]([&"moonfin_koi", &"flying_fish"])
+liked_items = Array[StringName]([&"sunflower", &"silver_minnow", &"sunflower_loaf"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([&"fertilizer"])
+loved_line = "It shimmers like starlight! I'll sketch it tonight. Thank you!"
+liked_line = "Oh, lovely! Thank you!"
+neutral_line = "Thank you! That's kind."
+disliked_line = "Hmm. Not very starry, is it? Thank you anyway!"

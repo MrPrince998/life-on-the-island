@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CropCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/crop_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/resources/crop_data.gd" id="2_crop"]
+[ext_resource type="Resource" path="res://data/crops/turnip.tres" id="c_turnip"]
+[ext_resource type="Resource" path="res://data/crops/carrot.tres" id="c_carrot"]
+[ext_resource type="Resource" path="res://data/crops/sunflower.tres" id="c_sunflower"]
+[ext_resource type="Resource" path="res://data/crops/tomato.tres" id="c_tomato"]
+[ext_resource type="Resource" path="res://data/crops/pumpkin.tres" id="c_pumpkin"]
+[ext_resource type="Resource" path="res://data/crops/kale.tres" id="c_kale"]
+
+[resource]
+script = ExtResource("1_catalog")
+crops = Array[ExtResource("2_crop")]([ExtResource("c_turnip"), ExtResource("c_carrot"), ExtResource("c_sunflower"), ExtResource("c_tomato"), ExtResource("c_pumpkin"), ExtResource("c_kale")])

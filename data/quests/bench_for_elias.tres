@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Bring Theo 6 wooden planks"
+kind = 5
+target = &"theo"
+amount = 1
+or_event = &""
+items = {"wooden_plank": 6}
+minutes = 60
+lines = PackedStringArray("Good wood. Let's get to work.", "…There. Go and see it by your cottage. Sit a while, he'd like that.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"bench_for_elias"
+title = "A Bench for Elias"
+giver = "Theo"
+description = "Theo wants to carve a bench in Grandpa's memory."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 0
+reward_items = {}
+reward_flags = Array[StringName]([&"theo_bench_built"])
+reward_friendship = 100
+giver_id = &"theo"
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &"restored_bridge"
+offer_lines = PackedStringArray("Your grandfather sat on my porch every evening. Never once complained about the creaky step.", "I'd like to carve him a bench by your cottage. Bring me six planks of good wood?")
+complete_message = "Theo carved a memorial bench for Grandpa by the cottage."

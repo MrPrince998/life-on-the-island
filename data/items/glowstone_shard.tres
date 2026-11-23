@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/glowstone.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"glowstone_shard"
+display_name = "Glowstone Shard"
+description = "A piece of the old lighthouse lens, warm to the touch and faintly humming. Grandpa wrote that there are five."
+category = 5
+buy_price = 0
+sell_price = 0
+max_stack = 5
+unique = false
+icon = ExtResource("2_icon")

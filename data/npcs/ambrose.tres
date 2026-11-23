@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_mr-ambrose.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_ambrose_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 8
+position = Vector3(16.4, 0, 135.4)
+facing_degrees = 219
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 13
+position = Vector3(8.6, 0, 106)
+facing_degrees = 321.3402
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 18
+position = Vector3(16.4, 0, 135.4)
+facing_degrees = 219
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"ambrose"
+display_name = "Mr. Ambrose"
+role = "Librarian"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.86
+walk_speed = 1
+intro_lines = PackedStringArray("Ah. A new face. And a curious one, I'd wager.", "Ambrose, librarian. The books outnumber the readers on this island, I'm afraid.", "Your grandfather wrote in a dreadful shorthand. If you ever find his notes, bring them to me.")
+later_lines = PackedStringArray("Every old building here has a story. Most of them are in my library, gathering dust.", "The island's founders called the spring under the lake the Moonwell. A pretty name for an odd thing.", "Do mind the books on your way out. They are older than both of us combined.", "Reading costs no coins and very little time. A splendid bargain.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2")])
+story_lines = {
+&"ch3_market_day": PackedStringArray("Market Day. I'd quite forgotten the sound of it.", "Your grandfather's ledger was right about everything, you know. The island remembered how to gather.")
+}
+friend_lines = PackedStringArray("Your grandfather borrowed eleven books and returned twelve. I never found out where the twelfth came from.", "There's a shelf in the library I keep just for your discoveries.")
+loved_items = Array[StringName]([&"azure_manta", &"moonfin_koi", &"turnip_soup"])
+liked_items = Array[StringName]([&"bread", &"sunflower", &"garden_pie"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([&"fertilizer"])
+loved_line = "Remarkable! A specimen worthy of the island's records. Thank you."
+liked_line = "How kind. I'll enjoy this with my tea."
+neutral_line = "Thank you. Most considerate."
+disliked_line = "Ah. Fertilizer. I shall… file it appropriately."

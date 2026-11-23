@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://source_assets/tripo/house.glb" id="1_house"]
+[ext_resource type="Script" path="res://scripts/systems/shop/shop_counter.gd" id="2_counter"]
+[ext_resource type="PackedScene" path="res://scenes/props/wooden_crate.tscn" id="3_crate"]
+[ext_resource type="PackedScene" path="res://scenes/props/wooden_barrel.tscn" id="4_barrel"]
+[ext_resource type="Script" path="res://scripts/world/night_light.gd" id="5_night"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(8.370, 6.0, 5.643)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_porch"]
+size = Vector3(2.100, 0.6, 1.112)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ramp"]
+size = Vector3(2.100, 0.2, 1.206)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_counter"]
+radius = 1.4
+
+[node name="GeneralStore" type="Node3D" groups=["keep_clear"]]
+metadata/clear_radius = 10.0
+
+[node name="Model" parent="." instance=ExtResource("1_house")]
+transform = Transform3D(9.0, 0, 0, 0, 9.0, 0, 0, 0, 9.0, 0, 0, 0)
+
+[node name="Collision" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="Body" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.689)
+shape = SubResource("BoxShape3D_body")
+
+[node name="Porch" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.270, 0.240, 2.664)
+shape = SubResource("BoxShape3D_porch")
+
+[node name="Ramp" type="CollisionShape3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, 0.8941, -0.4479, 0, 0.4479, 0.8941, 0.270, 0.181, 3.734)
+shape = SubResource("BoxShape3D_ramp")
+
+[node name="ShopCounter" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.270, 1.440, 2.9)
+script = ExtResource("2_counter")
+interaction_id = &"general_store_counter"
+prompt_text = "Browse the General Store"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShopCounter"]
+shape = SubResource("SphereShape3D_counter")
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 5.05, 3.45)
+pixel_size = 0.006
+text = "General Store"
+font_size = 64
+outline_size = 14
+modulate = Color(1, 0.94, 0.78, 1)
+outline_modulate = Color(0.35, 0.2, 0.1, 1)
+
+[node name="CrateA" parent="." instance=ExtResource("3_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 3.6)
+
+[node name="CrateB" parent="." instance=ExtResource("3_crate")]
+transform = Transform3D(0.94, 0, 0.34, 0, 1, 0, -0.34, 0, 0.94, -2.2, 0.64, 3.6)
+snap_to_ground = false
+
+[node name="BarrelA" parent="." instance=ExtResource("4_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0, 3.7)
+
+[node name="BarrelB" parent="." instance=ExtResource("4_barrel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 0, 3.0)
+
+[node name="DoorLantern" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 3.0, 2.7)
+light_color = Color(1, 0.78, 0.5, 1)
+light_energy = 1.6
+omni_range = 7.0
+script = ExtResource("5_night")
+on_energy = 1.6

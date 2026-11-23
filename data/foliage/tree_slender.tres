@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FoliageLayer" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/foliage_layer.gd" id="1_layer"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/broadleaf_tree.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_layer")
+id = &"tree_slender"
+model = ExtResource("2_model")
+blocks_others = true
+cast_shadows = true
+tint_variation = 0.1
+sink = 0.02
+count = 45
+scale_range = Vector2(6.5, 9.0)
+spacing = 5.0
+forest = 0.4
+lakeshore = 0.3
+collision_radius = 0.03
+collision_height = 0.4
+wind_strength = 0.03
+sway_start = 0.4

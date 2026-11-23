@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/player/camera_rig.gd" id="2_camera"]
+[ext_resource type="Script" path="res://scripts/player/player_interaction.gd" id="3_interaction"]
+[ext_resource type="PackedScene" path="res://scenes/player/character.tscn" id="4_character"]
+[ext_resource type="Script" path="res://scripts/systems/fishing/fishing_controller.gd" id="5_fishing"]
+[ext_resource type="Script" path="res://scripts/systems/fishing/fishing_tackle.gd" id="6_tackle"]
+[ext_resource type="Resource" path="res://data/fish/fish_catalog.tres" id="7_catalog"]
+[ext_resource type="Script" path="res://scripts/systems/farming/farming_controller.gd" id="8_farming"]
+[ext_resource type="Script" path="res://scripts/systems/music/ukulele_controller.gd" id="20_ukulele"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_shirt"]
+albedo_color = Color(0.32, 0.58, 0.66, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_skin"]
+albedo_color = Color(0.96, 0.8, 0.66, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_hat"]
+albedo_color = Color(0.93, 0.78, 0.45, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Mat_pack"]
+albedo_color = Color(0.55, 0.37, 0.24, 1)
+roughness = 0.95
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("Mat_shirt")
+radius = 0.34
+height = 1.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+material = SubResource("Mat_skin")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hat_brim"]
+material = SubResource("Mat_hat")
+top_radius = 0.42
+bottom_radius = 0.42
+height = 0.04
+radial_segments = 16
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hat_top"]
+material = SubResource("Mat_hat")
+top_radius = 0.17
+bottom_radius = 0.23
+height = 0.2
+radial_segments = 16
+
+[sub_resource type="BoxMesh" id="BoxMesh_pack"]
+material = SubResource("Mat_pack")
+size = Vector3(0.44, 0.5, 0.22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nose"]
+material = SubResource("Mat_skin")
+size = Vector3(0.07, 0.07, 0.1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_arm"]
+radius = 0.22
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_reach"]
+radius = 1.7
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+floor_max_angle = 0.837758
+floor_snap_length = 0.45
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Character" parent="Visual" instance=ExtResource("4_character")]
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("2_camera")
+
+[node name="PitchPivot" type="Node3D" parent="CameraRig"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0, 0)
+collision_mask = 1
+shape = SubResource("SphereShape3D_arm")
+spring_length = 3.8
+margin = 0.1
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/PitchPivot/SpringArm3D"]
+current = true
+fov = 70.0
+near = 0.05
+far = 2500.0
+
+[node name="InteractionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_interaction")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+shape = SubResource("SphereShape3D_reach")
+
+[node name="Fishing" type="Node" parent="."]
+script = ExtResource("5_fishing")
+catalog = ExtResource("7_catalog")
+
+[node name="Tackle" type="Node3D" parent="Fishing"]
+script = ExtResource("6_tackle")
+
+[node name="Farming" type="Node" parent="."]
+script = ExtResource("8_farming")
+
+[node name="Ukulele" type="Node" parent="."]
+script = ExtResource("20_ukulele")

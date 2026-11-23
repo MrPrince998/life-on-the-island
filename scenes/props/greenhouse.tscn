@@ -1,0 +1,69 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/greenhouse.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/systems/restoration/restoration_site.gd" id="3_site"]
+[ext_resource type="Resource" path="res://data/buildings/greenhouse.tres" id="4_data"]
+[ext_resource type="Script" path="res://scripts/systems/farming/daily_produce.gd" id="5_produce"]
+[ext_resource type="Script" path="res://scripts/world/night_light.gd" id="6_night"]
+
+[sub_resource type="SphereShape3D" id="Shape_site"]
+radius = 1.6
+
+[sub_resource type="SphereShape3D" id="Shape_trays"]
+radius = 1.1
+
+[sub_resource type="BoxShape3D" id="Shape_body"]
+size = Vector3(5.0, 5.0, 3.8)
+
+[node name="Greenhouse" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+metadata/clear_radius = 5.0
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(5.5, 0, 0.0, 0, 5.5, 0, -0.0, 0, 5.5, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("Shape_body")
+
+[node name="Restoration" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.6)
+script = ExtResource("3_site")
+building = ExtResource("4_data")
+restored_nodes = [NodePath("../SeedTrays"), NodePath("../GlowInside")]
+footprint = Vector2(5.0, 3.8)
+interaction_id = &"greenhouse_restoration"
+prompt_text = "Repair the greenhouse"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Restoration"]
+shape = SubResource("Shape_site")
+
+[node name="SeedTrays" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.6, 2.35)
+script = ExtResource("5_produce")
+item_ids = Array[StringName]([&"turnip_seeds", &"carrot_seeds", &"sunflower_seeds"])
+starting_stock = 2
+look = &"seed_tray"
+spots = PackedVector3Array(-0.35, -0.6, 0.15, 0.25, -0.6, 0.2, -0.05, -0.6, 0.6)
+requires_flag = &"restored_greenhouse"
+empty_prompt = "The seedlings are still sprouting · new trays every morning"
+taken_message = "You took %s from the greenhouse trays."
+interaction_id = &"greenhouse_seedlings"
+prompt_text = "Seedling trays"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SeedTrays"]
+shape = SubResource("Shape_trays")
+
+[node name="GlowInside" type="Node3D" parent="."]
+
+[node name="Lamp" type="OmniLight3D" parent="GlowInside"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+light_color = Color(1, 0.82, 0.55, 1)
+light_energy = 1.2
+omni_range = 5.0
+script = ExtResource("6_night")
+on_energy = 1.2

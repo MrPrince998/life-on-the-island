@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Show Pip a flying fish from the sea"
+kind = 5
+target = &"pip"
+amount = 1
+or_event = &""
+items = {"flying_fish": 1}
+lines = PackedStringArray("WHOA! It has wings! Actual wings!", "This is the best day ever. You can have my lucky shell. Okay, and some coins.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"pips_big_fish"
+title = "Pip's Big Fish"
+giver = "Pip"
+description = "Pip has never seen a flying fish up close."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 40
+reward_items = {}
+reward_flags = Array[StringName]([&"pip_fish_done"])
+reward_friendship = 100
+giver_id = &"pip"
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray("Auntie Emma says flying fish are real. REAL fish that FLY!", "Can you catch one in the sea and show me? Pleeeease?")
+complete_message = "Pip will be talking about that fish for weeks."

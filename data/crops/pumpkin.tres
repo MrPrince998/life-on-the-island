@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CropData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/crop_data.gd" id="1_crop"]
+
+[resource]
+script = ExtResource("1_crop")
+id = &"pumpkin"
+display_name = "Pumpkins"
+seed_item_id = &"pumpkin_seeds"
+harvest_item_id = &"pumpkin"
+harvest_amount = 1
+grow_hours = 72.0
+look = &"pumpkin"
+plants_per_row = 2
+plant_scale = 1.0
+seasons = Array[StringName]([&"autumn"])

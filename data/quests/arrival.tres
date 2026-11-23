@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Find Emma at the General Store"
+kind = 0
+target = &"met_emma"
+amount = 1
+or_event = &"open_shop"
+
+[resource]
+script = ExtResource("1_quest")
+id = &"arrival"
+title = "Welcome to Willowbrook"
+giver = "Grandpa's letter"
+description = "Grandpa's letter says Emma at the General Store is keeping the cottage key."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &"opening_seen"
+next_quest = &""
+reward_coins = 0
+complete_message = "Emma hands you Grandpa's key. Welcome home."

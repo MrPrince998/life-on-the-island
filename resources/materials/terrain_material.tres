@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dr80uf4plkhvb"]
+
+[ext_resource type="Shader" uid="uid://c4s5q7k4x5lal" path="res://shaders/terrain.gdshader" id="1_shader"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_paint"]
+frequency = 0.02
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_paint"]
+noise = SubResource("FastNoiseLite_paint")
+seamless = true
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/grass_light = Color(0.6, 0.8, 0.3, 1)
+shader_parameter/grass_dark = Color(0.36, 0.6, 0.2, 1)
+shader_parameter/sand_color = Color(0.94, 0.83, 0.6, 1)
+shader_parameter/wet_sand_color = Color(0.66, 0.6, 0.46, 1)
+shader_parameter/rock_color = Color(0.58, 0.55, 0.5, 1)
+shader_parameter/dirt_color = Color(0.66, 0.48, 0.3, 1)
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_paint")
+shader_parameter/edge_breakup = 0.35

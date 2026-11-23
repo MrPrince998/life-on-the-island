@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/building_data.gd" id="1_building"]
+
+[resource]
+script = ExtResource("1_building")
+id = &"windmill"
+display_name = "Windmill"
+description = "The old windmill on the rise above Sunflower Fields. Its sails are torn and its gears are stuck."
+cost_coins = 180
+materials = {"stone": 5, "wooden_plank": 10}
+work_minutes = 120
+restored_message = "The sails catch the wind and the old windmill creaks, then turns! Something inside the gearbox is glowing..."

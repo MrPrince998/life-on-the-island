@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FishData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_fish"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/sea_bream.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_fish")
+id = &"sea_bream"
+display_name = "Sea Bream"
+description = "A sturdy, friendly fish of the island's shores. Bites at any hour."
+rarity = 0
+water_ids = PackedStringArray("sea")
+start_hour = 0
+end_hour = 24
+weight = 55.0
+difficulty = 0.35
+min_size_cm = 20.0
+max_size_cm = 40.0
+sell_price = 9
+ui_color = Color(0.9, 0.6, 0.55, 1)
+model = ExtResource("2_model")
+model_yaw_degrees = 90.0

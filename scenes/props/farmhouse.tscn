@@ -1,0 +1,71 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/farmhouse.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/world/model_cutout.gd" id="3_cutout"]
+[ext_resource type="Script" path="res://scripts/world/soil_mound.gd" id="4_mound"]
+[ext_resource type="Script" path="res://scripts/world/stone_steps.gd" id="5_steps"]
+
+[sub_resource type="BoxShape3D" id="Shape_walls"]
+size = Vector3(8.4, 6.4, 6.0)
+
+[sub_resource type="BoxShape3D" id="Shape_porch"]
+size = Vector3(7.7, 1.61, 1.25)
+
+[sub_resource type="BoxShape3D" id="Shape_rail_left"]
+size = Vector3(3.9, 0.9, 0.25)
+
+[sub_resource type="BoxShape3D" id="Shape_rail_right"]
+size = Vector3(1.95, 0.9, 0.25)
+
+[sub_resource type="BoxShape3D" id="Shape_yard_left"]
+size = Vector3(4.1, 1.45, 1.65)
+
+[sub_resource type="BoxShape3D" id="Shape_yard_right"]
+size = Vector3(3.19, 1.95, 1.65)
+
+[node name="Farmhouse" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+metadata/clear_radius = 8.0
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(9.0, 0, 0.0, 0, 9.0, 0, -0.0, 0, 9.0, 0, 0, 0)
+
+[node name="GateCutout" type="Node" parent="."]
+script = ExtResource("3_cutout")
+cut_boxes = Array[AABB]([AABB(-0.6, -0.1, 3.8, 1.81, 1.98, 0.5)])
+
+[node name="SoilMound" type="Node3D" parent="."]
+script = ExtResource("4_mound")
+
+[node name="Steps" type="Node3D" parent="."]
+script = ExtResource("5_steps")
+x_min = -0.08
+x_max = 1.0
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="Walls" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -1.45)
+shape = SubResource("Shape_walls")
+
+[node name="PorchFloor" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.805, 2.175)
+shape = SubResource("Shape_porch")
+
+[node name="RailLeft" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05, 2.06, 2.68)
+shape = SubResource("Shape_rail_left")
+
+[node name="RailRight" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.725, 2.06, 2.68)
+shape = SubResource("Shape_rail_right")
+
+[node name="YardLeft" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 0.725, 3.625)
+shape = SubResource("Shape_yard_left")
+
+[node name="YardRight" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.605, 0.975, 3.625)
+shape = SubResource("Shape_yard_right")

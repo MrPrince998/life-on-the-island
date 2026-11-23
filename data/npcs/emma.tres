@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_emma.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_emma_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(20.6, 0, 123.6)
+facing_degrees = 250
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 17
+position = Vector3(4.2, 0, 116.6)
+facing_degrees = 249.1455
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 20
+position = Vector3(20.6, 0, 123.6)
+facing_degrees = 250
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"emma"
+display_name = "Emma"
+role = "Shopkeeper"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.69
+walk_speed = 1.2
+intro_lines = PackedStringArray("Oh! You must be Elias's grandchild. You have his eyes, you know.", "I'm Emma. I run the General Store, such as it is these days.", "If you've fish or crops to sell, bring them to my counter. I pay fair, and I always need stock.", "Welcome home. The island's been waiting for someone like you.")
+later_lines = PackedStringArray("Seeds, tools, planks: if the island needs it, I'll try to stock it.", "Back when the lighthouse shone, this square was full every market day.", "Mia could use a hand out at the fields, if you've the time.", "My nephew Pip's visiting for the summer. If something's hidden on this island, he'll find it.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2")])
+story_lines = {
+&"ch3_market_day": PackedStringArray("Have you seen the square? Lanterns, music, full stalls... I keep pinching myself.", "Your grandpa would have bought one of everything. Twice.")
+}
+friend_lines = PackedStringArray("Business is picking up, you know. I think the island is waking up.", "Pip talks about you all the time. You're his hero.")
+loved_items = Array[StringName]([&"sunflower", &"bread", &"turnip_soup"])
+liked_items = Array[StringName]([&"turnip", &"carrot", &"wooden_plank", &"sunflower_loaf"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([&"fertilizer"])
+loved_line = "For me? That brightens up the whole counter. Thank you!"
+liked_line = "How useful! You know what a shopkeeper likes."
+neutral_line = "Thank you, that's very kind."
+disliked_line = "Oh! Er… I'll put it out back. Thank you, though."

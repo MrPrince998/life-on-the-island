@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/ukulele.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"ukulele"
+display_name = "Grandpa's Ukulele"
+description = "Worn koa wood and four soft strings. Press U to play. A few of Grandpa's tunes are written inside the case."
+category = 2
+buy_price = 0
+sell_price = 0
+max_stack = 1
+unique = true
+icon = ExtResource("2_icon")

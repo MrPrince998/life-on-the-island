@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/lighthouse.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/world/night_light.gd" id="3_night"]
+[ext_resource type="Script" path="res://scripts/world/lighthouse_beam.gd" id="4_beam"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tower"]
+height = 12.0
+radius = 2.6
+
+[node name="Lighthouse" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_snap")
+height_offset = -0.4
+metadata/clear_radius = 7.0
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(16, 0, 0, 0, 16, 0, 0, 0, 16, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+shape = SubResource("CylinderShape3D_tower")
+
+[node name="Beacon" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.7, 0)
+light_color = Color(1, 0.86, 0.6, 1)
+light_energy = 4.0
+omni_range = 40.0
+script = ExtResource("3_night")
+on_energy = 4.0
+requires_flag = &"lighthouse_lit"
+
+[node name="Beam" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.7, 0)
+script = ExtResource("4_beam")

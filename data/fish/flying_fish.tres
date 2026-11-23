@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="FishData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_fish"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/Exocoetidae.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_fish")
+id = &"flying_fish"
+display_name = "Flying Fish"
+description = "It leaps from the waves and glides on wing-like fins. Watch for it skipping across the water on bright days."
+rarity = 1
+water_ids = PackedStringArray("sea")
+start_hour = 6
+end_hour = 18
+weight = 22.0
+difficulty = 0.5
+min_size_cm = 20.0
+max_size_cm = 38.0
+sell_price = 18
+ui_color = Color(0.25, 0.45, 0.95, 1)
+model = ExtResource("2_model")
+model_yaw_degrees = 90.0
+seasons = Array[StringName]([&"spring", &"summer"])

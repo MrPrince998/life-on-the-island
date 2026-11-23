@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Mend the lighthouse lens with Luna and Theo: 5 Glowstones, 5 planks, 5 stone"
+kind = 0
+target = &"restored_lighthouse"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+text = "Wait for nightfall at the lighthouse"
+kind = 0
+target = &"lighthouse_lit"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[sub_resource type="Resource" id="Step_3"]
+script = ExtResource("2_step")
+text = "Row from the dock to the little isle in Moonlit Lake"
+kind = 0
+target = &"journal_page_10"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[resource]
+script = ExtResource("1_quest")
+id = &"finale_lens"
+title = "Finale: The Moonwell"
+giver = "Luna"
+description = "Five stones, one lens, and a keeper to tend it. Then, when the light shines again, the little isle in Moonlit Lake."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2"), SubResource("Step_3")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 0
+reward_items = {}
+reward_flags = Array[StringName]([])
+reward_friendship = 0
+giver_id = &""
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray()
+complete_message = "The lighthouse shines, the Moonwell glows beneath the lake, and Grandpa's last letter is safe in your journal. The island is yours."

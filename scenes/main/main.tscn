@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://cl1n00mly0vis"]
+
+[ext_resource type="Script" uid="uid://eabuhlocf7qr" path="res://scripts/main/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/world/island.tscn" id="2_island"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/fishing_hud.tscn" id="5_fishing_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/bag_panel.tscn" id="6_bag"]
+[ext_resource type="PackedScene" path="res://scenes/systems/shop/shop_panel.tscn" id="7_shop"]
+[ext_resource type="PackedScene" path="res://scenes/npc/villagers.tscn" id="8_villagers"]
+[ext_resource type="PackedScene" path="res://scenes/ui/gift_panel.tscn" id="20_gift"]
+[ext_resource type="PackedScene" path="res://scenes/ui/journal_panel.tscn" id="21_journal"]
+
+[node name="Main" type="Node3D" unique_id=1676161225]
+script = ExtResource("1_main")
+
+[node name="Island" parent="." unique_id=2034129533 instance=ExtResource("2_island")]
+
+[node name="Player" parent="." unique_id=1858198269 instance=ExtResource("3_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 5, 102)
+
+[node name="HUD" parent="." unique_id=2036686524 instance=ExtResource("4_hud")]
+
+[node name="FishingHUD" parent="." unique_id=406623554 instance=ExtResource("5_fishing_hud")]
+
+[node name="BagPanel" parent="." unique_id=369687337 instance=ExtResource("6_bag")]
+
+[node name="ShopPanel" parent="." unique_id=629545161 instance=ExtResource("7_shop")]
+
+[node name="Villagers" parent="." instance=ExtResource("8_villagers")]
+
+[node name="GiftPanel" parent="." instance=ExtResource("20_gift")]
+
+[node name="JournalPanel" parent="." instance=ExtResource("21_journal")]

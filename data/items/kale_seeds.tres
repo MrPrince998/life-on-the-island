@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"kale_seeds"
+display_name = "Kale Seeds"
+description = "Hardy greens that don't mind the frost. Winter's only crop."
+category = 1
+buy_price = 25
+sell_price = 10
+max_stack = 99
+unique = false
+

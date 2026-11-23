@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FoliageLayer" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/foliage_layer.gd" id="1_layer"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/flowers_cluster.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_layer")
+id = &"flowers"
+model = ExtResource("2_model")
+count = 260
+scale_range = Vector2(0.5, 0.85)
+spacing = 2.0
+meadow = 0.15
+village = 1.0
+lakeshore = 0.3
+hills = 0.1
+cast_shadows = false
+tint_variation = 0.05
+sink = 0.02
+visibility_range = 80.0
+wind_strength = 0.08
+sway_start = 0.2

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/farming/farm_plot.gd" id="1_plot"]
+
+[sub_resource type="BoxShape3D" id="Shape_bed"]
+size = Vector3(2.3, 1.0, 2.3)
+
+[node name="FarmPlot" type="Area3D"]
+script = ExtResource("1_plot")
+prompt_text = "Garden bed"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("Shape_bed")

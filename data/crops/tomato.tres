@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CropData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/crop_data.gd" id="1_crop"]
+
+[resource]
+script = ExtResource("1_crop")
+id = &"tomato"
+display_name = "Tomatoes"
+seed_item_id = &"tomato_seeds"
+harvest_item_id = &"tomato"
+harvest_amount = 3
+grow_hours = 36.0
+look = &"tomato"
+plants_per_row = 3
+plant_scale = 1.25
+seasons = Array[StringName]([&"summer"])

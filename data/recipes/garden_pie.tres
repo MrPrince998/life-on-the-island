@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"garden_pie"
+ingredients = {"bread": 1, "carrot": 1, "turnip": 1}
+result_item = &"garden_pie"
+result_amount = 1
+minutes = 45
+requires_flag = &"nana_recipe_done"
+unlock_hint = "Nana Bea at the inn keeps a family pie recipe. Help her and she might share it."

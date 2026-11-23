@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RecipeBook" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_book.gd" id="1_book"]
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="2_recipe"]
+[ext_resource type="Resource" path="res://data/recipes/grilled_fish.tres" id="r_grilled_fish"]
+[ext_resource type="Resource" path="res://data/recipes/turnip_soup.tres" id="r_turnip_soup"]
+[ext_resource type="Resource" path="res://data/recipes/roasted_carrots.tres" id="r_roasted_carrots"]
+[ext_resource type="Resource" path="res://data/recipes/fishermans_stew.tres" id="r_fishermans_stew"]
+[ext_resource type="Resource" path="res://data/recipes/sunflower_loaf.tres" id="r_sunflower_loaf"]
+[ext_resource type="Resource" path="res://data/recipes/garden_pie.tres" id="r_garden_pie"]
+
+[resource]
+script = ExtResource("1_book")
+recipes = Array[ExtResource("2_recipe")]([ExtResource("r_grilled_fish"), ExtResource("r_turnip_soup"), ExtResource("r_roasted_carrots"), ExtResource("r_fishermans_stew"), ExtResource("r_sunflower_loaf"), ExtResource("r_garden_pie")])

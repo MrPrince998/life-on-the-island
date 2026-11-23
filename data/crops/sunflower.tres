@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CropData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/crop_data.gd" id="1_crop"]
+[ext_resource type="PackedScene" path="res://scenes/props/crops/sunflower_ready.tscn" id="2_ready"]
+
+[resource]
+script = ExtResource("1_crop")
+id = &"sunflower"
+display_name = "Sunflowers"
+seed_item_id = &"sunflower_seeds"
+harvest_item_id = &"sunflower"
+harvest_amount = 2
+grow_hours = 60.0
+look = &"sunflower"
+plants_per_row = 2
+plant_scale = 1.0
+seasons = Array[StringName]([&"summer"])
+stage_models = Array[PackedScene]([null, null, null, ExtResource("2_ready")])

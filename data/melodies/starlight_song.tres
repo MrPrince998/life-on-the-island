@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MelodyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/melody_data.gd" id="1_melody"]
+
+[resource]
+script = ExtResource("1_melody")
+id = &"starlight_song"
+title = "Starlight Song"
+notes = PackedInt32Array(1, 5, 4, 3, 2, 1)
+effect = &"starlight"
+description = "At night, play yourself to sleep under the stars and wake at 6 AM wherever you are."
+learn_flag = &"journal_page_4"
+hint = "Grandpa's journal page by the ancient oak."

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"sunflower_seeds"
+display_name = "Sunflower Seeds"
+description = "Tall, cheerful flowers. The fields were named after them once."
+category = 1
+buy_price = 45
+sell_price = 18
+max_stack = 99
+unique = false

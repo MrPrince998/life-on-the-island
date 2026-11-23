@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"fishermans_stew"
+ingredients = {"any_fish": 1, "carrot": 1, "turnip": 1}
+result_item = &"fishermans_stew"
+result_amount = 1
+minutes = 45
+requires_flag = &"hearts_oliver_2"
+unlock_hint = "Oliver might teach you this one once you're good friends (2 hearts)."

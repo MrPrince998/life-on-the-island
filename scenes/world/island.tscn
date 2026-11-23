@@ -1,0 +1,2578 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/island_terrain.gd" id="1_terrain"]
+[ext_resource type="Material" path="res://resources/materials/terrain_material.tres" id="2_terrain_mat"]
+[ext_resource type="Script" path="res://scripts/world/vegetation_scatter.gd" id="3_vegetation"]
+[ext_resource type="Script" path="res://scripts/world/water_body.gd" id="4_water"]
+[ext_resource type="Material" path="res://resources/materials/sea_material.tres" id="5_sea_mat"]
+[ext_resource type="Material" path="res://resources/materials/lake_material.tres" id="6_lake_mat"]
+[ext_resource type="Script" path="res://scripts/world/day_night_controller.gd" id="7_daynight"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/cottage.tscn" id="8_cottage"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/fishing_dock.tscn" id="9_dock"]
+[ext_resource type="Script" path="res://scripts/world/region_area.gd" id="10_region"]
+[ext_resource type="Script" path="res://scripts/world/night_light.gd" id="11_night"]
+[ext_resource type="Resource" path="res://data/foliage/tree_broadleaf.tres" id="f_tree_broadleaf"]
+[ext_resource type="Resource" path="res://data/foliage/tree_palm.tres" id="f_tree_palm"]
+[ext_resource type="Resource" path="res://data/foliage/bush.tres" id="f_bush"]
+[ext_resource type="Resource" path="res://data/foliage/fern.tres" id="f_fern"]
+[ext_resource type="Resource" path="res://data/foliage/flowers.tres" id="f_flowers"]
+[ext_resource type="Resource" path="res://data/foliage/grass_clump.tres" id="f_grass_clump"]
+[ext_resource type="Resource" path="res://data/foliage/rock_boulder.tres" id="f_rock_boulder"]
+[ext_resource type="Resource" path="res://data/foliage/stone_slab.tres" id="f_stone_slab"]
+[ext_resource type="Resource" path="res://data/foliage/reeds.tres" id="f_reeds"]
+[ext_resource type="Resource" path="res://data/foliage/lily_pads.tres" id="f_lily_pads"]
+[ext_resource type="Resource" path="res://data/foliage/tree_pine.tres" id="f_tree_pine"]
+[ext_resource type="Resource" path="res://data/foliage/tree_slender.tres" id="f_tree_slender"]
+[ext_resource type="Resource" path="res://data/foliage/tree_cherry.tres" id="f_tree_cherry"]
+[ext_resource type="Resource" path="res://data/foliage/tree_blossom.tres" id="f_tree_blossom"]
+[ext_resource type="Resource" path="res://data/foliage/tree_white_blossom.tres" id="f_tree_white_blossom"]
+[ext_resource type="Resource" path="res://data/foliage/sapling.tres" id="f_sapling"]
+[ext_resource type="Resource" path="res://data/foliage/mushrooms.tres" id="f_mushrooms"]
+[ext_resource type="Script" path="res://scripts/resources/foliage_layer.gd" id="12_layer_script"]
+[ext_resource type="PackedScene" path="res://scenes/props/lantern_post.tscn" id="13_lantern"]
+[ext_resource type="PackedScene" path="res://scenes/props/village_well.tscn" id="14_well"]
+[ext_resource type="PackedScene" path="res://scenes/props/signpost.tscn" id="15_signpost"]
+[ext_resource type="PackedScene" path="res://scenes/props/lighthouse.tscn" id="16_lighthouse"]
+[ext_resource type="PackedScene" path="res://scenes/props/rowboat.tscn" id="17_rowboat"]
+[ext_resource type="PackedScene" path="res://scenes/props/wooden_crate.tscn" id="18_crate"]
+[ext_resource type="PackedScene" path="res://scenes/props/wooden_barrel.tscn" id="19_barrel"]
+[ext_resource type="PackedScene" path="res://scenes/props/garden_bench.tscn" id="20_bench"]
+[ext_resource type="PackedScene" path="res://scenes/props/fence_section.tscn" id="21_fence_section"]
+[ext_resource type="Script" path="res://scripts/world/fence_line.gd" id="22_fence_line"]
+[ext_resource type="PackedScene" path="res://scenes/props/general_store.tscn" id="23_store"]
+[ext_resource type="Script" path="res://scripts/systems/farming/farm_field.gd" id="24_farm_field"]
+[ext_resource type="PackedScene" path="res://scenes/systems/farming/farm_plot.tscn" id="25_farm_plot"]
+[ext_resource type="PackedScene" path="res://scenes/props/farmhouse.tscn" id="26_farmhouse"]
+[ext_resource type="PackedScene" path="res://scenes/props/barn.tscn" id="27_barn"]
+[ext_resource type="PackedScene" path="res://scenes/props/greenhouse.tscn" id="28_greenhouse"]
+[ext_resource type="PackedScene" path="res://scenes/props/garden_shed.tscn" id="29_shed"]
+[ext_resource type="PackedScene" path="res://scenes/props/scarecrow.tscn" id="30_scarecrow"]
+[ext_resource type="PackedScene" path="res://scenes/props/compost_bin.tscn" id="31_compost"]
+[ext_resource type="PackedScene" path="res://scenes/props/water_trough.tscn" id="32_trough"]
+[ext_resource type="Script" path="res://scripts/world/story_variant.gd" id="sp_1"]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="sp_2"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/collapsed_market_stall.glb" id="sp_3"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/market-stall.glb" id="sp_4"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/basekt_of_vegetables.glb" id="sp_5"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/fish_crate.glb" id="sp_6"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/sunflower.glb" id="sp_7"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/potted_plant.glb" id="sp_8"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/wooden_barrel.glb" id="sp_9"]
+[ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="sp_10"]
+[ext_resource type="Script" path="res://scripts/systems/restoration/restoration_site.gd" id="sp_11"]
+[ext_resource type="Resource" path="res://data/buildings/market.tres" id="sp_12"]
+[ext_resource type="Script" path="res://scripts/world/story_pickup.gd" id="sp_13"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/crystal_shard.glb" id="sp_14"]
+[ext_resource type="Script" path="res://scripts/world/overnight_change.gd" id="sp_15"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/village_inn_ruined.glb" id="sp_16"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/village_inn.glb" id="sp_17"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/village_library.glb" id="sp_18"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/ruined_village_house.glb" id="sp_19"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/house.glb" id="sp_20"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/notice_board.glb" id="sp_21"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/barzier.glb" id="sp_22"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/mailbox.glb" id="sp_23"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/firewood_stack.glb" id="sp_24"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/wooden_chair.glb" id="sp_25"]
+[ext_resource type="PackedScene" path="res://scenes/props/garden_bench.tscn" id="sp_26"]
+[ext_resource type="PackedScene" path="res://scenes/props/street_lamp.tscn" id="sp_27"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/fisherman's_shelter.glb" id="sp_28"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/ruined_lakeside_boathouse.glb" id="sp_29"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/boathouse.glb" id="sp_30"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/dock_warehouse.glb" id="sp_31"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/ruined_windmill.glb" id="sp_32"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/windmill.glb" id="sp_33"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/tree_strump.glb" id="sp_34"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/blossom_sapling.glb" id="sp_35"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/beehive.glb" id="sp_36"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/bale.glb" id="sp_37"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/wheelbarrow.glb" id="sp_38"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/bramble_bush.glb" id="sp_39"]
+[ext_resource type="Script" path="res://scripts/world/story_activity.gd" id="sp_40"]
+[ext_resource type="Resource" path="res://data/buildings/windmill.tres" id="sp_41"]
+[ext_resource type="Script" path="res://scripts/world/spinning_sails.gd" id="sp_42"]
+[ext_resource type="Script" path="res://scripts/world/butterflies.gd" id="sp_43"]
+[ext_resource type="Script" path="res://scripts/world/creek_water.gd" id="sp_44"]
+[ext_resource type="Material" path="res://resources/materials/creek_material.tres" id="sp_45"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/bridge.glb" id="sp_46"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/stone_arch_bridge.glb" id="sp_47"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/ruined_carperter's_workshop.glb" id="sp_48"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/carpenter's_workshop.glb" id="sp_49"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/ancient_oak.glb" id="sp_50"]
+[ext_resource type="Resource" path="res://data/buildings/bridge.tres" id="sp_51"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/tree_broadleaf.glb" id="sp_52"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/ancient_forest_shrine.glb" id="sp_53"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/mushroom_circle.glb" id="sp_54"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/branch-pile.glb" id="sp_55"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/mossy_fallen_log.glb" id="sp_56"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/boulder.glb" id="sp_57"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/shipwreck.glb" id="sp_58"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/lighthouse_keeper's_cottage.glb" id="sp_59"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/cave_entrance.glb" id="sp_60"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/crystal_formation.glb" id="sp_61"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/rock_boulder_a.glb" id="sp_62"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/beach_jetty.tscn" id="sp_63"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/mail_boat.glb" id="sp_64"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/welcome_sign.glb" id="sp_65"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/driftwood.glb" id="sp_66"]
+[ext_resource type="PackedScene" path="res://scenes/props/seagull.tscn" id="sp_67"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/watchtower_ruins.glb" id="sp_68"]
+[ext_resource type="Script" path="res://scripts/world/gather_spawner.gd" id="sp_69"]
+[ext_resource type="Script" path="res://scripts/world/sawhorse.gd" id="sp_70"]
+[ext_resource type="Script" path="res://scripts/world/crafting_spot.gd" id="sp_71"]
+[ext_resource type="PackedScene" path="res://scenes/props/journal_page.tscn" id="sp_72"]
+[ext_resource type="Resource" path="res://data/buildings/lighthouse.tres" id="sp_73"]
+[ext_resource type="Script" path="res://scripts/world/moonwell_glow.gd" id="sp_74"]
+[ext_resource type="Script" path="res://scripts/world/house_door.gd" id="sp_75"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/rowboat.glb" id="sp_76"]
+[ext_resource type="Script" path="res://scripts/world/finale_trigger.gd" id="sp_77"]
+[ext_resource type="Script" path="res://scripts/world/journal_page.gd" id="sp_78"]
+[ext_resource type="PackedScene" path="res://scenes/props/glowstone_shard.tscn" id="sp_79"]
+[ext_resource type="Script" path="res://scripts/world/tide_pool.gd" id="sp_80"]
+[ext_resource type="PackedScene" path="res://scenes/props/message_bottle.tscn" id="sp_81"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/chest.glb" id="sp_82"]
+[ext_resource type="PackedScene" path="res://scenes/npc/villager.tscn" id="sp_83"]
+[ext_resource type="Resource" path="res://data/npcs/marlow.tres" id="sp_84"]
+[ext_resource type="Script" path="res://scripts/world/barrier_line.gd" id="sp_85"]
+[ext_resource type="Script" path="res://scripts/world/isle_bridge.gd" id="sp_86"]
+[ext_resource type="Script" path="res://scripts/world/lighthouse_isle.gd" id="sp_87"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/flowers_cluster.glb" id="up_flowers"]
+[ext_resource type="Script" path="res://scripts/world/bunting.gd" id="up_bunting"]
+
+[sub_resource type="SphereShape3D" id="SpSphere_0"]
+radius = 2
+
+[sub_resource type="SphereShape3D" id="SpSphere_1"]
+radius = 2.2
+
+[sub_resource type="SphereShape3D" id="SpSphere_2"]
+radius = 2.6
+
+[sub_resource type="SphereShape3D" id="SpSphere_3"]
+radius = 1.7
+
+[sub_resource type="SphereShape3D" id="SpSphere_4"]
+radius = 1.4
+
+[sub_resource type="SphereShape3D" id="SpSphere_5"]
+radius = 4.5
+
+[sub_resource type="SphereShape3D" id="SpSphere_6"]
+radius = 2.2
+
+[sub_resource type="SphereShape3D" id="SpSphere_7"]
+radius = 3
+
+[sub_resource type="SphereShape3D" id="SpSphere_8"]
+radius = 1.6
+
+[sub_resource type="SphereShape3D" id="SpSphere_9"]
+radius = 1.5
+
+[sub_resource type="SphereShape3D" id="SpSphere_10"]
+radius = 2.4
+
+[sub_resource type="SphereShape3D" id="SpSphere_11"]
+radius = 1.7
+
+[sub_resource type="SphereShape3D" id="SpSphere_12"]
+radius = 1.4
+
+[sub_resource type="SphereShape3D" id="SpSphere_13"]
+radius = 3
+
+[sub_resource type="SphereShape3D" id="SpSphere_14"]
+radius = 2
+
+[sub_resource type="SphereShape3D" id="SpSphere_15"]
+radius = 1.8
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_top_color = Color(0.36, 0.6, 0.86, 1)
+sky_horizon_color = Color(0.74, 0.86, 0.93, 1)
+ground_bottom_color = Color(0.2, 0.3, 0.38, 1)
+ground_horizon_color = Color(0.67, 0.78, 0.84, 1)
+sun_angle_max = 20.0
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+ambient_light_energy = 1.0
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_white = 6.0
+ssao_enabled = true
+ssao_radius = 1.5
+ssao_intensity = 1.6
+glow_enabled = true
+glow_intensity = 0.5
+glow_bloom = 0.05
+fog_enabled = true
+fog_light_color = Color(0.72, 0.82, 0.9, 1)
+fog_density = 0.0011
+fog_aerial_perspective = 0.55
+fog_sky_affect = 0.25
+adjustment_enabled = true
+adjustment_saturation = 1.12
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sea"]
+size = Vector2(3000, 3000)
+subdivide_width = 160
+subdivide_depth = 160
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lake"]
+top_radius = 49.0
+bottom_radius = 49.0
+height = 0.05
+radial_segments = 64
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="Mat_white"]
+albedo_color = Color(0.95, 0.93, 0.88, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_red"]
+albedo_color = Color(0.72, 0.27, 0.22, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_wood"]
+albedo_color = Color(0.52, 0.37, 0.24, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_lamp"]
+albedo_color = Color(1, 0.92, 0.7, 1)
+emission_enabled = true
+emission = Color(1, 0.85, 0.55, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tower"]
+top_radius = 1.6
+bottom_radius = 2.3
+height = 13.0
+radial_segments = 16
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_band"]
+top_radius = 1.75
+bottom_radius = 1.95
+height = 2.0
+radial_segments = 16
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_village"]
+height = 80.0
+radius = 70.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lake"]
+height = 80.0
+radius = 62.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_forest"]
+height = 120.0
+radius = 100.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_farm"]
+height = 80.0
+radius = 55.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_coast"]
+height = 120.0
+radius = 55.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hills"]
+height = 140.0
+radius = 75.0
+
+[node name="Island" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0, 60, 0)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 1.25
+shadow_enabled = true
+directional_shadow_max_distance = 160.0
+
+[node name="DayNightController" type="Node" parent="." node_paths=PackedStringArray("sun", "world_environment")]
+script = ExtResource("7_daynight")
+sun = NodePath("../Sun")
+world_environment = NodePath("../WorldEnvironment")
+
+[node name="Terrain" type="Node3D" parent="."]
+script = ExtResource("1_terrain")
+terrain_material = ExtResource("2_terrain_mat")
+
+[node name="Sea" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_sea")
+surface_material_override/0 = ExtResource("5_sea_mat")
+script = ExtResource("4_water")
+water_id = &"sea"
+
+[node name="MoonlitLake" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3.2, 15)
+mesh = SubResource("CylinderMesh_lake")
+surface_material_override/0 = ExtResource("6_lake_mat")
+script = ExtResource("4_water")
+water_id = &"moonlit_lake"
+radius = 46.0
+
+[node name="Vegetation" type="Node3D" parent="."]
+script = ExtResource("3_vegetation")
+layers = Array[ExtResource("12_layer_script")]([ExtResource("f_rock_boulder"), ExtResource("f_stone_slab"), ExtResource("f_tree_broadleaf"), ExtResource("f_tree_pine"), ExtResource("f_tree_slender"), ExtResource("f_tree_cherry"), ExtResource("f_tree_blossom"), ExtResource("f_tree_white_blossom"), ExtResource("f_sapling"), ExtResource("f_tree_palm"), ExtResource("f_bush"), ExtResource("f_fern"), ExtResource("f_mushrooms"), ExtResource("f_flowers"), ExtResource("f_grass_clump"), ExtResource("f_reeds"), ExtResource("f_lily_pads")])
+landmark_tree = ExtResource("f_tree_broadleaf")
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="Cottage" parent="Buildings" groups=["keep_clear"] instance=ExtResource("8_cottage")]
+metadata/clear_radius = 10.0
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -25.5, 3.95, 100)
+
+[node name="FishingDock" parent="Buildings" groups=["keep_clear"] instance=ExtResource("9_dock")]
+metadata/clear_radius = 6.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3.85, 57)
+
+[node name="Well" parent="Buildings" instance=ExtResource("14_well")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, 115)
+
+[node name="Signpost" parent="Buildings" instance=ExtResource("15_signpost")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3.9, 93)
+
+[node name="Lighthouse" parent="Buildings" instance=ExtResource("16_lighthouse")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 207.9, 13.73, -169)
+
+[node name="FarmField" type="Node3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 5, 70)
+script = ExtResource("24_farm_field")
+
+[node name="Plots" type="Node3D" parent="Buildings/FarmField"]
+
+[node name="Plot01" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 0, -4.8)
+interaction_id = &"farm_plot_01"
+
+[node name="Plot02" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -4.8)
+interaction_id = &"farm_plot_02"
+
+[node name="Plot03" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 0, -4.8)
+interaction_id = &"farm_plot_03"
+
+[node name="Plot04" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 0, -4.8)
+interaction_id = &"farm_plot_04"
+
+[node name="Plot05" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 0, -1.2)
+interaction_id = &"farm_plot_05"
+
+[node name="Plot06" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -1.2)
+interaction_id = &"farm_plot_06"
+
+[node name="Plot07" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 0, -1.2)
+interaction_id = &"farm_plot_07"
+
+[node name="Plot08" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 0, -1.2)
+interaction_id = &"farm_plot_08"
+
+[node name="Plot09" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 0, 2.4)
+interaction_id = &"farm_plot_09"
+
+[node name="Plot10" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 2.4)
+interaction_id = &"farm_plot_10"
+
+[node name="Plot11" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 0, 2.4)
+interaction_id = &"farm_plot_11"
+
+[node name="Plot12" parent="Buildings/FarmField/Plots" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8, 0, 2.4)
+interaction_id = &"farm_plot_12"
+
+[node name="GardenShed" parent="Buildings/FarmField" instance=ExtResource("29_shed")]
+transform = Transform3D(1.0, 0, 0.0, 0, 1, 0, -0.0, 0, 1.0, -9.5, 0, -8.0)
+
+[node name="Scarecrow" parent="Buildings/FarmField" instance=ExtResource("30_scarecrow")]
+transform = Transform3D(0.0, 0, -1.0, 0, 1, 0, 1.0, 0, 0.0, 11.8, 0, -1.2)
+
+[node name="CompostBin" parent="Buildings/FarmField" instance=ExtResource("31_compost")]
+transform = Transform3D(0.9063, 0, 0.4226, 0, 1, 0, -0.4226, 0, 0.9063, -10.2, 0, 8.2)
+
+[node name="WaterTrough" parent="Buildings/FarmField" instance=ExtResource("32_trough")]
+transform = Transform3D(1.0, 0, 0.0, 0, 1, 0, -0.0, 0, 1.0, -6.2, 0, 8.9)
+
+[node name="Farmhouse" parent="Buildings/FarmField" instance=ExtResource("26_farmhouse")]
+transform = Transform3D(1.0, 0, 0.0, 0, 1, 0, -0.0, 0, 1.0, 1.0, 0, -21.0)
+
+[node name="Barn" parent="Buildings/FarmField" instance=ExtResource("27_barn")]
+transform = Transform3D(0.0, 0, -1.0, 0, 1, 0, 1.0, 0, 0.0, 23.0, 0, -4.0)
+
+[node name="Greenhouse" parent="Buildings/FarmField" instance=ExtResource("28_greenhouse")]
+transform = Transform3D(-1.0, 0, 0.0, 0, 1, 0, -0.0, 0, -1.0, 4.0, 0, 17.5)
+
+[node name="Fence" type="Node3D" parent="Buildings/FarmField"]
+
+[node name="North" type="Node3D" parent="Buildings/FarmField/Fence"]
+script = ExtResource("22_fence_line")
+segment = ExtResource("21_fence_section")
+from = Vector3(-13, 0, -11)
+to = Vector3(15, 0, -11)
+
+[node name="South" type="Node3D" parent="Buildings/FarmField/Fence"]
+script = ExtResource("22_fence_line")
+segment = ExtResource("21_fence_section")
+from = Vector3(-13, 0, 11)
+to = Vector3(15, 0, 11)
+
+[node name="East" type="Node3D" parent="Buildings/FarmField/Fence"]
+script = ExtResource("22_fence_line")
+segment = ExtResource("21_fence_section")
+from = Vector3(15, 0, -11)
+to = Vector3(15, 0, 11)
+
+[node name="WestA" type="Node3D" parent="Buildings/FarmField/Fence"]
+script = ExtResource("22_fence_line")
+segment = ExtResource("21_fence_section")
+from = Vector3(-13, 0, -11)
+to = Vector3(-13, 0, -3)
+
+[node name="WestB" type="Node3D" parent="Buildings/FarmField/Fence"]
+script = ExtResource("22_fence_line")
+segment = ExtResource("21_fence_section")
+from = Vector3(-13, 0, 3)
+to = Vector3(-13, 0, 11)
+
+[node name="Rowboat" parent="Buildings" instance=ExtResource("17_rowboat")]
+transform = Transform3D(0.9928, 0, 0.1197, 0, 1, 0, -0.1197, 0, 0.9928, 14.6, 2.95, 50.5)
+
+[node name="VillageBarrel" parent="Buildings" instance=ExtResource("19_barrel")]
+transform = Transform3D(0.9553, 0, 0.2955, 0, 1, 0, -0.2955, 0, 0.9553, -22.0, 4, 105.4)
+
+[node name="VillageCrate1" parent="Buildings" instance=ExtResource("18_crate")]
+transform = Transform3D(0.9801, 0, 0.1987, 0, 1, 0, -0.1987, 0, 0.9801, -20.9, 4, 105.6)
+
+[node name="VillageCrate2" parent="Buildings" instance=ExtResource("18_crate")]
+transform = Transform3D(0.9211, 0, -0.3894, 0, 1, 0, 0.3894, 0, 0.9211, -21.4, 4, 106.6)
+
+[node name="WellCrate" parent="Buildings" instance=ExtResource("18_crate")]
+transform = Transform3D(0.8253, 0, 0.5646, 0, 1, 0, -0.5646, 0, 0.8253, 3.9, 4, 117.6)
+
+[node name="WellBarrel" parent="Buildings" instance=ExtResource("19_barrel")]
+transform = Transform3D(1.0000, 0, 0.0000, 0, 1, 0, -0.0000, 0, 1.0000, 4.8, 4, 116.3)
+
+[node name="LakeBench" parent="Buildings" instance=ExtResource("20_bench")]
+transform = Transform3D(-0.9363, 0, 0.3511, 0, 1, 0, -0.3511, 0, -0.9363, -8, 4, 63)
+
+[node name="GeneralStore" parent="Buildings" instance=ExtResource("23_store")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 26, 3.95, 119)
+
+[node name="Lanterns" type="Node3D" parent="Buildings"]
+
+[node name="LanternCottage" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
+transform = Transform3D(0.3624, 0, 0.9320, 0, 1, 0, -0.9320, 0, 0.3624, -14.5, 4, 104.0)
+
+[node name="LanternSquareEast" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
+transform = Transform3D(-0.8569, 0, 0.5155, 0, 1, 0, -0.5155, 0, -0.8569, 8.0, 4, 105.0)
+
+[node name="LanternSquareWest" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
+transform = Transform3D(0.5403, 0, -0.8415, 0, 1, 0, 0.8415, 0, 0.5403, -9.0, 4, 123.0)
+
+[node name="LanternDockPath" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
+transform = Transform3D(1.0000, 0, 0.0000, 0, 1, 0, -0.0000, 0, 1.0000, 7.6, 4, 90.0)
+
+[node name="LanternDockPath2" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
+transform = Transform3D(-1.0000, 0, 0.0016, 0, 1, 0, -0.0016, 0, -1.0000, 13.8, 4, 72.0)
+
+[node name="LanternDockStart" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
+transform = Transform3D(-1.0000, 0, 0.0016, 0, 1, 0, -0.0016, 0, -1.0000, 13.6, 4, 60.5)
+
+[node name="Regions" type="Node3D" parent="."]
+
+[node name="WillowbrookVillage" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 112)
+script = ExtResource("10_region")
+region_id = &"willowbrook_village"
+display_name = "Willowbrook Village"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/WillowbrookVillage"]
+shape = SubResource("CylinderShape3D_village")
+
+[node name="MoonlitLake" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 10, 12)
+script = ExtResource("10_region")
+region_id = &"moonlit_lake"
+display_name = "Moonlit Lake"
+region_priority = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/MoonlitLake"]
+shape = SubResource("CylinderShape3D_lake")
+
+[node name="FernwoodForest" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -115, 20, -20)
+script = ExtResource("10_region")
+region_id = &"fernwood_forest"
+display_name = "Fernwood Forest"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/FernwoodForest"]
+shape = SubResource("CylinderShape3D_forest")
+
+[node name="SunflowerFields" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115, 10, 70)
+script = ExtResource("10_region")
+region_id = &"sunflower_fields"
+display_name = "Sunflower Fields"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/SunflowerFields"]
+shape = SubResource("CylinderShape3D_farm")
+
+[node name="WhisperingCoastHeadland" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 165, 20, -88)
+script = ExtResource("10_region")
+region_id = &"whispering_coast"
+display_name = "Whispering Coast"
+region_priority = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/WhisperingCoastHeadland"]
+shape = SubResource("CylinderShape3D_coast")
+
+[node name="WhisperingCoastBeach" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85, 10, 178)
+script = ExtResource("10_region")
+region_id = &"whispering_coast"
+display_name = "Whispering Coast"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/WhisperingCoastBeach"]
+shape = SubResource("CylinderShape3D_coast")
+
+[node name="NorthernHills" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 30, -125)
+script = ExtResource("10_region")
+region_id = &"northern_hills"
+display_name = "Northern Hills"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/NorthernHills"]
+shape = SubResource("CylinderShape3D_hills")
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, 102)
+
+[node name="StoryPlaces" type="Node3D" parent="."]
+
+[node name="Village" type="Node3D" parent="StoryPlaces"]
+
+[node name="MarketStall1" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.3162, 0, -0.9487, 0, 1, 0, 0.9487, 0, -0.3162, 12, 0, 119)
+script = ExtResource("sp_1")
+flag = &"restored_market"
+metadata/clear_radius = 2.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/MarketStall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_3")
+size = 3.6
+collision_fraction = Vector3(0.8, 0.6, 0.7)
+
+[node name="After1" type="Node3D" parent="StoryPlaces/Village/MarketStall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_4")
+size = 3.6
+collision_fraction = Vector3(0.85, 0.45, 0.6)
+
+[node name="After2" type="Node3D" parent="StoryPlaces/Village/MarketStall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_5")
+size = 0.7
+collision = 0
+view_distance = 90
+
+[node name="After3" type="Node3D" parent="StoryPlaces/Village/MarketStall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_6")
+size = 1
+collision = 0
+view_distance = 90
+
+[node name="MarketStall2" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.7809, 0, -0.6247, 0, 1, 0, 0.6247, 0, -0.7809, 8, 0, 125)
+script = ExtResource("sp_1")
+flag = &"restored_market"
+metadata/clear_radius = 2.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/MarketStall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_3")
+size = 3.6
+collision_fraction = Vector3(0.8, 0.6, 0.7)
+
+[node name="After1" type="Node3D" parent="StoryPlaces/Village/MarketStall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_4")
+size = 3.6
+collision_fraction = Vector3(0.85, 0.45, 0.6)
+
+[node name="After2" type="Node3D" parent="StoryPlaces/Village/MarketStall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 1.6
+fit = 1
+collision = 0
+view_distance = 90
+
+[node name="After3" type="Node3D" parent="StoryPlaces/Village/MarketStall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_8")
+size = 0.8
+fit = 1
+collision = 0
+view_distance = 90
+
+[node name="After4" type="Node3D" parent="StoryPlaces/Village/MarketStall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 1.4
+fit = 1
+collision = 0
+view_distance = 90
+
+[node name="MarketStall3" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.9884, 0, -0.1521, 0, 1, 0, 0.1521, 0, -0.9884, 2, 0, 128)
+script = ExtResource("sp_1")
+flag = &"restored_market"
+metadata/clear_radius = 2.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/MarketStall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_3")
+size = 3.6
+collision_fraction = Vector3(0.8, 0.6, 0.7)
+
+[node name="After1" type="Node3D" parent="StoryPlaces/Village/MarketStall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_4")
+size = 3.6
+collision_fraction = Vector3(0.85, 0.45, 0.6)
+
+[node name="After2" type="Node3D" parent="StoryPlaces/Village/MarketStall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_6")
+size = 1
+collision = 0
+view_distance = 90
+
+[node name="After3" type="Node3D" parent="StoryPlaces/Village/MarketStall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_6")
+size = 0.9
+collision = 0
+view_distance = 90
+
+[node name="MarketStall4" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.9744, 0, 0.2249, 0, 1, 0, -0.2249, 0, -0.9744, -3, 0, 128)
+script = ExtResource("sp_1")
+flag = &"restored_market"
+metadata/clear_radius = 2.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/MarketStall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_3")
+size = 3.6
+collision_fraction = Vector3(0.8, 0.6, 0.7)
+
+[node name="After1" type="Node3D" parent="StoryPlaces/Village/MarketStall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_4")
+size = 3.6
+collision_fraction = Vector3(0.85, 0.45, 0.6)
+
+[node name="After2" type="Node3D" parent="StoryPlaces/Village/MarketStall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_5")
+size = 0.7
+collision = 0
+view_distance = 90
+
+[node name="After3" type="Node3D" parent="StoryPlaces/Village/MarketStall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 1.65)
+script = ExtResource("sp_2")
+model = ExtResource("sp_9")
+size = 0.9
+collision = 0
+view_distance = 90
+
+[node name="MarketRepairBase" type="Node3D" parent="StoryPlaces/Village"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8, 0, 122.6)
+script = ExtResource("sp_10")
+
+[node name="Repair" type="Area3D" parent="StoryPlaces/Village/MarketRepairBase"]
+script = ExtResource("sp_11")
+interaction_id = &"market_repair"
+building = ExtResource("sp_12")
+model_path = NodePath("")
+footprint = Vector2(2.6, 2.6)
+requires_flag = &"journal_page_6"
+locked_message = "Four old market stalls, their awnings fallen in. Emma at the General Store remembers when this was a busy market."
+shopping_hint = "Planks come from the sawhorse in Grandpa's yard, stone from rocks in the hills (or both from the General Store)."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Village/MarketRepairBase/Repair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_0")
+
+[node name="WellGlow" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 115)
+script = ExtResource("sp_1")
+flag = &"ch3_well_glow"
+metadata/clear_radius = 0.1
+
+[node name="AfterWell" type="Node3D" parent="StoryPlaces/Village/WellGlow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_10")
+
+[node name="Pickup" type="Area3D" parent="StoryPlaces/Village/WellGlow/AfterWell"]
+script = ExtResource("sp_13")
+interaction_id = &"village_well_shard"
+prompt_text = "Look down the glowing well"
+items = {"glowstone_shard": 1}
+sets_flag = &"shard_3"
+message = "Far down the well, resting on a ledge just above the water, is a pale blue stone. You fish it out with the bucket: Glowstone shard 3!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Village/WellGlow/AfterWell/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_1")
+
+[node name="Shard" type="Node3D" parent="StoryPlaces/Village/WellGlow/AfterWell/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_14")
+size = 0.4
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="Glow" type="OmniLight3D" parent="StoryPlaces/Village/WellGlow/AfterWell/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+light_color = Color(0.5, 0.78, 1, 1)
+light_energy = 2.6
+omni_range = 7.0
+
+[node name="WellGlowsAtNight" type="Node" parent="StoryPlaces/Village"]
+script = ExtResource("sp_15")
+after_flag = &"ch3_market_day"
+sets_flag = &"ch3_well_glow"
+at_hour = 19
+message = "As night falls, a soft blue light rises from the old village well... Pip comes running: \"I saw it first!\""
+
+[node name="Inn" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.2137, 0, 0.9769, 0, 1, 0, -0.9769, 0, -0.2137, -32, 0, 122)
+script = ExtResource("sp_1")
+flag = &"restored_inn"
+metadata/clear_radius = 7
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/Inn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_16")
+size = 10
+collision_fraction = Vector3(0.8, 0.85, 0.8)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Village/Inn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_17")
+size = 8.6
+fit = 1
+collision_fraction = Vector3(0.8, 0.85, 0.8)
+
+[node name="Library" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.7809, 0, -0.6247, 0, 1, 0, 0.6247, 0, -0.7809, 20, 0, 140)
+script = ExtResource("sp_2")
+model = ExtResource("sp_18")
+size = 8
+fit = 1
+collision_fraction = Vector3(0.8, 0.9, 0.75)
+metadata/clear_radius = 6.5
+
+[node name="House1" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(0.7241, 0, -0.6897, 0, 1, 0, 0.6897, 0, 0.7241, 20, 0, 94)
+script = ExtResource("sp_1")
+flag = &"restored_house_1"
+metadata/clear_radius = 5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/House1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_19")
+size = 7
+fit = 1
+collision_fraction = Vector3(0.85, 0.9, 0.85)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Village/House1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_20")
+size = 7
+collision_fraction = Vector3(0.85, 0.75, 0.7)
+
+[node name="House2" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.3091, 0, -0.951, 0, 1, 0, 0.951, 0, -0.3091, 40, 0, 128)
+script = ExtResource("sp_1")
+flag = &"restored_house_2"
+metadata/clear_radius = 5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/House2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_19")
+size = 7
+fit = 1
+collision_fraction = Vector3(0.85, 0.9, 0.85)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Village/House2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_20")
+size = 7
+collision_fraction = Vector3(0.85, 0.75, 0.7)
+
+[node name="House3" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.3227, 0, 0.9465, 0, 1, 0, -0.9465, 0, -0.3227, -44, 0, 130)
+script = ExtResource("sp_1")
+flag = &"restored_house_3"
+metadata/clear_radius = 5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/House3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_19")
+size = 7
+fit = 1
+collision_fraction = Vector3(0.85, 0.9, 0.85)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Village/House3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_20")
+size = 7
+collision_fraction = Vector3(0.85, 0.75, 0.7)
+
+[node name="House4" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(0.2425, 0, 0.9701, 0, 1, 0, -0.9701, 0, 0.2425, -40, 0, 105)
+script = ExtResource("sp_1")
+flag = &"restored_house_4"
+metadata/clear_radius = 5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Village/House4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_19")
+size = 7
+fit = 1
+collision_fraction = Vector3(0.85, 0.9, 0.85)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Village/House4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_20")
+size = 7
+collision_fraction = Vector3(0.85, 0.75, 0.7)
+
+[node name="NoticeBoard" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(0.4961, 0, -0.8682, 0, 1, 0, 0.8682, 0, 0.4961, 7, 0, 108)
+script = ExtResource("sp_2")
+model = ExtResource("sp_21")
+size = 2.4
+fit = 1
+collision_fraction = Vector3(0.9, 1, 0.4)
+metadata/clear_radius = 1.6
+
+[node name="BrazierWest" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 112)
+script = ExtResource("sp_2")
+model = ExtResource("sp_22")
+size = 1.6
+fit = 1
+collision_fraction = Vector3(0.4, 1, 0.4)
+metadata/clear_radius = 0.8
+
+[node name="BrazierEast" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 118)
+script = ExtResource("sp_2")
+model = ExtResource("sp_22")
+size = 1.6
+fit = 1
+collision_fraction = Vector3(0.4, 1, 0.4)
+metadata/clear_radius = 0.8
+
+[node name="Mailbox" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -19.6, 0, 103.2)
+script = ExtResource("sp_2")
+model = ExtResource("sp_23")
+size = 1.35
+fit = 1
+collision_fraction = Vector3(0.5, 1, 0.5)
+metadata/clear_radius = 0.8
+
+[node name="Firewood" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, 105.6)
+script = ExtResource("sp_2")
+model = ExtResource("sp_24")
+size = 1.9
+collision_fraction = Vector3(0.85, 1, 0.8)
+metadata/clear_radius = 1.2
+
+[node name="YardChair" type="Node3D" parent="StoryPlaces/Village"]
+transform = Transform3D(-0.5, 0, 0.866, 0, 1, 0, -0.866, 0, -0.5, -20.6, 0, 96.2)
+script = ExtResource("sp_2")
+model = ExtResource("sp_25")
+size = 1
+fit = 1
+collision_fraction = Vector3(0.8, 0.5, 0.8)
+
+[node name="MemorialBench" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
+transform = Transform3D(-0.7933, 0, 0.6088, 0, 1, 0, -0.6088, 0, -0.7933, -30.5, 0, 91.5)
+script = ExtResource("sp_1")
+flag = &"theo_bench_built"
+metadata/clear_radius = 1.8
+
+[node name="After" parent="StoryPlaces/Village/MemorialBench" instance=ExtResource("sp_26")]
+
+[node name="SitRest" parent="StoryPlaces/Village/MemorialBench/After"]
+interaction_id = &"memorial_bench"
+prompt_text = "Sit on Grandpa's bench"
+
+[node name="VegBasket" type="Node3D" parent="StoryPlaces/Village"]
+transform = Transform3D(-0.342, 0, -0.9397, 0, 1, 0, 0.9397, 0, -0.342, 21.7, 0, 115.4)
+script = ExtResource("sp_2")
+model = ExtResource("sp_5")
+size = 0.7
+collision = 0
+view_distance = 70
+
+[node name="PottedPlantA" type="Node3D" parent="StoryPlaces/Village"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9, 0, 117.6)
+script = ExtResource("sp_2")
+model = ExtResource("sp_8")
+size = 0.95
+fit = 1
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 80
+
+[node name="PottedPlantB" type="Node3D" parent="StoryPlaces/Village"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.6, 0, 124.8)
+script = ExtResource("sp_2")
+model = ExtResource("sp_8")
+size = 0.95
+fit = 1
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 80
+
+[node name="StreetLamps" type="Node3D" parent="StoryPlaces/Village"]
+
+[node name="Lamp01" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.9806, 0, -0.1961, 0, 1, 0, 0.1961, 0, -0.9806, 18.2976, 0, 114.7058)
+
+[node name="Lamp02" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.9095, 0, -0.4158, 0, 1, 0, 0.4158, 0, -0.9095, 53.0216, 0, 103.39)
+
+[node name="Lamp03" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.9095, 0, 0.4158, 0, 1, 0, -0.4158, 0, 0.9095, 66.6482, 0, 89.9038)
+
+[node name="Lamp04" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.7682, 0, 0.6402, 0, 1, 0, -0.6402, 0, 0.7682, -17.477, 0, 125.2686)
+
+[node name="Lamp05" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.824, 0, -0.5665, 0, 1, 0, 0.5665, 0, -0.824, -28.9123, 0, 143.2568)
+
+[node name="Lamp06" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.824, 0, 0.5665, 0, 1, 0, -0.5665, 0, 0.824, -49.1322, 0, 149.1487)
+
+[node name="Lamp07" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.8209, 0, -0.5711, 0, 1, 0, 0.5711, 0, -0.8209, -61.8523, 0, 165.9172)
+
+[node name="Lamp08" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.8209, 0, 0.5711, 0, 1, 0, -0.5711, 0, 0.8209, -82.0395, 0, 171.9205)
+
+[node name="Lamp09" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.8209, 0, -0.5711, 0, 1, 0, 0.5711, 0, -0.8209, -83.1155, 0, 180.709)
+
+[node name="Lamp10" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.8209, 0, 0.5711, 0, 1, 0, -0.5711, 0, 0.8209, -86.8845, 0, 175.291)
+
+[node name="Lamp11" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.4472, 0, -0.8944, 0, 1, 0, 0.8944, 0, 0.4472, -9.3444, 0, 97.9323)
+
+[node name="Lamp12" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.9048, 0, 0.4258, 0, 1, 0, -0.4258, 0, -0.9048, -26.9841, 0, 88.9487)
+
+[node name="Lamp13" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(0.8137, 0, -0.5812, 0, 1, 0, 0.5812, 0, 0.8137, -40.7833, 0, 73.0994)
+
+[node name="Lamp14" parent="StoryPlaces/Village/StreetLamps" instance=ExtResource("sp_27")]
+transform = Transform3D(-0.2873, 0, -0.9578, 0, 1, 0, 0.9578, 0, -0.2873, 10.2225, 0, 82.7428)
+
+[node name="Lake" type="Node3D" parent="StoryPlaces"]
+
+[node name="FishermansShelter" type="Node3D" parent="StoryPlaces/Lake" groups=["keep_clear"]]
+transform = Transform3D(-0.9623, 0, -0.2722, 0, 1, 0, 0.2722, 0, -0.9623, 24, 0, 64.5)
+script = ExtResource("sp_2")
+model = ExtResource("sp_28")
+size = 4.6
+collision_fraction = Vector3(0.75, 1, 0.55)
+min_height = 3.6
+metadata/clear_radius = 3.6
+
+[node name="FishCrate" type="Node3D" parent="StoryPlaces/Lake"]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 20.6, 0, 62.2)
+script = ExtResource("sp_2")
+model = ExtResource("sp_6")
+size = 1
+collision_fraction = Vector3(0.8, 1, 0.8)
+view_distance = 70
+
+[node name="Boathouse" type="Node3D" parent="StoryPlaces/Lake" groups=["keep_clear"]]
+transform = Transform3D(-0.7665, 0, 0.6422, 0, 1, 0, -0.6422, 0, -0.7665, -14.8, 0, 44.6)
+script = ExtResource("sp_1")
+flag = &"restored_boathouse"
+metadata/clear_radius = 5.5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Lake/Boathouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_29")
+size = 8
+collision_fraction = Vector3(0.75, 0.8, 0.75)
+min_height = 3.55
+
+[node name="After" type="Node3D" parent="StoryPlaces/Lake/Boathouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_30")
+size = 8
+collision_fraction = Vector3(0.75, 0.8, 0.75)
+min_height = 3.55
+
+[node name="DockWarehouse" type="Node3D" parent="StoryPlaces/Lake" groups=["keep_clear"]]
+transform = Transform3D(-0.8609, 0, -0.5087, 0, 1, 0, 0.5087, 0, -0.8609, 36, 0, 59)
+script = ExtResource("sp_2")
+model = ExtResource("sp_31")
+size = 8
+collision_fraction = Vector3(0.8, 0.9, 0.8)
+min_height = 3.6
+metadata/clear_radius = 5.5
+
+[node name="Farm" type="Node3D" parent="StoryPlaces"]
+
+[node name="BrambleHedge" type="Node3D" parent="StoryPlaces/Farm"]
+script = ExtResource("sp_85")
+barrier_id = &"brambles"
+gate_flag = &"ch1_hedge_cleared"
+gate_center = Vector2(72.08, 90.96)
+hint = "A wall of thorny brambles, far too thick to push through. Until the farm path is cleared, the way to the farm is round by the lake path."
+
+[node name="Windmill" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(0.6606, 0, -0.7507, 0, 1, 0, 0.7507, 0, 0.6606, 140, 5.2, 48)
+script = ExtResource("sp_1")
+flag = &"restored_windmill"
+metadata/clear_radius = 5.5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Windmill"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_32")
+size = 11
+fit = 1
+collision_fraction = Vector3(0.45, 1, 0.45)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Windmill"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_33")
+size = 12
+fit = 1
+collision_fraction = Vector3(0.4, 1, 0.4)
+
+[node name="Orchard1" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 87)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 1.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Orchard1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 150
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Orchard1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_35")
+size = 2.6
+fit = 1
+collision_fraction = Vector3(0.15, 1, 0.15)
+
+[node name="Orchard2" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(0.3907, 0, 0.9205, 0, 1, 0, -0.9205, 0, 0.3907, 134, 0, 90)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 1.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Orchard2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 150
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Orchard2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_35")
+size = 2.6
+fit = 1
+collision_fraction = Vector3(0.15, 1, 0.15)
+
+[node name="Orchard3" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-0.6947, 0, 0.7193, 0, 1, 0, -0.7193, 0, -0.6947, 140, 0, 87)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 1.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Orchard3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 150
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Orchard3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_35")
+size = 2.6
+fit = 1
+collision_fraction = Vector3(0.15, 1, 0.15)
+
+[node name="Orchard4" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-0.9336, 0, -0.3584, 0, 1, 0, 0.3584, 0, -0.9336, 131, 0, 94)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 1.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Orchard4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 150
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Orchard4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_35")
+size = 2.6
+fit = 1
+collision_fraction = Vector3(0.15, 1, 0.15)
+
+[node name="Orchard5" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-0.0349, 0, -0.9994, 0, 1, 0, 0.9994, 0, -0.0349, 137, 0, 95)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 1.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Orchard5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 150
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Orchard5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_35")
+size = 2.6
+fit = 1
+collision_fraction = Vector3(0.15, 1, 0.15)
+
+[node name="Orchard6" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(0.9063, 0, -0.4226, 0, 1, 0, 0.4226, 0, 0.9063, 143, 0, 92)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 1.6
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Farm/Orchard6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 150
+
+[node name="After" type="Node3D" parent="StoryPlaces/Farm/Orchard6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_35")
+size = 2.6
+fit = 1
+collision_fraction = Vector3(0.15, 1, 0.15)
+
+[node name="Beehive1" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-0.9903, 0, 0.1392, 0, 1, 0, -0.1392, 0, -0.9903, 97, 0, 88.5)
+script = ExtResource("sp_2")
+model = ExtResource("sp_36")
+size = 1.25
+fit = 1
+collision_fraction = Vector3(0.8, 1, 0.8)
+view_distance = 150
+metadata/clear_radius = 1.2
+
+[node name="Beehive2" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 100.5, 0, 90)
+script = ExtResource("sp_2")
+model = ExtResource("sp_36")
+size = 1.25
+fit = 1
+collision_fraction = Vector3(0.8, 1, 0.8)
+view_distance = 150
+metadata/clear_radius = 1.2
+
+[node name="Beehive3" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-0.9903, 0, -0.1392, 0, 1, 0, 0.1392, 0, -0.9903, 104, 0, 88.5)
+script = ExtResource("sp_2")
+model = ExtResource("sp_36")
+size = 1.25
+fit = 1
+collision_fraction = Vector3(0.8, 1, 0.8)
+view_distance = 150
+metadata/clear_radius = 1.2
+
+[node name="HayBale1" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(0.9397, 0, 0.342, 0, 1, 0, -0.342, 0, 0.9397, 138.4, 0, 73.8)
+script = ExtResource("sp_2")
+model = ExtResource("sp_37")
+size = 1.55
+collision_fraction = Vector3(0.9, 1, 0.9)
+view_distance = 150
+metadata/clear_radius = 1.2
+
+[node name="HayBale2" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(0.2588, 0, 0.9659, 0, 1, 0, -0.9659, 0, 0.2588, 141.2, 0, 74.4)
+script = ExtResource("sp_2")
+model = ExtResource("sp_37")
+size = 1.55
+collision_fraction = Vector3(0.9, 1, 0.9)
+view_distance = 150
+metadata/clear_radius = 1.2
+
+[node name="HayBale3" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(-0.766, 0, 0.6428, 0, 1, 0, -0.6428, 0, -0.766, 139.6, 0, 76.9)
+script = ExtResource("sp_2")
+model = ExtResource("sp_37")
+size = 1.55
+collision_fraction = Vector3(0.9, 1, 0.9)
+view_distance = 150
+metadata/clear_radius = 1.2
+
+[node name="Wheelbarrow" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, -0.9397, 106.6, 0, 66.2)
+script = ExtResource("sp_2")
+model = ExtResource("sp_38")
+size = 1.6
+collision_fraction = Vector3(0.7, 0.7, 0.8)
+view_distance = 100
+
+[node name="VegBasket" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 114, 0, 54.8)
+script = ExtResource("sp_2")
+model = ExtResource("sp_5")
+size = 0.7
+collision = 0
+view_distance = 70
+
+[node name="Sunflower01" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.8387, 0, -0.5446, 0, 1, 0, 0.5446, 0, -0.8387, 79.278, 0, 90.8269)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.05
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower02" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.6947, 0, -0.7193, 0, 1, 0, 0.7193, 0, -0.6947, 76.5053, 0, 85.2815)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.2
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower03" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.8746, 0, -0.4848, 0, 1, 0, 0.4848, 0, -0.8746, 82.8557, 0, 89.0381)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 1.9
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower04" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.7431, 0, -0.6691, 0, 1, 0, 0.6691, 0, -0.7431, 80.083, 0, 83.4926)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.05
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower05" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.9063, 0, -0.4226, 0, 1, 0, 0.4226, 0, -0.9063, 86.4334, 0, 87.2492)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.2
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower06" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.788, 0, -0.6157, 0, 1, 0, 0.6157, 0, -0.788, 83.6607, 0, 81.7038)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 1.9
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower07" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.9336, 0, -0.3584, 0, 1, 0, 0.3584, 0, -0.9336, 90.0111, 0, 85.4604)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.05
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower08" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.829, 0, -0.5592, 0, 1, 0, 0.5592, 0, -0.829, 87.2384, 0, 79.9149)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.2
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower09" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.682, 0, -0.7314, 0, 1, 0, 0.7314, 0, -0.682, 93.5888, 0, 83.6715)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 1.9
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower10" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.866, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866, 90.8161, 0, 78.126)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.05
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower11" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.7314, 0, -0.682, 0, 1, 0, 0.682, 0, -0.7314, 97.1665, 0, 81.8826)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 2.2
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="Sunflower12" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(-0.8988, 0, -0.4384, 0, 1, 0, 0.4384, 0, -0.8988, 94.3938, 0, 76.3372)
+script = ExtResource("sp_2")
+model = ExtResource("sp_7")
+size = 1.9
+fit = 1
+collision = 0
+view_distance = 120
+
+[node name="BrambleGate" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.0778, 7.25, 90.9611)
+script = ExtResource("sp_1")
+flag = &"ch1_hedge_cleared"
+metadata/clear_radius = 1
+
+[node name="Before1" type="Node3D" parent="StoryPlaces/Farm/BrambleGate"]
+transform = Transform3D(0.8235, 0, 0.5673, 0, 1, 0, -0.5673, 0, 0.8235, 0.1342, 0, 3.846)
+script = ExtResource("sp_2")
+model = ExtResource("sp_39")
+size = 3.4
+collision_fraction = Vector3(0.85, 0.8, 0.8)
+
+[node name="Before2" type="Node3D" parent="StoryPlaces/Farm/BrambleGate"]
+transform = Transform3D(0.8235, 0, 0.5673, 0, 1, 0, -0.5673, 0, 0.8235, 3.2647, 0, 2.2808)
+script = ExtResource("sp_2")
+model = ExtResource("sp_39")
+size = 3.4
+collision_fraction = Vector3(0.85, 0.8, 0.8)
+
+[node name="Before3" type="Node3D" parent="StoryPlaces/Farm/BrambleGate"]
+transform = Transform3D(0.948, 0, 0.3184, 0, 1, 0, -0.3184, 0, 0.948, -1.923, 0, -2.9516)
+script = ExtResource("sp_2")
+model = ExtResource("sp_39")
+size = 3.4
+collision_fraction = Vector3(0.85, 0.8, 0.8)
+
+[node name="Before4" type="Node3D" parent="StoryPlaces/Farm/BrambleGate"]
+transform = Transform3D(0.948, 0, 0.3184, 0, 1, 0, -0.3184, 0, 0.948, 0.7603, 0, -4.2933)
+script = ExtResource("sp_2")
+model = ExtResource("sp_39")
+size = 3.4
+collision_fraction = Vector3(0.85, 0.8, 0.8)
+
+[node name="BeforeClearSpot" type="Node3D" parent="StoryPlaces/Farm/BrambleGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_10")
+
+[node name="Clear" type="Area3D" parent="StoryPlaces/Farm/BrambleGate/BeforeClearSpot"]
+script = ExtResource("sp_40")
+interaction_id = &"ch1_hedge_cleared"
+prompt_text = "Clear the brambles with Mia"
+requires_flag = &"met_mia"
+locked_message = "A tangle of brambles across the farm path. Mia at the farm might know how to clear it."
+sets_flag = &"ch1_hedge_cleared"
+work_minutes = 60
+done_message = "Mia comes running with her garden shears. Snip, tug, laugh, repeat... Together you clear the farm path!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Farm/BrambleGate/BeforeClearSpot/Clear"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_2")
+
+[node name="RepairBase" type="Node3D" parent="StoryPlaces/Farm/Windmill"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_10")
+
+[node name="Repair" type="Area3D" parent="StoryPlaces/Farm/Windmill/RepairBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5)
+script = ExtResource("sp_11")
+interaction_id = &"windmill_repair"
+building = ExtResource("sp_41")
+model_path = NodePath("")
+footprint = Vector2(5.2, 5.2)
+requires_flag = &"ch1_hedge_cleared"
+locked_message = "The old windmill's sails are torn and its gears are stuck. Mia might know what it needs, once the farm path is clear."
+shopping_hint = "Gather stone from rocks in the hills and forest, and saw fallen branches into planks at the sawhorse in Grandpa's yard (or buy both at the General Store)."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Farm/Windmill/RepairBase/Repair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_3")
+
+[node name="Sails" type="Node3D" parent="StoryPlaces/Farm/Windmill/After"]
+script = ExtResource("sp_42")
+
+[node name="AfterShard" type="Node3D" parent="StoryPlaces/Farm/Windmill"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.9)
+script = ExtResource("sp_10")
+
+[node name="Pickup" type="Area3D" parent="StoryPlaces/Farm/Windmill/AfterShard"]
+script = ExtResource("sp_13")
+interaction_id = &"windmill_gearbox_shard"
+prompt_text = "Look inside the gearbox"
+items = {"glowstone_shard": 1}
+sets_flag = &"shard_1"
+message = "Wedged in the old gearbox is a pale blue stone, warm and faintly humming. A Glowstone shard! Grandpa wrote: \"The first one kept the mill turning.\""
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Farm/Windmill/AfterShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_4")
+
+[node name="Shard" type="Node3D" parent="StoryPlaces/Farm/Windmill/AfterShard/Pickup"]
+transform = Transform3D(0.9397, 0, 0.342, 0, 1, 0, -0.342, 0, 0.9397, 0, 1.05, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_14")
+size = 0.55
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="Glow" type="OmniLight3D" parent="StoryPlaces/Farm/Windmill/AfterShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0.3)
+light_color = Color(0.55, 0.8, 1, 1)
+light_energy = 1.4
+omni_range = 3.5
+
+[node name="OrchardPlanting" type="Node3D" parent="StoryPlaces/Farm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135.5, 0, 90.5)
+script = ExtResource("sp_10")
+
+[node name="Plant" type="Area3D" parent="StoryPlaces/Farm/OrchardPlanting"]
+script = ExtResource("sp_40")
+interaction_id = &"ch1_orchard_planted"
+prompt_text = "Plant Grandpa's orchard with Mia"
+requires_flag = &"shard_1"
+locked_message = "Old stumps where Grandpa's orchard used to be. Mia says it's no use planting until the windmill turns again."
+sets_flag = &"ch1_orchard_planted"
+work_minutes = 60
+done_message = "Mia brings saplings from the barn and you plant them where the old trees stood. “Grandpa would love this,” she says."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Farm/OrchardPlanting/Plant"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_5")
+
+[node name="Butterflies" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123, 6.4, 79)
+script = ExtResource("sp_1")
+flag = &"ch1_orchard_planted"
+metadata/clear_radius = 0.1
+
+[node name="After" type="CPUParticles3D" parent="StoryPlaces/Farm/Butterflies"]
+script = ExtResource("sp_43")
+
+[node name="Forest" type="Node3D" parent="StoryPlaces"]
+
+[node name="WillowCreek" type="MeshInstance3D" parent="StoryPlaces/Forest"]
+script = ExtResource("sp_44")
+surface_material_override/0 = ExtResource("sp_45")
+
+
+[node name="Bridge" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.6, 0, 0.8, 0, 1, 0, -0.8, 0, -0.6, -75, 0, 45)
+script = ExtResource("sp_1")
+flag = &"restored_bridge"
+metadata/clear_radius = 2
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Forest/Bridge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_46")
+size = 12
+collision = 2
+snap_to_ground = false
+
+[node name="After" type="Node3D" parent="StoryPlaces/Forest/Bridge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.4, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_47")
+size = 14
+collision = 2
+snap_to_ground = false
+
+[node name="Workshop" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.1414, 0, 0.9899, 0, 1, 0, -0.9899, 0, -0.1414, -98, 0, 36)
+script = ExtResource("sp_1")
+flag = &"restored_bridge"
+metadata/clear_radius = 9.5
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Forest/Workshop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_48")
+size = 8
+collision_fraction = Vector3(0.75, 0.9, 0.75)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Forest/Workshop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_49")
+size = 8
+collision_fraction = Vector3(0.75, 0.9, 0.75)
+
+[node name="AncientTree" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.9063, 0, 0.4226, 0, 1, 0, -0.4226, 0, 0.9063, -130, 0, -30)
+script = ExtResource("sp_1")
+flag = &"ch2_tree_restored"
+metadata/clear_radius = 13
+
+[node name="Before" type="Node3D" parent="StoryPlaces/Forest/AncientTree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_50")
+size = 20
+fit = 1
+collision_fraction = Vector3(0.13, 0.6, 0.13)
+sink = 0.3
+tint = Color(0.85, 0.58, 0.34, 1)
+
+[node name="After" type="Node3D" parent="StoryPlaces/Forest/AncientTree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_50")
+size = 20
+fit = 1
+collision_fraction = Vector3(0.13, 0.6, 0.13)
+sink = 0.3
+
+[node name="BridgeRepairBase" type="Node3D" parent="StoryPlaces/Forest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.8, 0, 49.1)
+script = ExtResource("sp_10")
+
+[node name="Repair" type="Area3D" parent="StoryPlaces/Forest/BridgeRepairBase"]
+script = ExtResource("sp_11")
+interaction_id = &"bridge_repair"
+building = ExtResource("sp_51")
+model_path = NodePath("")
+footprint = Vector2(2.4, 2.4)
+requires_flag = &"met_theo"
+locked_message = "The old stone bridge is broken right through the middle. Theo the carpenter is often here in the evening; maybe he knows how to fix it."
+shopping_hint = "Saw fallen branches into planks at the sawhorse in Grandpa's yard and gather stone in the hills, or buy both at the General Store."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Forest/BridgeRepairBase/Repair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_6")
+
+[node name="OakSaplings" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -130, 0, -30)
+script = ExtResource("sp_1")
+flag = &"ch2_saplings_planted"
+metadata/clear_radius = 0.1
+
+[node name="After1" type="Node3D" parent="StoryPlaces/Forest/OakSaplings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3623, 0, 4.4995)
+script = ExtResource("sp_2")
+model = ExtResource("sp_52")
+size = 2.2
+fit = 1
+collision_fraction = Vector3(0.1, 1, 0.1)
+
+[node name="After2" type="Node3D" parent="StoryPlaces/Forest/OakSaplings"]
+transform = Transform3D(0.225, 0, 0.9744, 0, 1, 0, -0.9744, 0, 0.225, -6.5778, 0, 2.3941)
+script = ExtResource("sp_2")
+model = ExtResource("sp_52")
+size = 2.2
+fit = 1
+collision_fraction = Vector3(0.1, 1, 0.1)
+
+[node name="After3" type="Node3D" parent="StoryPlaces/Forest/OakSaplings"]
+transform = Transform3D(-0.8988, 0, 0.4384, 0, 1, 0, -0.4384, 0, -0.8988, 1.2155, 0, -6.8937)
+script = ExtResource("sp_2")
+model = ExtResource("sp_52")
+size = 2.2
+fit = 1
+collision_fraction = Vector3(0.1, 1, 0.1)
+
+[node name="SaplingPlanting" type="Node3D" parent="StoryPlaces/Forest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, -23.8)
+script = ExtResource("sp_10")
+
+[node name="Plant" type="Area3D" parent="StoryPlaces/Forest/SaplingPlanting"]
+script = ExtResource("sp_40")
+interaction_id = &"ch2_saplings_planted"
+prompt_text = "Plant oak saplings around the old tree with Theo"
+requires_flag = &"restored_bridge"
+locked_message = "The great old oak looks asleep, every branch bare. Theo might know how to wake it, once the bridge is mended."
+sets_flag = &"ch2_saplings_planted"
+work_minutes = 60
+done_message = "Theo brings three oak saplings from his workshop and you plant them in a ring round the old tree. “Give it a night,” he says."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Forest/SaplingPlanting/Plant"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_7")
+
+[node name="OakWakes" type="Node" parent="StoryPlaces/Forest"]
+script = ExtResource("sp_15")
+after_flag = &"ch2_saplings_planted"
+sets_flag = &"ch2_tree_restored"
+message = "Overnight, the ancient oak in Fernwood Forest burst into leaf! Birds are singing in its branches again."
+
+[node name="ShrineShard" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.6, 0, -5.4)
+script = ExtResource("sp_1")
+flag = &"ch2_tree_restored"
+metadata/clear_radius = 0.5
+
+[node name="AfterShard" type="Node3D" parent="StoryPlaces/Forest/ShrineShard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("sp_10")
+
+[node name="Pickup" type="Area3D" parent="StoryPlaces/Forest/ShrineShard/AfterShard"]
+script = ExtResource("sp_13")
+interaction_id = &"forest_shrine_shard"
+prompt_text = "Look at the shrine"
+items = {"glowstone_shard": 1}
+sets_flag = &"shard_2"
+message = "Sunlight through the oak's new leaves falls on the old shrine, and something glints: Glowstone shard 2! Grandpa wrote: \"The second sleeps where the old oak dreams.\""
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Forest/ShrineShard/AfterShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_8")
+
+[node name="Shard" type="Node3D" parent="StoryPlaces/Forest/ShrineShard/AfterShard/Pickup"]
+transform = Transform3D(0.9397, 0, 0.342, 0, 1, 0, -0.342, 0, 0.9397, 0, 0.05, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_14")
+size = 0.6
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="Glow" type="OmniLight3D" parent="StoryPlaces/Forest/ShrineShard/AfterShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+light_color = Color(0.55, 0.8, 1, 1)
+light_energy = 1.4
+omni_range = 4.0
+
+[node name="ForestShrine" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.1758, 0, 0.9844, 0, 1, 0, -0.9844, 0, -0.1758, -140, 0, -5)
+script = ExtResource("sp_2")
+model = ExtResource("sp_53")
+size = 4.2
+fit = 1
+collision_fraction = Vector3(0.8, 1, 0.8)
+metadata/clear_radius = 3
+
+[node name="MushroomRing" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.766, 0, 0.6428, 0, 1, 0, -0.6428, 0, 0.766, -105, 0, -45)
+script = ExtResource("sp_2")
+model = ExtResource("sp_54")
+size = 3.2
+collision = 0
+metadata/clear_radius = 2.5
+
+[node name="LogStump1" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.9848, 0, 0.1736, 0, 1, 0, -0.1736, 0, 0.9848, -106.5, 0, 13.5)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.5
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 120
+metadata/clear_radius = 1
+
+[node name="LogStump2" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.766, 0, 0.6428, 0, 1, 0, -0.6428, 0, -0.766, -103, 0, 10.6)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.2
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 120
+metadata/clear_radius = 1
+
+[node name="LogStump3" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.1736, 0, -0.9848, 0, 1, 0, 0.9848, 0, -0.1736, -109.8, 0, 16.4)
+script = ExtResource("sp_2")
+model = ExtResource("sp_34")
+size = 1.3
+collision_fraction = Vector3(0.6, 1, 0.6)
+view_distance = 120
+metadata/clear_radius = 1
+
+[node name="BranchPile1" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, -103.6, 0, 16.8)
+script = ExtResource("sp_2")
+model = ExtResource("sp_55")
+size = 2.3
+collision_fraction = Vector3(0.7, 0.6, 0.7)
+view_distance = 120
+metadata/clear_radius = 1.3
+
+[node name="BranchPile2" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.9397, 0, -0.342, 0, 1, 0, 0.342, 0, -0.9397, -110.5, 0, 11)
+script = ExtResource("sp_2")
+model = ExtResource("sp_55")
+size = 2
+collision_fraction = Vector3(0.7, 0.6, 0.7)
+view_distance = 120
+metadata/clear_radius = 1.2
+
+[node name="FallenLog" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.342, 0, 0.9397, 0, 1, 0, -0.9397, 0, 0.342, -100, 0, 6.5)
+script = ExtResource("sp_2")
+model = ExtResource("sp_56")
+size = 4.2
+collision_fraction = Vector3(0.85, 0.8, 0.5)
+view_distance = 150
+metadata/clear_radius = 2.2
+
+[node name="LogFirewood" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.1392, 0, 0.9903, 0, 1, 0, -0.9903, 0, -0.1392, -96.8, 0, 41.9)
+script = ExtResource("sp_2")
+model = ExtResource("sp_24")
+size = 1.9
+collision_fraction = Vector3(0.85, 1, 0.8)
+view_distance = 120
+metadata/clear_radius = 1.2
+
+[node name="Boulder1" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.1789, 0, 5.3987)
+script = ExtResource("sp_2")
+model = ExtResource("sp_57")
+size = 2.4
+collision_fraction = Vector3(0.8, 0.8, 0.8)
+view_distance = 200
+metadata/clear_radius = 1.44
+
+[node name="Boulder2" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.342, 0, 0.9397, 0, 1, 0, -0.9397, 0, 0.342, -116.4025, 0, -7.2327)
+script = ExtResource("sp_2")
+model = ExtResource("sp_57")
+size = 1.9
+collision_fraction = Vector3(0.8, 0.8, 0.8)
+view_distance = 200
+metadata/clear_radius = 1.14
+
+[node name="Boulder3" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.766, 0, 0.6428, 0, 1, 0, -0.6428, 0, -0.766, -107.5975, 0, -12.7673)
+script = ExtResource("sp_2")
+model = ExtResource("sp_57")
+size = 2.6
+collision_fraction = Vector3(0.8, 0.8, 0.8)
+view_distance = 200
+metadata/clear_radius = 1.56
+
+[node name="SpringBoulder1" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(0.9848, 0, 0.1736, 0, 1, 0, -0.1736, 0, 0.9848, -141.5, 0, 41)
+script = ExtResource("sp_2")
+model = ExtResource("sp_57")
+size = 2.6
+collision_fraction = Vector3(0.8, 0.8, 0.8)
+view_distance = 200
+metadata/clear_radius = 1.6
+
+[node name="SpringBoulder2" type="Node3D" parent="StoryPlaces/Forest" groups=["keep_clear"]]
+transform = Transform3D(-0.5, 0, 0.866, 0, 1, 0, -0.866, 0, -0.5, -139, 0, 37.6)
+script = ExtResource("sp_2")
+model = ExtResource("sp_57")
+size = 1.8
+collision_fraction = Vector3(0.8, 0.8, 0.8)
+view_distance = 200
+metadata/clear_radius = 1.2
+
+[node name="Coast" type="Node3D" parent="StoryPlaces"]
+
+[node name="Shipwreck" type="Node3D" parent="StoryPlaces/Coast" groups=["keep_clear"]]
+transform = Transform3D(0.8192, 0, 0.5736, 0, 1, 0, -0.5736, 0, 0.8192, -135, 0, 160)
+script = ExtResource("sp_2")
+model = ExtResource("sp_58")
+size = 13
+collision_fraction = Vector3(0.45, 0.45, 0.8)
+sink = 0.4
+metadata/clear_radius = 7
+
+[node name="KeepersCottage" type="Node3D" parent="StoryPlaces/Coast" groups=["keep_clear"]]
+transform = Transform3D(0.8321, 0, 0.5547, 0, 1, 0, -0.5547, 0, 0.8321, 197.7, 0, -166.1)
+script = ExtResource("sp_2")
+model = ExtResource("sp_59")
+size = 7.2
+fit = 1
+collision_fraction = Vector3(0.75, 1, 0.75)
+metadata/clear_radius = 4
+
+[node name="SeaCave" type="Node3D" parent="StoryPlaces/Coast" groups=["keep_clear"]]
+transform = Transform3D(-0.4657, 0, -0.8849, 0, 1, 0, 0.8849, 0, -0.4657, 184, 0, -70)
+script = ExtResource("sp_2")
+model = ExtResource("sp_60")
+size = 5.2
+fit = 1
+collision_fraction = Vector3(0.9, 0.9, 0.9)
+metadata/clear_radius = 3.5
+
+[node name="CaveCrystals" type="Node3D" parent="StoryPlaces/Coast" groups=["keep_clear"]]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 180.6, 0, -72.2)
+script = ExtResource("sp_2")
+model = ExtResource("sp_61")
+size = 1.5
+fit = 1
+collision_fraction = Vector3(0.6, 1, 0.6)
+metadata/clear_radius = 1
+
+[node name="Rockfall" type="Node3D" parent="StoryPlaces/Coast" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.073, 0, -108.258)
+script = ExtResource("sp_1")
+flag = &"ch4_rockfall_cleared"
+metadata/clear_radius = 18
+
+[node name="BeforeBridge" type="Node3D" parent="StoryPlaces/Coast/Rockfall"]
+script = ExtResource("sp_86")
+part = 1
+
+[node name="AfterBridge" type="Node3D" parent="StoryPlaces/Coast/Rockfall"]
+script = ExtResource("sp_86")
+
+[node name="Scree" type="Node3D" parent="StoryPlaces/Coast/Rockfall"]
+script = ExtResource("sp_86")
+part = 2
+
+[node name="IsleRocks" type="Node3D" parent="StoryPlaces/Coast"]
+script = ExtResource("sp_87")
+
+[node name="BeachJetty" type="Node3D" parent="StoryPlaces/Coast"]
+
+[node name="Jetty" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"] instance=ExtResource("sp_63")]
+transform = Transform3D(-0.8924, 0, 0.4512, 0, 1, 0, -0.4512, 0, -0.8924, -82.5183, 1.2, 173.0917)
+metadata/clear_radius = 6
+
+[node name="ArrivalPoint" type="Marker3D" parent="StoryPlaces/Coast/BeachJetty"]
+transform = Transform3D(0.8924, 0, -0.4512, 0, 1, 0, 0.4512, 0, 0.8924, -87.4817, 1.2, 182.9083)
+
+[node name="MailBoat" type="Node3D" parent="StoryPlaces/Coast/BeachJetty"]
+transform = Transform3D(0.8924, 0, -0.4512, 0, 1, 0, 0.4512, 0, 0.8924, -94.1036, 0, 183.5941)
+
+[node name="Model" type="Node3D" parent="StoryPlaces/Coast/BeachJetty/MailBoat"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, -0.85, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_64")
+size = 10
+collision_fraction = Vector3(0.75, 0.3, 0.85)
+snap_to_ground = false
+
+[node name="WelcomeSign" type="Node3D" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"]]
+transform = Transform3D(0.8924, 0, -0.4512, 0, 1, 0, 0.4512, 0, 0.8924, -78.3089, 0, 171.8584)
+script = ExtResource("sp_2")
+model = ExtResource("sp_65")
+size = 2.3
+fit = 1
+collision_fraction = Vector3(0.9, 1, 0.3)
+metadata/clear_radius = 1.5
+
+[node name="Driftwood1" type="Node3D" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"]]
+transform = Transform3D(0.9397, 0, 0.342, 0, 1, 0, -0.342, 0, 0.9397, -86.2935, 0, 167.261)
+script = ExtResource("sp_2")
+model = ExtResource("sp_66")
+size = 2.6
+collision = 0
+view_distance = 120
+metadata/clear_radius = 1.2
+
+[node name="Driftwood2" type="Node3D" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"]]
+transform = Transform3D(-0.342, 0, 0.9397, 0, 1, 0, -0.9397, 0, -0.342, -73.1379, 0, 175.5935)
+script = ExtResource("sp_2")
+model = ExtResource("sp_66")
+size = 2
+collision = 0
+view_distance = 120
+metadata/clear_radius = 1.2
+
+[node name="Driftwood3" type="Node3D" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"]]
+transform = Transform3D(0.5, 0, -0.866, 0, 1, 0, 0.866, 0, 0.5, -67.1016, 0, 175.8442)
+script = ExtResource("sp_2")
+model = ExtResource("sp_66")
+size = 2.4
+collision = 0
+view_distance = 120
+metadata/clear_radius = 1.2
+
+[node name="Seagulls" type="Node3D" parent="StoryPlaces/Coast"]
+
+[node name="Gull1" parent="StoryPlaces/Coast/Seagulls" instance=ExtResource("sp_67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92, 13, 182)
+radius = 12
+speed_degrees = 9
+start_degrees = 0
+
+[node name="Gull2" parent="StoryPlaces/Coast/Seagulls" instance=ExtResource("sp_67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86, 16, 190)
+radius = 17
+speed_degrees = -7
+start_degrees = 120
+
+[node name="Gull3" parent="StoryPlaces/Coast/Seagulls" instance=ExtResource("sp_67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 11, 176)
+radius = 9
+speed_degrees = 11
+start_degrees = 240
+
+[node name="Gull4" parent="StoryPlaces/Coast/Seagulls" instance=ExtResource("sp_67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172, 42, -92)
+radius = 14
+speed_degrees = -8
+start_degrees = 60
+
+[node name="Gull5" parent="StoryPlaces/Coast/Seagulls" instance=ExtResource("sp_67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 176, 36, -86)
+radius = 20
+speed_degrees = 6
+start_degrees = 200
+
+[node name="Hills" type="Node3D" parent="StoryPlaces"]
+
+[node name="WatchtowerRuins" type="Node3D" parent="StoryPlaces/Hills" groups=["keep_clear"]]
+transform = Transform3D(0.9778, 0, 0.2095, 0, 1, 0, -0.2095, 0, 0.9778, -20, 0, -125)
+script = ExtResource("sp_2")
+model = ExtResource("sp_68")
+size = 9
+fit = 1
+collision_fraction = Vector3(0.7, 1, 0.7)
+metadata/clear_radius = 4.5
+
+[node name="Gathering" type="Node3D" parent="StoryPlaces"]
+
+[node name="WoodSpots" type="Node3D" parent="StoryPlaces/Gathering"]
+script = ExtResource("sp_69")
+item_id = &"wood"
+verb_text = "Gather"
+count = 22
+areas = Array[Vector3]([Vector3(-112, -18, 72), Vector3(-45, 68, 26), Vector3(55, 62, 22), Vector3(-62, 140, 22), Vector3(40, 150, 20)])
+models = Array[PackedScene]([ExtResource("sp_55")])
+size_range = Vector2(1.8, 2.4)
+amount_min = 2
+amount_max = 3
+regrow_days = 2
+random_seed = 7101
+min_spacing = 9
+
+[node name="StoneSpots" type="Node3D" parent="StoryPlaces/Gathering"]
+script = ExtResource("sp_69")
+item_id = &"stone"
+verb_text = "Gather"
+count = 18
+areas = Array[Vector3]([Vector3(-20, -122, 55), Vector3(118, -58, 30), Vector3(-122, -62, 30), Vector3(-108, 160, 24)])
+models = Array[PackedScene]([ExtResource("sp_57")])
+size_range = Vector2(1, 1.5)
+amount_min = 1
+amount_max = 2
+regrow_days = 3
+random_seed = 7202
+min_spacing = 9
+
+[node name="Sawhorse" type="Node3D" parent="StoryPlaces/Gathering" groups=["keep_clear"]]
+transform = Transform3D(0.9659, 0, 0.2588, 0, 1, 0, -0.2588, 0, 0.9659, -23.5, 0, 109.5)
+script = ExtResource("sp_10")
+metadata/clear_radius = 1.8
+
+[node name="Model" type="Node3D" parent="StoryPlaces/Gathering/Sawhorse"]
+script = ExtResource("sp_70")
+
+[node name="Saw" type="Area3D" parent="StoryPlaces/Gathering/Sawhorse"]
+script = ExtResource("sp_71")
+interaction_id = &"cottage_sawhorse"
+missing_message = "You need 2 wood to saw a plank. Fallen branches lie around Fernwood Forest and the meadows near the village."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Gathering/Sawhorse/Saw"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("SpSphere_9")
+
+[node name="Story" type="Node3D" parent="StoryPlaces"]
+
+[node name="JournalPage2" parent="StoryPlaces/Story" instance=ExtResource("sp_72")]
+transform = Transform3D(-0.0698, 0, 0.9976, 0, 1, 0, -0.9976, 0, -0.0698, 107.2, 0, 65.6)
+height_offset = 0
+
+[node name="Page" parent="StoryPlaces/Story/JournalPage2"]
+page = 2
+text = "Five stones, five places. The first one kept the mill turning."
+
+[node name="JournalPage3" parent="StoryPlaces/Story" instance=ExtResource("sp_72")]
+transform = Transform3D(-0.7771, 0, 0.6293, 0, 1, 0, -0.6293, 0, -0.7771, -105, 0, -45)
+height_offset = 0
+
+[node name="Page" parent="StoryPlaces/Story/JournalPage3"]
+page = 3
+text = "The ring only shows itself to those who wander at night. So did I, once, with your grandmother."
+
+[node name="JournalPage4" parent="StoryPlaces/Story" instance=ExtResource("sp_72")]
+transform = Transform3D(-0.9903, 0, -0.1392, 0, 1, 0, 0.1392, 0, -0.9903, -127.2, 0, -27)
+height_offset = 0
+
+[node name="Page" parent="StoryPlaces/Story/JournalPage4"]
+page = 4
+text = "This oak was planted the year the lighthouse was built. When it sleeps, the whole forest sleeps with it."
+
+[node name="JournalPage7" parent="StoryPlaces/Story" instance=ExtResource("sp_72")]
+transform = Transform3D(0.8572, 0, -0.515, 0, 1, 0, 0.515, 0, 0.8572, 182.4, 0, -71)
+height_offset = 0
+
+[node name="Page" parent="StoryPlaces/Story/JournalPage7"]
+page = 7
+text = "The tide keeps its secrets until morning. Come early, little one."
+
+[node name="LensRepairBase" type="Node3D" parent="StoryPlaces/Coast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 204.4, 0, -165.5)
+script = ExtResource("sp_10")
+
+[node name="Repair" type="Area3D" parent="StoryPlaces/Coast/LensRepairBase"]
+script = ExtResource("sp_11")
+interaction_id = &"lighthouse_lens"
+building = ExtResource("sp_73")
+model_path = NodePath("")
+footprint = Vector2(2.0, 2.0)
+requires_flag = &"journal_page_9"
+locked_message = "The lighthouse lens is cracked right through. Luna says it once held five glowing stones."
+shopping_hint = "Luna and Theo will do the rest."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Coast/LensRepairBase/Repair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_10")
+
+[node name="LighthouseLights" type="Node" parent="StoryPlaces/Coast"]
+script = ExtResource("sp_15")
+after_flag = &"restored_lighthouse"
+sets_flag = &"lighthouse_lit"
+at_hour = 19
+message = "Night falls, and for the first time in fifteen years the lighthouse shines! Its beam sweeps across the sea... and deep in Moonlit Lake, something answers with a glow."
+
+[node name="Moonwell" type="OmniLight3D" parent="StoryPlaces/Lake"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.8, -3.5)
+script = ExtResource("sp_74")
+omni_range = 28.0
+shadow_enabled = false
+
+[node name="DockLanding" type="Marker3D" parent="StoryPlaces/Lake"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 11.2, 3.9, 50.5)
+
+[node name="IsleLanding" type="Marker3D" parent="StoryPlaces/Lake"]
+transform = Transform3D(0.509, 0, 0.8607, 0, 1, 0, -0.8607, 0, 0.509, -3.6, 3.85, 4.6)
+
+[node name="RowToIsle" type="Area3D" parent="StoryPlaces/Lake"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.9, 4.6, 50.5)
+script = ExtResource("sp_75")
+interaction_id = &"row_to_isle"
+prompt_text = "Row to the little isle"
+destination = NodePath("../IsleLanding")
+fade_seconds = 0.6
+requires_flag = &"lighthouse_lit"
+locked_message = "Oliver's little rowboat bobs by the dock. The isle in the middle of the lake looks peaceful... maybe one day there'll be a reason to row out there."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Lake/RowToIsle"]
+shape = SubResource("SpSphere_11")
+
+[node name="IsleDock" type="Node3D" parent="StoryPlaces/Lake"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4, 0, 4.9)
+script = ExtResource("sp_10")
+
+[node name="RowBack" type="Area3D" parent="StoryPlaces/Lake/IsleDock"]
+script = ExtResource("sp_75")
+interaction_id = &"row_back_to_dock"
+prompt_text = "Row back to the dock"
+destination = NodePath("../../DockLanding")
+fade_seconds = 0.6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Lake/IsleDock/RowBack"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_12")
+
+[node name="Boat" type="Node3D" parent="StoryPlaces/Lake/IsleDock"]
+transform = Transform3D(-0.866, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866, 0.9, -0.45, 0.6)
+script = ExtResource("sp_2")
+model = ExtResource("sp_76")
+size = 3.3
+collision = 0
+snap_to_ground = false
+
+[node name="IslePage" type="Node3D" parent="StoryPlaces/Lake" groups=["keep_clear"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7, 0, 3.5)
+script = ExtResource("sp_1")
+flag = &"lighthouse_lit"
+metadata/clear_radius = 0.6
+
+[node name="After" parent="StoryPlaces/Lake/IslePage" instance=ExtResource("sp_72")]
+
+[node name="Page" parent="StoryPlaces/Lake/IslePage/After"]
+page = 10
+text = "My dear grandchild, if you are reading this, the light is shining again, and you did it. The Moonwell was never really magic. It was always us: caring for this place, and for each other. The island is yours now. Look after it, and let it look after you. With all my love, Grandpa Elias."
+
+[node name="FinaleTrigger" type="Node" parent="StoryPlaces/Lake"]
+script = ExtResource("sp_77")
+page_path = NodePath("../IslePage/After/Page")
+
+[node name="Page9" type="Area3D" parent="StoryPlaces/Story"]
+script = ExtResource("sp_78")
+interaction_id = &"journal_page_9"
+page = 9
+text = "Five stones, one lens, and a keeper to tend it. When the light shines again, row out to my little isle in the lake. I left you something under my tree."
+
+[node name="LedgerPage5" type="Area3D" parent="StoryPlaces/Story"]
+script = ExtResource("sp_78")
+interaction_id = &"journal_page_5"
+page = 5
+text = "Fish from Oliver, roots from the fields, flowers from the meadow. Stalls by the well, lamps on every path."
+
+[node name="LedgerPage6" type="Area3D" parent="StoryPlaces/Story"]
+script = ExtResource("sp_78")
+interaction_id = &"journal_page_6"
+page = 6
+text = "When the stalls are mended and full, the island will remember how to gather."
+
+[node name="BeforeClearSpot" type="Node3D" parent="StoryPlaces/Coast/Rockfall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29, 0, 2.71)
+script = ExtResource("sp_10")
+
+[node name="Clear" type="Area3D" parent="StoryPlaces/Coast/Rockfall/BeforeClearSpot"]
+script = ExtResource("sp_40")
+interaction_id = &"ch4_rockfall_cleared"
+prompt_text = "Mend the cliff bridge with Theo"
+requires_flag = &"shard_3"
+locked_message = "In the great storm the cliff by the bridge gave way, and the falling rocks smashed Grandpa's footbridge to Lighthouse Isle. Far too much to mend alone... Theo might help."
+sets_flag = &"ch4_rockfall_cleared"
+work_minutes = 120
+done_message = "Theo arrives with a crowbar, rope and a cart of timber. You lever the fallen boulders into the sea, then lay new planks across to Lighthouse Isle. The way to the lighthouse is open!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Coast/Rockfall/BeforeClearSpot/Clear"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_13")
+
+[node name="TidePool" type="MeshInstance3D" parent="StoryPlaces/Coast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 181, 0, -71.4)
+script = ExtResource("sp_80")
+water_material = ExtResource("sp_45")
+radius = 2.9
+
+[node name="CaveShard" type="Node3D" parent="StoryPlaces/Coast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 182.9, 0, -70.7)
+script = ExtResource("sp_10")
+
+[node name="Pickup" type="Area3D" parent="StoryPlaces/Coast/CaveShard"]
+script = ExtResource("sp_13")
+interaction_id = &"sea_cave_shard"
+prompt_text = "Reach into the crystal pool"
+items = {"glowstone_shard": 1}
+sets_flag = &"shard_4"
+requires_flag = &"ch4_rockfall_cleared"
+locked_message = "Something glows deep in the sea cave, but the way along the coast path is blocked by fallen rocks."
+open_from_hour = 6
+open_to_hour = 10
+closed_message = "The tide is in and the cave mouth is flooded. Luna said the tide pools empty in the morning (6–10 AM)."
+message = "At low tide the cave floor is dry, and in a little crystal pool lies a glowing stone: Glowstone shard 4!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Coast/CaveShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_14")
+
+[node name="Shard" type="Node3D" parent="StoryPlaces/Coast/CaveShard/Pickup"]
+transform = Transform3D(0.9659, 0, 0.2588, 0, 1, 0, -0.2588, 0, 0.9659, 0, 0.05, 0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_14")
+size = 0.6
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="Glow" type="OmniLight3D" parent="StoryPlaces/Coast/CaveShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+light_color = Color(0.55, 0.8, 1, 1)
+light_energy = 1.6
+omni_range = 4.5
+
+[node name="MessageBottle" parent="StoryPlaces/Story" instance=ExtResource("sp_81")]
+transform = Transform3D(0.5, 0, 0.866, 0, 1, 0, -0.866, 0, 0.5, -118, 0, 171)
+
+[node name="Page" parent="StoryPlaces/Story/MessageBottle"]
+page = 8
+text = "To whoever finds this: the key to the captain's chest is tied inside. The fifth stone went down with the old ship. Look in the chest. - E."
+
+[node name="CaptainsChest" type="Node3D" parent="StoryPlaces/Coast" groups=["keep_clear"]]
+transform = Transform3D(-0.5547, 0, -0.8321, 0, 1, 0, 0.8321, 0, -0.5547, -129, 0, 164)
+script = ExtResource("sp_2")
+model = ExtResource("sp_82")
+size = 1.2
+collision_fraction = Vector3(0.9, 0.8, 0.9)
+metadata/clear_radius = 1.4
+
+[node name="ChestShard" type="Node3D" parent="StoryPlaces/Coast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -129, 0, 164)
+script = ExtResource("sp_10")
+
+[node name="Pickup" type="Area3D" parent="StoryPlaces/Coast/ChestShard"]
+script = ExtResource("sp_13")
+interaction_id = &"captains_chest_shard"
+prompt_text = "Open the captain's chest"
+items = {"glowstone_shard": 1}
+sets_flag = &"shard_5"
+requires_flag = &"journal_page_8"
+hide_when_taken = Array[NodePath]([NodePath("Glow")])
+locked_message = "A heavy sea chest from the old ship, locked tight. Maybe the key washed up somewhere along the beach."
+message = "The old key turns with a clunk. Under a folded sail, wrapped in Grandpa's handkerchief: Glowstone shard 5!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Coast/ChestShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SpSphere_15")
+
+[node name="Glow" type="OmniLight3D" parent="StoryPlaces/Coast/ChestShard/Pickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+light_color = Color(0.55, 0.8, 1, 1)
+light_energy = 0.9
+omni_range = 3.0
+
+[node name="CaptainMarlow" parent="StoryPlaces/Coast/BeachJetty" instance=ExtResource("sp_83")]
+data = ExtResource("sp_84")
+
+[node name="ExtraBedsSouth" type="Node3D" parent="Buildings/FarmField"]
+script = ExtResource("sp_1")
+flag = &"bought_farm_beds_1"
+
+[node name="AfterPlot13" parent="Buildings/FarmField/ExtraBedsSouth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, -3.0, 0, 6.0)
+interaction_id = &"farm_plot_13"
+
+[node name="AfterPlot14" parent="Buildings/FarmField/ExtraBedsSouth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, 0.6, 0, 6.0)
+interaction_id = &"farm_plot_14"
+
+[node name="AfterPlot15" parent="Buildings/FarmField/ExtraBedsSouth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, 4.2, 0, 6.0)
+interaction_id = &"farm_plot_15"
+
+[node name="AfterPlot16" parent="Buildings/FarmField/ExtraBedsSouth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, 7.8, 0, 6.0)
+interaction_id = &"farm_plot_16"
+
+[node name="ExtraBedsNorth" type="Node3D" parent="Buildings/FarmField"]
+script = ExtResource("sp_1")
+flag = &"bought_farm_beds_2"
+
+[node name="AfterPlot17" parent="Buildings/FarmField/ExtraBedsNorth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, -3.0, 0, -8.4)
+interaction_id = &"farm_plot_17"
+
+[node name="AfterPlot18" parent="Buildings/FarmField/ExtraBedsNorth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, 0.6, 0, -8.4)
+interaction_id = &"farm_plot_18"
+
+[node name="AfterPlot19" parent="Buildings/FarmField/ExtraBedsNorth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, 4.2, 0, -8.4)
+interaction_id = &"farm_plot_19"
+
+[node name="AfterPlot20" parent="Buildings/FarmField/ExtraBedsNorth" instance=ExtResource("25_farm_plot")]
+transform = Transform3D(1, 0, -0.0000, 0, 1, 0, -0.0000, 0, 1, 7.8, 0, -8.4)
+interaction_id = &"farm_plot_20"
+
+[node name="UpgradeFlowers" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_village_flowers"
+
+[node name="AfterFlowers1" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.2675, 0, 0.9636, 0, 1, 0, -0.9636, 0, 0.2675, 14.5, 0, 114.2)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.5
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers2" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.8569, 0, 0.5155, 0, 1, 0, -0.5155, 0, -0.8569, 14.5, 0, 115.8)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.3
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers3" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.7259, 0, -0.6878, 0, 1, 0, 0.6878, 0, -0.7259, 15.1, 0, 115.0)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.1
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers4" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.4685, 0, -0.8835, 0, 1, 0, 0.8835, 0, 0.4685, -6.61, 0, 128.0)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.5
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers5" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.9766, 0, 0.2151, 0, 1, 0, -0.2151, 0, 0.9766, -7.99, 0, 127.2)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.3
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers6" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.0540, 0, 0.9985, 0, 1, 0, -0.9985, 0, 0.0540, -7.6, 0, 128.12)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.1
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers7" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.9477, 0, 0.3191, 0, 1, 0, -0.3191, 0, -0.9477, -13.79, 0, 119.57)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.5
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers8" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.5610, 0, -0.8278, 0, 1, 0, 0.8278, 0, -0.5610, -14.21, 0, 118.03)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.3
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers9" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.6476, 0, -0.7620, 0, 1, 0, 0.7620, 0, 0.6476, -14.58, 0, 118.96)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.1
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers10" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.9074, 0, 0.4202, 0, 1, 0, -0.4202, 0, 0.9074, -14.21, 0, 111.97)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.5
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers11" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.1621, 0, 0.9868, 0, 1, 0, -0.9868, 0, -0.1621, -13.79, 0, 110.43)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.3
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers12" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.9942, 0, 0.1078, 0, 1, 0, -0.1078, 0, -0.9942, -14.58, 0, 111.04)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.1
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers13" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.3698, 0, -0.9291, 0, 1, 0, 0.9291, 0, -0.3698, -7.89, 0, 102.8)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.5
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers14" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.7964, 0, -0.6048, 0, 1, 0, 0.6048, 0, 0.7964, -6.51, 0, 102.0)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.3
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers15" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(0.7958, 0, 0.6055, 0, 1, 0, -0.6055, 0, 0.7958, -7.5, 0, 101.88)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.1
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers16" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.3706, 0, 0.9288, 0, 1, 0, -0.9288, 0, -0.3706, 12.2, 0, 107.01)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.5
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers17" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.9941, 0, -0.1086, 0, 1, 0, 0.1086, 0, -0.9941, 13.0, 0, 108.39)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.3
+collision = 0
+view_distance = 140.0
+
+[node name="AfterFlowers18" type="Node3D" parent="StoryPlaces/Village/UpgradeFlowers"]
+transform = Transform3D(-0.1612, 0, -0.9869, 0, 1, 0, 0.9869, 0, -0.1612, 13.12, 0, 107.4)
+script = ExtResource("sp_2")
+model = ExtResource("up_flowers")
+size = 1.1
+collision = 0
+view_distance = 140.0
+
+[node name="UpgradeBenches" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_village_benches"
+
+[node name="AfterBench1" parent="StoryPlaces/Village/UpgradeBenches" instance=ExtResource("20_bench")]
+transform = Transform3D(-1.0000, 0, 0.0000, 0, 1, 0, -0.0000, 0, -1.0000, 0.0, 0, 125.0)
+
+[node name="AfterBench2" parent="StoryPlaces/Village/UpgradeBenches" instance=ExtResource("20_bench")]
+transform = Transform3D(0.9659, 0, 0.2589, 0, 1, 0, -0.2589, 0, 0.9659, -2.6, 0, 105.3)
+
+[node name="AfterBench3" parent="StoryPlaces/Village/UpgradeBenches" instance=ExtResource("20_bench")]
+transform = Transform3D(-0.9907, 0, 0.1360, 0, 1, 0, -0.1360, 0, -0.9907, 3.0, 0, 66.0)
+
+[node name="AfterBench4" parent="StoryPlaces/Village/UpgradeBenches" instance=ExtResource("20_bench")]
+transform = Transform3D(-0.9899, 0, -0.1414, 0, 1, 0, 0.1414, 0, -0.9899, 17.0, 0, 64.0)
+
+[node name="UpgradeLamps" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_village_lamps"
+
+[node name="AfterLamp1" parent="StoryPlaces/Village/UpgradeLamps" instance=ExtResource("13_lantern")]
+transform = Transform3D(1.0000, 0, 0.0000, 0, 1, 0, -0.0000, 0, 1.0000, -24.2, 0, 83.3)
+
+[node name="AfterLamp2" parent="StoryPlaces/Village/UpgradeLamps" instance=ExtResource("13_lantern")]
+transform = Transform3D(0.6216, 0, 0.7833, 0, 1, 0, -0.7833, 0, 0.6216, -42.7, 0, 79.4)
+
+[node name="AfterLamp3" parent="StoryPlaces/Village/UpgradeLamps" instance=ExtResource("13_lantern")]
+transform = Transform3D(-0.2272, 0, 0.9738, 0, 1, 0, -0.9738, 0, -0.2272, -56.7, 0, 69.4)
+
+[node name="AfterLamp4" parent="StoryPlaces/Village/UpgradeLamps" instance=ExtResource("13_lantern")]
+transform = Transform3D(-0.9041, 0, 0.4274, 0, 1, 0, -0.4274, 0, -0.9041, 42.5, 0, 101.3)
+
+[node name="AfterLamp5" parent="StoryPlaces/Village/UpgradeLamps" instance=ExtResource("13_lantern")]
+transform = Transform3D(-0.8968, 0, -0.4425, 0, 1, 0, 0.4425, 0, -0.8968, 60.0, 0, 93.3)
+
+[node name="AfterLamp6" parent="StoryPlaces/Village/UpgradeLamps" instance=ExtResource("13_lantern")]
+transform = Transform3D(-0.2108, 0, -0.9775, 0, 1, 0, 0.9775, 0, -0.2108, 82.7, 0, 82.3)
+
+[node name="UpgradeBunting" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_village_bunting"
+
+[node name="AfterBunting" type="Node3D" parent="StoryPlaces/Village/UpgradeBunting"]
+script = ExtResource("up_bunting")
+poles = PackedVector3Array(11.0, 0, 115.0, 4.2, 0, 104.8, -4.2, 0, 104.8, -10.2, 0, 110.8, -10.2, 0, 119.2)
+closed_loop = false
+
+[node name="HomeGardenBench" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_home_bench"
+
+[node name="AfterBench" parent="StoryPlaces/Village/HomeGardenBench" instance=ExtResource("20_bench")]
+transform = Transform3D(0.0000, 0, 1.0000, 0, 1, 0, -1.0000, 0, 0.0000, -19.8, 0, 95.2)
+
+[node name="HomeBeehive" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_home_beehive"
+
+[node name="AfterBeehive" type="Node3D" parent="StoryPlaces/Village/HomeBeehive" groups=["keep_clear"]]
+transform = Transform3D(0.8253, 0, 0.5646, 0, 1, 0, -0.5646, 0, 0.8253, -31.0, 0, 107.0)
+script = ExtResource("sp_2")
+model = ExtResource("sp_36")
+size = 1.3
+fit = 1
+metadata/clear_radius = 1.6
+
+[node name="HomeLantern" type="Node3D" parent="StoryPlaces/Village"]
+script = ExtResource("sp_1")
+flag = &"bought_home_lantern"
+
+[node name="AfterLantern" parent="StoryPlaces/Village/HomeLantern" instance=ExtResource("13_lantern")]
+transform = Transform3D(0.9553, 0, 0.2955, 0, 1, 0, -0.2955, 0, 0.9553, -19.2, 0, 103.6)

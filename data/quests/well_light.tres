@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Wait for evening in the village square"
+kind = 0
+target = &"ch3_well_glow"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+text = "Look into the glowing well"
+kind = 0
+target = &"shard_3"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray()
+minutes = 0
+
+[resource]
+script = ExtResource("1_quest")
+id = &"well_light"
+title = "Ch. 3: A Light in the Well"
+giver = "Pip"
+description = "Something about the old village well feels different since Market Day."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 60
+reward_items = {}
+reward_flags = Array[StringName]([])
+reward_friendship = 0
+giver_id = &""
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray()
+complete_message = "Glowstone shard 3! Pip was right: the old well had a secret all along. Chapter 3 complete!"

@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Find 3 of Grandpa's journal pages"
+kind = 7
+target = &"journal_page_"
+amount = 3
+or_event = &""
+items = {}
+lines = PackedStringArray()
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+text = "Tell Mr. Ambrose what you found"
+kind = 4
+target = &"ambrose"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray("Remarkable. His handwriting never improved, but his heart was always in it.", "I'll keep a shelf for his pages. And for you, a small reward from the library fund.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"grandpas_pages"
+title = "Grandpa's Pages"
+giver = "Mr. Ambrose"
+description = "Mr. Ambrose suspects Grandpa's journal pages are scattered across the island."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 80
+reward_items = {}
+reward_flags = Array[StringName]([&"ambrose_pages_done"])
+reward_friendship = 100
+giver_id = &"ambrose"
+offer_hearts = 0
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray("Your grandfather kept a journal, you know. I believe he tucked the pages away in his favourite places.", "Find three of them and come tell me what they say. For the island's records, of course.")
+complete_message = "Grandpa's pages have a home in the library."

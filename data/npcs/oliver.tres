@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/Oliver_character.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_oliver_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_dock_morning"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(11, 0, 61.5)
+facing_degrees = 180.0
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_bench"]
+script = ExtResource("2_entry")
+from_hour = 12
+position = Vector3(-7.619, 0, 62.973)
+facing_degrees = 159.4
+activity = &"sit"
+height_offset = 0.17
+
+[sub_resource type="Resource" id="Entry_dock_evening"]
+script = ExtResource("2_entry")
+from_hour = 17
+position = Vector3(11, 0, 61.5)
+facing_degrees = 180.0
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"oliver"
+display_name = "Oliver"
+role = "Fisherman"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.72
+walk_speed = 1.15
+intro_lines = PackedStringArray("Ah, you must be the one who took over the old cottage. Welcome to the island.", "Your grandfather and I fished this lake every morning, rain or shine.", "He'd want you to have this. My spare rod. It's caught more fish than I can count.", "Press R to take the rod out, then face the water.", "Hold the left mouse button to wind up, and let go to cast.", "When the bobber dips, click to hook the fish.", "Then hold to reel in, and ease off when the line turns red. No rush. The fish aren't going anywhere.")
+intro_needs = &"no_rod"
+intro_action = &"grant_rod"
+intro_action_line = 2
+later_lines = PackedStringArray("Calm water, patient hands. That's all fishing ever was.", "Mackerel bite best in the morning. Your grandpa swore by it.", "Emma at the General Store buys whatever you catch. She pays fair.", "Some nights the middle of the lake glows. Your grandfather never told me why…")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_dock_morning"), SubResource("Entry_bench"), SubResource("Entry_dock_evening")])
+story_lines = {
+&"journal_page_9": PackedStringArray("Go on, then. Luna will know what to do with those stones."),
+&"lighthouse_lit": PackedStringArray("I watched it from the dock last night, sweeping over the water like it used to.", "Your grandpa would've cried. I did, a little. Don't tell anyone.")
+}
+friend_lines = PackedStringArray("You've got your grandpa's patience. I mean that as the highest praise.", "Come sit with me on the bench sometime. The lake's best at noon.", "I kept his old tackle box. Someday I'll give it to you.")
+loved_items = Array[StringName]([&"blue_mackerel", &"sea_bream", &"moonfin_koi", &"fishermans_stew"])
+liked_items = Array[StringName]([&"bread", &"grilled_fish"])
+liked_categories = Array[int]([0])
+disliked_items = Array[StringName]([&"fertilizer"])
+loved_line = "Now that's a beauty! Your grandpa would've hung this one on the wall."
+liked_line = "Ah, thank you. A fisherman never says no to that."
+neutral_line = "Well, that's thoughtful of you. Thanks."
+disliked_line = "Ha! Fertilizer? I'll… give it to Mia, I think."

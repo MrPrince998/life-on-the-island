@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/Mia_character.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_mia_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_plant"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(115.6, 0, 73.8)
+facing_degrees = 180.0
+activity = &"plant"
+via = PackedVector3Array(109, 0, 74.6)
+
+[sub_resource type="Resource" id="Entry_water"]
+script = ExtResource("2_entry")
+from_hour = 11
+position = Vector3(121, 0, 68.8)
+facing_degrees = 90.0
+activity = &"water"
+via = PackedVector3Array(121, 0, 74.6)
+
+[sub_resource type="Resource" id="Entry_rest"]
+script = ExtResource("2_entry")
+from_hour = 15
+position = Vector3(109, 0, 70)
+facing_degrees = 90.0
+activity = &"idle"
+via = PackedVector3Array(121, 0, 70.6, 109, 0, 70.6)
+
+[resource]
+script = ExtResource("1_data")
+id = &"mia"
+display_name = "Mia"
+role = "Farmer"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.7
+walk_speed = 1.3
+intro_lines = PackedStringArray("Oh, hello! You must be the new neighbour. I'm Mia. I look after the fields.", "Nothing here ever wilts if you forget about it. Plants just wait for you, like good friends.", "Emma's store sells seeds. Turnips are the easiest to start with!")
+later_lines = PackedStringArray("Water your beds and they'll keep growing. Forget, and they simply wait for you.", "The bees used to love these fields. I think they'll come back if we plant enough flowers.", "Morning? Afternoon? Out here I lose track. The plants don't mind.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_plant"), SubResource("Entry_water"), SubResource("Entry_rest")])
+friend_lines = PackedStringArray("The fields feel less lonely with you around.", "If we plant enough flowers, the bees will come back. I just know it.", "Your grandpa taught me to graft apple trees. Want me to show you someday?")
+loved_items = Array[StringName]([&"sunflower", &"carrot", &"sunflower_seeds", &"sunflower_loaf", &"roasted_carrots"])
+liked_items = Array[StringName]([&"turnip", &"turnip_seeds", &"carrot_seeds", &"fertilizer"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([&"silver_minnow"])
+loved_line = "Oh, I love these! You've got a real green thumb."
+liked_line = "Perfect, I can always use these on the farm. Thank you!"
+neutral_line = "Aw, thank you! That's sweet of you."
+disliked_line = "A… fish? That's very kind. I'll find it a nice home. Somewhere."
+story_lines = {
+&"met_mia": PackedStringArray("See the old windmill up on the rise? It used to grind flour for the whole village. Your grandpa and I always said we'd fix it.", "But first, brambles have swallowed the farm path. Meet me there and we'll clear them together!"),
+&"ch1_hedge_cleared": PackedStringArray("The path's open again. Thank you!", "Could you help me in the fields? Harvest a few crops with me. The soil's happiest when someone's tending it.", "And the windmill needs 10 planks, 5 stones and 180 coins for new gears. Emma sells planks and stone at the store."),
+&"restored_windmill": PackedStringArray("It's turning! It's really turning!", "Did you see something glowing by the door? Grandpa always said the mill had a heart. Go and look!"),
+&"shard_1": PackedStringArray("A Glowstone... so his stories were true.", "Now that the mill turns, let's plant Grandpa's orchard. I've kept saplings in the barn for years. Meet me by the old stumps east of the greenhouse!"),
+&"ch1_orchard_planted": PackedStringArray("Butterflies! I haven't seen this many since I was little.", "Thank you for helping. The fields feel alive again.")
+}

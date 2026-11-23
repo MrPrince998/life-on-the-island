@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FishData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_fish"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/blue_mackerel.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_fish")
+id = &"blue_mackerel"
+display_name = "Blue Mackerel"
+description = "Striped like ocean waves, it runs fast and pulls hard. Most active in the morning."
+rarity = 1
+water_ids = PackedStringArray("sea")
+start_hour = 5
+end_hour = 13
+weight = 25.0
+difficulty = 0.6
+min_size_cm = 25.0
+max_size_cm = 45.0
+sell_price = 20
+ui_color = Color(0.3, 0.55, 0.85, 1)
+model = ExtResource("2_model")
+model_yaw_degrees = 90.0

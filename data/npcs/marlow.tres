@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_captain_marlow.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_marlow_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 0
+position = Vector3(-90.7155, 0, 185.9796)
+facing_degrees = 153.178
+activity = &"idle"
+height_offset = 4.73
+
+[resource]
+script = ExtResource("1_data")
+id = &"marlow"
+display_name = "Captain Marlow"
+role = "Mail-boat captain"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.78
+walk_speed = 1.1
+intro_lines = PackedStringArray("Ahoy there! Glad to see you've found your land legs.", "Captain Marlow, mail boat. I bring letters, parcels and the odd passenger.", "With the lighthouse dark, I don't come round as often as I used to. These waters are tricky at night.")
+later_lines = PackedStringArray("Wind's fair today. Good day for the sea.", "If that lighthouse ever shines again, I'll stop here every week. You have my word.", "Your grandfather sent more letters than anyone on the island. Long ones, too.", "Mind the gulls. They'll steal anything that isn't nailed down.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0")])
+friend_lines = PackedStringArray("You've made this old island feel like a harbour again.", "When the lighthouse shines, I'll bring you something special from the mainland.")
+loved_items = Array[StringName]([&"blue_mackerel", &"azure_manta", &"fishermans_stew"])
+liked_items = Array[StringName]([&"bread", &"grilled_fish"])
+liked_categories = Array[int]([0])
+disliked_items = Array[StringName]([])
+loved_line = "Now there's a proper sea fish! Thank you, sailor."
+liked_line = "Much obliged!"
+neutral_line = "Thank you kindly."
+disliked_line = "Not much use at sea, but thank you."

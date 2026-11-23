@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"sunflower_loaf"
+ingredients = {"bread": 1, "sunflower": 1}
+result_item = &"sunflower_loaf"
+result_amount = 1
+minutes = 40
+requires_flag = &"hearts_mia_2"
+unlock_hint = "Mia bakes this. Become good friends with her (2 hearts) and she'll share it."

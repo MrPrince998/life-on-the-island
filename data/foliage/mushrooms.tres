@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FoliageLayer" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/foliage_layer.gd" id="1_layer"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/mushroom.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_layer")
+id = &"mushrooms"
+model = ExtResource("2_model")
+count = 90
+scale_range = Vector2(0.35, 0.7)
+spacing = 2.5
+forest = 0.6
+hills = 0.15
+align_to_ground = true
+cast_shadows = false
+tint_variation = 0.08
+sink = 0.03
+visibility_range = 60.0
+wind_strength = 0.0

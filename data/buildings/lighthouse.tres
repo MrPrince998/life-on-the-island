@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/building_data.gd" id="1_building"]
+
+[resource]
+script = ExtResource("1_building")
+id = &"lighthouse"
+display_name = "Lighthouse Lens"
+description = "The great lens at the top of the lighthouse, cracked in the storm. The five Glowstones belong in it."
+cost_coins = 0
+materials = {"glowstone_shard": 5, "stone": 5, "wooden_plank": 5}
+work_minutes = 1440
+restored_message = "Luna, Theo and you work through a whole day and night: a new frame of wood, a base of stone, and the five Glowstones set into the lens. \"Tonight,\" Luna whispers, \"we light it.\""

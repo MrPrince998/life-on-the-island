@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"tomato_seeds"
+display_name = "Tomato Seeds"
+description = "Sun-loving vines for summer beds. Three plump tomatoes each."
+category = 1
+buy_price = 35
+sell_price = 14
+max_stack = 99
+unique = false
+

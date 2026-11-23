@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"home_bench"
+display_name = "Garden Bench"
+description = "A wooden bench in the cottage garden, for sitting with a cup of tea at dusk."
+category = 1
+price = 180
+requires_upgrade = &""
+requires_flag = &""
+requires_text = ""
+bought_message = "Theo sets a wooden bench in your garden, facing the lane."

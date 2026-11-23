@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Catch 5 different kinds of fish"
+kind = 6
+target = &""
+amount = 5
+or_event = &""
+items = {}
+lines = PackedStringArray()
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+text = "Tell Oliver about your catches"
+kind = 4
+target = &"oliver"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray("Five kinds! Now that's a proper fisher's tale.", "Here, Grandpa's old boathouse is yours to use now. I fixed it up while you were out on the water.")
+
+[resource]
+script = ExtResource("1_quest")
+id = &"fish_tales"
+title = "Fish Tales"
+giver = "Oliver"
+description = "Oliver wants to hear about the fish of the island, the way Grandpa used to tell them."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2")])
+starts_active = false
+start_flag = &""
+next_quest = &""
+reward_coins = 60
+reward_items = {}
+reward_flags = Array[StringName]([&"oliver_fish_tales_done", &"restored_boathouse"])
+reward_friendship = 100
+giver_id = &"oliver"
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &"has_fishing_rod"
+offer_lines = PackedStringArray("You know, your grandpa and I had a game. Whoever caught the most kinds of fish bought the tea.", "Catch five different kinds and come tell me about them. I'll put the kettle on.")
+complete_message = "The old boathouse by the lake is fixed up again."

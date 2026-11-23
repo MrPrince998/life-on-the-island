@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FishData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/fish_data.gd" id="1_fish"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/Azure_manta.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_fish")
+id = &"azure_manta"
+display_name = "Azure Manta"
+description = "A gentle giant that glides through the open sea like a kite. Its wings shimmer azure in the sun. Few anglers have ever landed one."
+rarity = 2
+water_ids = PackedStringArray("sea")
+start_hour = 0
+end_hour = 24
+weight = 6.0
+difficulty = 0.78
+min_size_cm = 90.0
+max_size_cm = 170.0
+sell_price = 100
+ui_color = Color(0.45, 0.65, 1, 1)
+model = ExtResource("2_model")
+model_yaw_degrees = 0.0

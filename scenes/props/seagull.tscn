@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/glide_circle.gd" id="1_glide"]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="2_fitted"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/seagull.glb" id="3_model"]
+
+[node name="Seagull" type="Node3D"]
+script = ExtResource("1_glide")
+
+[node name="Model" type="Node3D" parent="."]
+script = ExtResource("2_fitted")
+model = ExtResource("3_model")
+size = 1.0
+collision = 0
+snap_to_ground = false
+view_distance = 260.0

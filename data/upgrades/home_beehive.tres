@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"home_beehive"
+display_name = "Garden Beehive"
+description = "A beehive for the cottage garden. The bees will love the island's flowers."
+category = 1
+price = 250
+requires_upgrade = &""
+requires_flag = &""
+requires_text = ""
+bought_message = "Mia helps you settle a beehive in the cottage garden. The bees are already busy."

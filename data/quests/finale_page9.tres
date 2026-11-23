@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_data.gd" id="1_quest"]
+[ext_resource type="Script" path="res://scripts/resources/quest_step.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+text = "Visit Oliver at the fishing dock"
+kind = 4
+target = &"oliver"
+amount = 1
+or_event = &""
+items = {}
+lines = PackedStringArray("You've found all five, haven't you? I can see it in your face. Same look your grandpa used to get.", "Years ago he gave me this page. \"Keep it until they have all five,\" he said. \"They'll know what to do.\"", "Here. Page nine. I never read it... well. Maybe once.")
+minutes = 0
+
+[resource]
+script = ExtResource("1_quest")
+id = &"finale_page9"
+title = "Finale: The Moonwell"
+giver = "Oliver"
+description = "With all five Glowstones found, Oliver has something Grandpa asked him to keep."
+steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
+starts_active = false
+start_flag = &"shard_5"
+next_quest = &"finale_lens"
+reward_coins = 0
+reward_items = {}
+reward_flags = Array[StringName]([&"journal_page_9"])
+reward_friendship = 0
+giver_id = &""
+offer_hearts = 1
+requires_quest = &""
+requires_flag = &""
+offer_lines = PackedStringArray()
+complete_message = "Oliver gave you Grandpa's journal page 9."

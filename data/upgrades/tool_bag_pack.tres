@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="1_up"]
+
+[resource]
+script = ExtResource("1_up")
+id = &"tool_bag_pack"
+display_name = "Traveller's Pack"
+description = "A big pack with straps and pockets everywhere: 6 more slots again."
+category = 0
+price = 1000
+requires_upgrade = &"tool_bag_satchel"
+requires_flag = &""
+requires_text = ""
+bought_message = "The traveller's pack fits like it was made for you. Six more slots!"

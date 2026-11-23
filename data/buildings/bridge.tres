@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/building_data.gd" id="1_building"]
+
+[resource]
+script = ExtResource("1_building")
+id = &"bridge"
+display_name = "Willow Creek Bridge"
+description = "Grandpa's favourite bridge, broken in the middle since the great storm. Theo knows how to rebuild it."
+cost_coins = 0
+materials = {"stone": 10, "wooden_plank": 15}
+work_minutes = 180
+restored_message = "Stone by stone, plank by plank, you and Theo rebuild the old bridge. \"Your grandpa would be proud,\" Theo says quietly. His workshop across the creek is open again!"
