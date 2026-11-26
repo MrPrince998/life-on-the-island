@@ -15,7 +15,12 @@ extends Node
 ## a sound each time the work swing lands: snapping branches, a chisel on stone, a
 ## brush of leaves, a hammer.
 ##
-## Lives on the player as "ActionSounds", listening to the Fishing and Farming nodes.
+## Shipping: packing an order (twine, the lid, nail taps), lifting a crate, setting it
+## down (a hollow knock on planks, a duller thump on grass, a rattle on the cart), the
+## cart's handles creaking as you take them, and its wheels rumbling over the path or
+## drumming on jetty planks, as loud and quick as you push it.
+##
+## Lives on the player as "ActionSounds", listening to the Fishing, Farming and Carry nodes.
 ## It only listens and plays: it never changes the clock or the game.
 
 signal played(sound: StringName)
@@ -28,6 +33,8 @@ const DB := {
 	&"dig": -6.0, &"plant": -9.0, &"fertilize": -10.0, &"harvest": -7.0,
 	&"harvest_jingle": -12.0, &"seed_rattle": -12.0,
 	&"work_hammer": -8.0, &"work_wood": -8.0, &"work_stone": -9.0, &"work_brush": -9.0,
+	&"crate_lift": -10.0, &"crate_set_wood": -8.0, &"crate_set_soft": -9.0,
+	&"crate_on_cart": -8.0, &"cart_grab": -11.0, &"cart_release": -10.0, &"pack_crate": -9.0,
 }
 ## The work sounds live with the story sounds.
 const WORK_DIR := "res://assets/audio/story/"
@@ -43,6 +50,9 @@ const CLICKS_PER_TURN := 6.0
 const STRAIN_FROM := 0.72
 const POUR_DB := -11.0
 const STRAIN_DB := -13.0
+const CART_DB := -12.0
+## Cart speed (m/s) at which the wheels sound as recorded (a normal push).
+const CART_FULL_SPEED := 1.45
 
 ## How many reel clicks have played (for checks).
 var click_count: int = 0
@@ -68,6 +78,17 @@ var _strain_level: float = 0.0
 var _interaction: PlayerInteraction
 var _last_target: Interactable
 var _swing_pos: float = -1.0
+var _carry: PlayerCarry
+var _held: ShippingCrate
+var _cart: HandCart
+var _cart_last_pos: Vector3
+var _cart_speed: float = 0.0
+var _roll_level: float = 0.0
+var _wood_mix: float = 0.0
+var _surface_timer: float = 0.0
+var _on_wood: bool = false
+var _roll: AudioStreamPlayer
+var _roll_wood: AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -79,6 +100,13 @@ func _ready() -> void:
 	_pour.stream = _loop(&"water_pour")
 	_strain = _make_player(&"Strain", 1)
 	_strain.stream = _loop(&"line_strain")
+	_roll = _make_player(&"CartRoll", 1)
+	_roll.stream = _loop(&"cart_roll")
+	_roll_wood = _make_player(&"CartRollWood", 1)
+	_roll_wood.stream = _loop(&"cart_roll_wood")
+	ActivityClock.time_advanced.connect(func(_m: int, activity_id: StringName) -> void:
+		if activity_id == &"packing":
+			play(&"pack_crate"))
 	_far = AudioStreamPlayer3D.new()
 	_far.name = "AtBobber"
 	_far.bus = &"Effects"
@@ -177,6 +205,78 @@ func _process(delta: float) -> void:
 	_update_fight(delta)
 	_update_pour(delta)
 	_update_work()
+	_update_carry(delta)
+
+
+func is_cart_rolling() -> bool:
+	return (_roll.playing or _roll_wood.playing) and _roll_level > 0.01
+
+
+func _physics_process(delta: float) -> void:
+	# The cart moves on physics steps: measure its speed there.
+	if not is_instance_valid(_cart):
+		_cart_speed = 0.0
+		return
+	var moved := _cart.global_position - _cart_last_pos
+	moved.y = 0.0
+	_cart_last_pos = _cart.global_position
+	_cart_speed = lerpf(_cart_speed, moved.length() / maxf(delta, 0.0001), minf(1.0, delta * 12.0))
+
+
+## Crates lifted and set down, the cart taken and let go, and its wheels rolling.
+func _update_carry(delta: float) -> void:
+	if _carry == null:
+		_carry = PlayerCarry.find(_player) if _player else null
+		if _carry == null:
+			return
+	var crate := _carry.get_crate()
+	if not is_instance_valid(_held):
+		_held = null
+	if crate != _held:
+		if crate != null and _held == null:
+			play(&"crate_lift")
+		elif crate == null and _carry.is_hands_busy():
+			# Set down on purpose (busy with the put-down), not dropped by loading a save.
+			play(crate_set_sound(_held, _player))
+		_held = crate
+	var cart := _carry.get_cart()
+	if not is_instance_valid(_cart):
+		_cart = null
+	if cart != _cart:
+		if cart != null:
+			play(&"cart_grab")
+			_cart_last_pos = cart.global_position
+			_cart_speed = 0.0
+		elif _cart != null:
+			play(&"cart_release")
+		_cart = cart
+	var target := 0.0
+	if _cart:
+		target = clampf(_cart_speed / CART_FULL_SPEED, 0.0, 1.0)
+		_surface_timer -= delta
+		if _surface_timer <= 0.0:
+			_surface_timer = 0.15
+			_on_wood = Footsteps.surface_at(_player, _cart.global_position) == &"wood"
+	_roll_level = move_toward(_roll_level, target, delta * 4.0)
+	_wood_mix = move_toward(_wood_mix, 1.0 if _on_wood else 0.0, delta * 5.0)
+	var pitch := clampf(0.75 + 0.3 * _cart_speed / CART_FULL_SPEED, 0.75, 1.15)
+	_roll.pitch_scale = pitch
+	_roll_wood.pitch_scale = pitch
+	_fade_loop(_roll, _roll_level * (1.0 - _wood_mix), CART_DB)
+	_fade_loop(_roll_wood, _roll_level * _wood_mix, CART_DB)
+
+
+## The sound of setting a crate down where it now is.
+static func crate_set_sound(crate: ShippingCrate, from: Node3D) -> StringName:
+	if not is_instance_valid(crate):
+		return &"crate_set_soft"
+	match crate.location:
+		ShippingCrate.Location.CART:
+			return &"crate_on_cart"
+		ShippingCrate.Location.TABLE, ShippingCrate.Location.PAD:
+			return &"crate_set_wood"
+	var surface := Footsteps.surface_at(from, crate.global_position)
+	return &"crate_set_wood" if surface == &"wood" or surface == &"stone" else &"crate_set_soft"
 
 
 ## One click each time the crank turns a sixth of the way round, whichever way it goes.

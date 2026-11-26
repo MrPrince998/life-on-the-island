@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/log.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"log"
+display_name = "Log"
+description = "A length of trunk from a tree you felled. Bram takes logs for tool handles, and they sell for more than branches."
+category = 3
+buy_price = 0
+sell_price = 6
+max_stack = 30
+unique = false
+icon = ExtResource("2_icon")

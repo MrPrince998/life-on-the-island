@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="NPCData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_theo.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_theo_library.tres" id="4_anims"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+from_hour = 6
+position = Vector3(7.8, 0, 141.3)
+facing_degrees = 180
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+from_hour = 19
+position = Vector3(3.2, 0, 111.8)
+facing_degrees = 210
+activity = &"idle"
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+from_hour = 22
+position = Vector3(7.8, 0, 141.3)
+facing_degrees = 180
+activity = &"idle"
+
+[resource]
+script = ExtResource("1_data")
+id = &"bram"
+display_name = "Bram"
+role = "Blacksmith"
+model = ExtResource("3_model")
+animations = ExtResource("4_anims")
+model_scale = 1.9
+walk_speed = 1.1
+tint = Color(0.78, 0.68, 0.6, 1)
+intro_lines = PackedStringArray("Hah! A new face. Mind the sparks, they bite.", "Bram. Blacksmith. If it cuts, digs or chops, I made it, or I'll make it.", "Fancy felling a tree? You'll want an axe. Bring me a few bits of wood for the handle and a few coins, and I'll forge you one while you wait.", "Or pay a bit more and take one off the rack. Your choice. Press F at the anvil if you want a proper look at my wares.")
+later_lines = PackedStringArray("A sharp axe is a safe axe. A blunt one bounces.", "Logs from a good straight trunk make the best handles. Bring me those and I'll make you something special.", "Fell a tree, cut it up, carry it home. The stump'll sprout again in a week or so. The woods look after themselves.", "One day I'll make you a sickle fit for a proper harvest. When there's grain on this island to cut.")
+schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2")])
+friend_lines = PackedStringArray("You've got good arms for an axe. Your grandad had them too.", "I kept your grandad's old tongs. Never had the heart to melt them down.")
+loved_items = Array[StringName]([&"fishermans_stew", &"grilled_fish"])
+liked_items = Array[StringName]([&"log", &"stone", &"bread"])
+liked_categories = Array[int]([])
+disliked_items = Array[StringName]([&"sunflower"])
+loved_line = "Now that's a meal for a man who's been at the anvil all day. Thank you!"
+liked_line = "Useful, that. Much obliged."
+neutral_line = "Hm! Thank you kindly."
+disliked_line = "Flowers? In a forge? They'll be ash by noon. Kind thought, though."

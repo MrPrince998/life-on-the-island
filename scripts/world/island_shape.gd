@@ -148,6 +148,8 @@ func _init() -> void:
 		PackedVector2Array([Vector2(52, 20), Vector2(88, -20), Vector2(128, -58), Vector2(160, -84)]),
 		# Village -> lake east shore
 		PackedVector2Array([Vector2(35, 108), Vector2(52, 70), Vector2(56, 40), Vector2(52, 20)]),
+		# Farm's east gate -> the shipping jetty (ShippingYard), clear of the orchard
+		PackedVector2Array([Vector2(131, 75), Vector2(148, 84), Vector2(158, 102), Vector2(161, 116)]),
 	]
 	for path in paths:
 		_path_bounds.append(_bounds_of(path))

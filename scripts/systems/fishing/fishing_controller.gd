@@ -223,6 +223,9 @@ func find_water_at(point: Vector3) -> WaterBody:
 # ---- Update -----------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Hands full of crate or cart (PlayerCarry): the rod stays away.
+	if _player and _player.is_hands_busy() and state == State.STOWED:
+		return
 	if event.is_action_pressed(&"toggle_rod"):
 		toggle_rod()
 		get_viewport().set_input_as_handled()

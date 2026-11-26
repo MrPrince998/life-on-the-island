@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ForgeCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/forge_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="2_recipe"]
+[ext_resource type="Resource" path="res://data/tools/axe.tres" id="3_axe"]
+[ext_resource type="Resource" path="res://data/tools/steel_axe.tres" id="4_steel_axe"]
+
+[resource]
+script = ExtResource("1_catalog")
+recipes = Array[ExtResource("2_recipe")]([ExtResource("3_axe"), ExtResource("4_steel_axe")])

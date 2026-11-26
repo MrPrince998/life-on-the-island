@@ -363,3 +363,29 @@ Generate one batch at a time, in order. Add the **style line** to every prompt. 
 
 **`fallen_log.glb`** — ✅ in the game as `mossy_fallen_log.glb`
 > long mossy fallen tree log with a few mushrooms growing on it
+
+---
+
+## Realistic farming, slice 1: woodcutting and the blacksmith
+The game uses simple built-in shapes for these until the models exist.
+
+**`axe.glb`** — ⬜ not made yet (the game draws a plain axe in code)
+> woodcutter's axe, single iron head with a bright sharpened edge, long slightly curved ash-wood handle with a leather grip wrap, lying flat, real-world proportions
+
+**`steel_axe.glb`** — ⬜ not made yet
+> fine felling axe, polished steel head with a gently flared blade and a small brass maker's stamp, dark oiled hardwood handle, lying flat
+
+**`blacksmith_forge.glb`** — ⬜ not made yet (the forge is built from simple blocks for now)
+> village blacksmith's open-fronted forge, stone back wall and stone hearth with glowing coals and a brick chimney, timber posts holding a sloping tiled roof, tools hanging on the back wall, a water barrel at the side, open to the front
+
+**`anvil.glb`** — ⬜ not made yet
+> blacksmith's iron anvil with a pointed horn, sitting on a thick tree-stump base, a hammer resting on top
+
+**`npc_bram.glb`** — ⬜ not made yet (Bram borrows Theo's model, darkened, for now)
+> burly friendly village blacksmith, broad shoulders, short dark beard, rolled-up sleeves, thick leather apron over a grey linen shirt, soot on his forearms, sturdy boots, T-pose, full body
+> Then put him through Mixamo like the other villagers (see the villagers doc) and tell Claude.
+
+**`log.glb`** — ⬜ not made yet (logs are drawn in code)
+> single cut log about one metre long, rough brown bark, pale wood rings showing on both cut ends, lying on its side
+
+Coming next slice: **`sickle.glb`** (curved harvesting sickle with a wooden handle), rice plants at each growth stage, a rice sheaf (tied bundle), and a pedal threshing machine.

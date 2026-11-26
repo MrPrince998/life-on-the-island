@@ -46,6 +46,9 @@ var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 
 var _coyote_timer: float = 0.0
 var _jump_buffer_timer: float = 0.0
 var _sprinting: bool = false
+## Carrying a crate or pushing the cart (PlayerCarry): slower, no running or jumping.
+var _hands_busy: bool = false
+var _hands_speed: float = 1.0
 var _last_safe_position: Vector3
 var _safe_record_timer: float = 0.0
 ## While true (e.g. fishing), movement and jump input are ignored. Camera still works.
@@ -65,6 +68,7 @@ func _ready() -> void:
 	_last_safe_position = global_position
 	add_child(Footsteps.new())
 	add_child(ActionSounds.new())
+	add_child(PlayerCarry.new())
 
 
 func _physics_process(delta: float) -> void:
@@ -78,8 +82,8 @@ func _physics_process(delta: float) -> void:
 		return
 	var input := Vector2.ZERO if _input_locked else Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
 	var move_dir := Vector3(input.x, 0.0, input.y).rotated(Vector3.UP, _camera_rig.get_yaw())
-	_sprinting = Input.is_action_pressed(&"sprint") and input.length() > 0.1
-	var target_velocity := move_dir * (sprint_speed if _sprinting else walk_speed)
+	_sprinting = Input.is_action_pressed(&"sprint") and input.length() > 0.1 and not _hands_busy
+	var target_velocity := move_dir * (sprint_speed if _sprinting else walk_speed * _hands_speed)
 
 	var rate := air_acceleration
 	if is_on_floor():
@@ -96,7 +100,7 @@ func _physics_process(delta: float) -> void:
 		var gravity_scale := fall_gravity_multiplier if velocity.y < 0.0 else 1.0
 		velocity.y -= _gravity * gravity_scale * delta
 
-	if Input.is_action_just_pressed(&"jump") and not _input_locked:
+	if Input.is_action_just_pressed(&"jump") and not _input_locked and not _hands_busy:
 		_jump_buffer_timer = jump_buffer_time
 	else:
 		_jump_buffer_timer -= delta
@@ -183,6 +187,16 @@ func _finish_standing() -> void:
 ## Turns the character to face a camera-style yaw (0 = north).
 func face_yaw(yaw: float) -> void:
 	_visual.rotation.y = yaw
+
+
+## Hands full (PlayerCarry): walk at `speed_factor` of the usual speed, no running or jumping.
+func set_hands_busy(busy: bool, speed_factor: float = 1.0) -> void:
+	_hands_busy = busy
+	_hands_speed = speed_factor if busy else 1.0
+
+
+func is_hands_busy() -> bool:
+	return _hands_busy
 
 
 func is_sprinting() -> bool:

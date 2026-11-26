@@ -258,7 +258,7 @@ func _run() -> void:
 				fence_bodies += 1
 			elif c is Node3D:
 				fence_pieces += 1
-	check(fence_pieces >= 40 and fence_bodies == 5, "the farm fence is built from fence sections with collision (%d sections)" % fence_pieces)
+	check(fence_pieces >= 40 and fence_bodies == 6, "the farm fence is built from fence sections with collision (%d sections)" % fence_pieces)
 	var veg_body := vegetation.get_node_or_null("VegetationCollision") as StaticBody3D
 	check(veg_body != null and veg_body.get_child_count() > 300, "trees and bushes have trunk collision")
 	var clear_ok := true
@@ -1557,8 +1557,13 @@ func _run() -> void:
 	await preload("res://tests/chapter4_tests.gd").new().run(self)
 	await preload("res://tests/finale_tests.gd").new().run(self)
 	await preload("res://tests/gathering_tests.gd").new().run(self)
+	await preload("res://tests/lakeside_tests.gd").new().run(self)
 	await preload("res://tests/cooking_tests.gd").new().run(self)
 	await preload("res://tests/upgrade_tests.gd").new().run(self)
+	await preload("res://tests/shipping_tests.gd").new().run(self)
+	await preload("res://tests/request_board_tests.gd").new().run(self)
+	await preload("res://tests/shipping_sound_tests.gd").new().run(self)
+	await preload("res://tests/forestry_tests.gd").new().run(self)
 
 	print("== NPCs ==")
 	ActivityClock.reset()

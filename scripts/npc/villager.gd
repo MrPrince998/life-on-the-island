@@ -36,6 +36,8 @@ enum Mode { ACTIVITY, WALKING, TALKING }
 ## "Already met" memory when GameManager has no story flags.
 static var _met_fallback: Dictionary = {}
 
+var _shared_entry: NPCScheduleEntry
+
 var _model: Node3D
 var _anim: AnimationPlayer
 var _mode: int = Mode.ACTIVITY
@@ -228,7 +230,23 @@ func has_met() -> bool:
 
 # ---------------------------------------------------------------- schedule
 
+func begin_shared_activity(entry: NPCScheduleEntry) -> void:
+	end_conversation()
+	_shared_entry = entry
+	_entry = entry
+	_begin_walk()
+
+
+func end_shared_activity() -> void:
+	if _shared_entry == null:
+		return
+	_shared_entry = null
+	_on_time_changed(ActivityClock.get_day(), 0)
+
+
 func _on_time_changed(_day: int, _minute_of_day: int) -> void:
+	if _shared_entry != null:
+		return
 	var wanted := data.entry_for_hour(ActivityClock.get_hour())
 	if wanted == null or wanted == _entry:
 		return
@@ -483,6 +501,8 @@ func _build_model() -> void:
 	_model.name = "Model"
 	_model.scale = Vector3.ONE * data.model_scale
 	add_child(_model)
+	if data.tint != Color.WHITE:
+		_tint_model(_model, data.tint)
 	_anim = AnimationPlayer.new()
 	_anim.name = "AnimationPlayer"
 	_model.add_child(_anim)
@@ -497,6 +517,19 @@ func _build_model() -> void:
 	var height := 1.0 * data.model_scale
 	_name_label.position.y = height + 0.25
 	_bubble.position.y = height + 0.62
+
+
+func _tint_model(node: Node, tint: Color) -> void:
+	var mesh := node as MeshInstance3D
+	if mesh and mesh.mesh:
+		for i in mesh.mesh.get_surface_count():
+			var material := mesh.get_active_material(i) as BaseMaterial3D
+			if material:
+				var tinted := material.duplicate() as BaseMaterial3D
+				tinted.albedo_color = material.albedo_color * tint
+				mesh.set_surface_override_material(i, tinted)
+	for child in node.get_children():
+		_tint_model(child, tint)
 
 
 ## Moves the villager up or down (onto or off a seat) during part of a clip:

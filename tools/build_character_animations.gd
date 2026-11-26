@@ -80,6 +80,43 @@ func _init() -> void:
 		library.add_animation(clip_name, sit_clip)
 		print("built ", clip_name, " from ", sdef[0], " length=", sit_clip.length)
 
+	# Carrying shipping crates (PlayerCarry). From the Mixamo "Lifting Object" clip only
+	# the bend down to the box is used, played down-hold-up: deep (a box on the ground)
+	# as carry_lift and shallow (a table or the cart) as carry_reach. Both are used for
+	# lifting and for setting down. "Carrying" (a standing hold) is carry_idle, and its
+	# arms on top of our walk make carry_walk. Without the files the game uses idle/walk.
+	if ResourceLoader.exists(CARRY_LIFT_SOURCE):
+		var squat := _retarget_clip(CARRY_LIFT_SOURCE, false)
+		_fill_missing_bones(skeleton, squat)
+		var bends := [
+			[&"carry_lift", LIFT_BOTTOM, LIFT_DOWN, LIFT_HOLD],
+			[&"carry_reach", REACH_BOTTOM, REACH_DOWN, REACH_HOLD],
+		]
+		for bend in bends:
+			var clip := _down_and_up(squat, LIFT_FROM, bend[1], bend[2], bend[3])
+			library.add_animation(bend[0], clip)
+			print("built ", bend[0], " from ", CARRY_LIFT_SOURCE, " length=", clip.length)
+	else:
+		print("(no lift clip yet: %s; the game uses idle)" % CARRY_LIFT_SOURCE)
+	if ResourceLoader.exists(CARRY_HOLD_SOURCE):
+		var hold := _retarget_clip(CARRY_HOLD_SOURCE, true)
+		_fill_missing_bones(skeleton, hold)
+		library.add_animation(&"carry_idle", hold)
+		library.add_animation(&"carry_walk", _walk_with_arms_of(walk, hold))
+		print("built carry_idle and carry_walk from ", CARRY_HOLD_SOURCE)
+	else:
+		print("(no carrying clip yet: %s; the game uses idle/walk)" % CARRY_HOLD_SOURCE)
+	# Pushing the hand-cart, when those clips are there.
+	var pushing := {&"cart_push": [CART_PUSH_SOURCE, true], &"cart_push_idle": [CART_PUSH_IDLE_SOURCE, true]}
+	for clip_name in pushing:
+		var cdef: Array = pushing[clip_name]
+		if not ResourceLoader.exists(cdef[0]):
+			print("(no %s yet: %s; the game falls back to idle/walk)" % [clip_name, cdef[0]])
+			continue
+		var push_clip := _retarget_clip(cdef[0], cdef[1])
+		_fill_missing_bones(skeleton, push_clip)
+		library.add_animation(clip_name, push_clip)
+		print("built ", clip_name, " from ", cdef[0], " length=", push_clip.length)
 	var err := ResourceSaver.save(library, OUT)
 	print("saved ", OUT, " ", error_string(err))
 	character.free()
@@ -94,6 +131,23 @@ const FISH_CAST_SOURCE := "res://source_assets/mixamo/Fishing Cast.fbx"
 const SIT_DOWN_SOURCE := "res://source_assets/mixamo/npc_sit_down.fbx"
 const SIT_IDLE_SOURCE := "res://source_assets/mixamo/npc_sit_idle.fbx"
 const STAND_UP_SOURCE := "res://source_assets/mixamo/npc_stand_up.fbx"
+const CARRY_LIFT_SOURCE := "res://source_assets/mixamo/Lifting Object.fbx"
+const CARRY_HOLD_SOURCE := "res://source_assets/mixamo/Carrying.fbx"
+## In "Lifting Object": standing until LIFT_FROM, hands at the box (deep squat) at
+## LIFT_BOTTOM; at REACH_BOTTOM it's a slight knee bend and lean.
+const LIFT_FROM := 0.6
+const LIFT_BOTTOM := 2.3
+const REACH_BOTTOM := 1.05
+## Seconds bending down (the same back up) and at the bottom: keep in step with
+## PlayerCarry.LIFT_DOWN / LIFT_HOLD / REACH_DOWN / REACH_HOLD.
+const LIFT_DOWN := 0.65
+const LIFT_HOLD := 0.12
+const REACH_DOWN := 0.35
+const REACH_HOLD := 0.08
+## The arms of the carrying pose, laid over the walk for carry_walk.
+const CARRY_ARM_BONES := ["LeftShoulder", "LeftArm", "LeftForeArm", "RightShoulder", "RightArm", "RightForeArm"]
+const CART_PUSH_SOURCE := "res://source_assets/mixamo/cart_push.fbx"
+const CART_PUSH_IDLE_SOURCE := "res://source_assets/mixamo/cart_push_idle.fbx"
 ## The Mixamo cast is 8.8 s: wind-up (peak ~1.45 s), release (~2.0 s), then a long
 ## follow-through and return to idle. Only the part up to the rod settling is kept;
 ## the game blends into the waiting pose from there.
@@ -186,6 +240,51 @@ func _retarget_clip(path: String, loop: bool = true, end_time: float = -1.0, wit
 		out.set_meta(&"rod_directions", rod_dirs)
 		out.set_meta(&"rod_fps", RETARGET_FPS)
 	src_root.free()
+	return out
+
+
+## Plays `src` from `from` to `to` over `down` seconds, holds, then back the same way.
+func _down_and_up(src: Animation, from: float, to: float, down: float, hold: float) -> Animation:
+	var out := Animation.new()
+	out.length = down * 2.0 + hold
+	out.loop_mode = Animation.LOOP_NONE
+	var frames := int(round(out.length * RETARGET_FPS))
+	for i in src.get_track_count():
+		var type := src.track_get_type(i)
+		if type != Animation.TYPE_ROTATION_3D and type != Animation.TYPE_POSITION_3D:
+			continue
+		var track := out.add_track(type)
+		out.track_set_path(track, src.track_get_path(i))
+		for f in frames + 1:
+			var t := minf(f / RETARGET_FPS, out.length)
+			var k := 1.0
+			if t < down:
+				k = smoothstep(0.0, 1.0, t / down)
+			elif t > down + hold:
+				k = 1.0 - smoothstep(0.0, 1.0, (t - down - hold) / down)
+			var s := lerpf(from, to, k)
+			if type == Animation.TYPE_ROTATION_3D:
+				out.rotation_track_insert_key(track, t, src.rotation_track_interpolate(i, s))
+			else:
+				out.position_track_insert_key(track, t, src.position_track_interpolate(i, s))
+	return out
+
+
+## Our walk with the arms held as in the first frame of `hold` (no arm swing).
+func _walk_with_arms_of(walk: Animation, hold: Animation) -> Animation:
+	var out := walk.duplicate() as Animation
+	for bone_name in CARRY_ARM_BONES:
+		var path := NodePath(SKEL + "mixamorig_" + bone_name)
+		var src := hold.find_track(path, Animation.TYPE_ROTATION_3D)
+		if src < 0:
+			push_warning("carry_walk: no %s track in the carrying clip" % bone_name)
+			continue
+		var dst := out.find_track(path, Animation.TYPE_ROTATION_3D)
+		if dst >= 0:
+			out.remove_track(dst)
+		dst = out.add_track(Animation.TYPE_ROTATION_3D)
+		out.track_set_path(dst, path)
+		out.rotation_track_insert_key(dst, 0.0, hold.rotation_track_interpolate(src, 0.0))
 	return out
 
 

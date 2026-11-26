@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+item_id = &"axe"
+buy_price = 140
+forge_fee = 40
+materials = {
+&"wood": 4
+}
+forge_minutes = 60
+pitch = "Every islander needs an axe. Bring me a few bits of wood for the handle and I'll knock one out while you wait."

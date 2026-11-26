@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/island_terrain.gd" id="1_terrain"]
+[ext_resource type="Script" path="res://scripts/world/notice_board_spot.gd" id="nb_spot"]
 [ext_resource type="Material" path="res://resources/materials/terrain_material.tres" id="2_terrain_mat"]
 [ext_resource type="Script" path="res://scripts/world/vegetation_scatter.gd" id="3_vegetation"]
 [ext_resource type="Script" path="res://scripts/world/water_body.gd" id="4_water"]
@@ -138,6 +139,15 @@
 [ext_resource type="Script" path="res://scripts/world/lighthouse_isle.gd" id="sp_87"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/flowers_cluster.glb" id="up_flowers"]
 [ext_resource type="Script" path="res://scripts/world/bunting.gd" id="up_bunting"]
+[ext_resource type="Script" path="res://scripts/systems/shipping/shipping_yard.gd" id="ship_yard"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/lakeside_project.tscn" id="lakeside_project"]
+
+[ext_resource type="PackedScene" path="res://scenes/buildings/forge.tscn" id="bf_forge"]
+[ext_resource type="Script" path="res://scripts/systems/forestry/forest_service.gd" id="bf_forestry"]
+
+[sub_resource type="SphereShape3D" id="NoticeBoardReach"]
+radius = 1.5
 
 [sub_resource type="SphereShape3D" id="SpSphere_0"]
 radius = 2
@@ -320,6 +330,10 @@ script = ExtResource("4_water")
 water_id = &"moonlit_lake"
 radius = 46.0
 
+[node name="LakesideClearance" type="Marker3D" parent="." groups=["keep_clear"]]
+position = Vector3(-1, 0, 68)
+metadata/clear_radius = 5.0
+
 [node name="Vegetation" type="Node3D" parent="."]
 script = ExtResource("3_vegetation")
 layers = Array[ExtResource("12_layer_script")]([ExtResource("f_rock_boulder"), ExtResource("f_stone_slab"), ExtResource("f_tree_broadleaf"), ExtResource("f_tree_pine"), ExtResource("f_tree_slender"), ExtResource("f_tree_cherry"), ExtResource("f_tree_blossom"), ExtResource("f_tree_white_blossom"), ExtResource("f_sapling"), ExtResource("f_tree_palm"), ExtResource("f_bush"), ExtResource("f_fern"), ExtResource("f_mushrooms"), ExtResource("f_flowers"), ExtResource("f_grass_clump"), ExtResource("f_reeds"), ExtResource("f_lily_pads")])
@@ -433,10 +447,16 @@ segment = ExtResource("21_fence_section")
 from = Vector3(-13, 0, 11)
 to = Vector3(15, 0, 11)
 
-[node name="East" type="Node3D" parent="Buildings/FarmField/Fence"]
+[node name="EastA" type="Node3D" parent="Buildings/FarmField/Fence"]
 script = ExtResource("22_fence_line")
 segment = ExtResource("21_fence_section")
 from = Vector3(15, 0, -11)
+to = Vector3(15, 0, 2.6)
+
+[node name="EastB" type="Node3D" parent="Buildings/FarmField/Fence"]
+script = ExtResource("22_fence_line")
+segment = ExtResource("21_fence_section")
+from = Vector3(15, 0, 7.4)
 to = Vector3(15, 0, 11)
 
 [node name="WestA" type="Node3D" parent="Buildings/FarmField/Fence"]
@@ -474,6 +494,9 @@ transform = Transform3D(-0.9363, 0, 0.3511, 0, 1, 0, -0.3511, 0, -0.9363, -8, 4,
 
 [node name="GeneralStore" parent="Buildings" instance=ExtResource("23_store")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 26, 3.95, 119)
+
+[node name="Forge" parent="Buildings" instance=ExtResource("bf_forge")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 8, 4.02, 140)
 
 [node name="Lanterns" type="Node3D" parent="Buildings"]
 
@@ -909,6 +932,14 @@ fit = 1
 collision_fraction = Vector3(0.9, 1, 0.4)
 metadata/clear_radius = 1.6
 
+[node name="Requests" type="Area3D" parent="StoryPlaces/Village/NoticeBoard"]
+script = ExtResource("nb_spot")
+interaction_id = &"village_notice_board"
+prompt_text = "Read the notice board"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Village/NoticeBoard/Requests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("NoticeBoardReach")
 [node name="BrazierWest" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 112)
 script = ExtResource("sp_2")
@@ -2576,3 +2607,11 @@ flag = &"bought_home_lantern"
 
 [node name="AfterLantern" parent="StoryPlaces/Village/HomeLantern" instance=ExtResource("13_lantern")]
 transform = Transform3D(0.9553, 0, 0.2955, 0, 1, 0, -0.2955, 0, 0.9553, -19.2, 0, 103.6)
+[node name="LakesideProject" parent="StoryPlaces/Lake" instance=ExtResource("lakeside_project")]
+position = Vector3(-1, 0, 68)
+
+[node name="ShippingYard" type="Node3D" parent="StoryPlaces/Farm"]
+script = ExtResource("ship_yard")
+
+[node name="Forestry" type="Node" parent="."]
+script = ExtResource("bf_forestry")

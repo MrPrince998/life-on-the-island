@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" path="res://scenes/npc/villagers.tscn" id="8_villagers"]
 [ext_resource type="PackedScene" path="res://scenes/ui/gift_panel.tscn" id="20_gift"]
 [ext_resource type="PackedScene" path="res://scenes/ui/journal_panel.tscn" id="21_journal"]
+[ext_resource type="PackedScene" path="res://scenes/ui/request_board_panel.tscn" id="22_board"]
+[ext_resource type="Script" path="res://scripts/ui/forge_panel.gd" id="23_forge"]
 
 [node name="Main" type="Node3D" unique_id=1676161225]
 script = ExtResource("1_main")
@@ -32,3 +34,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 5, 102)
 [node name="GiftPanel" parent="." instance=ExtResource("20_gift")]
 
 [node name="JournalPanel" parent="." instance=ExtResource("21_journal")]
+
+[node name="RequestBoardPanel" parent="." instance=ExtResource("22_board")]
+
+[node name="ForgePanel" type="CanvasLayer" parent="."]
+script = ExtResource("23_forge")

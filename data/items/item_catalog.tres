@@ -28,7 +28,10 @@
 [ext_resource type="Resource" path="res://data/items/pumpkin.tres" id="i_pumpkin"]
 [ext_resource type="Resource" path="res://data/items/kale_seeds.tres" id="i_kale_seeds"]
 [ext_resource type="Resource" path="res://data/items/kale.tres" id="i_kale"]
+[ext_resource type="Resource" path="res://data/items/axe.tres" id="i_axe"]
+[ext_resource type="Resource" path="res://data/items/steel_axe.tres" id="i_steel_axe"]
+[ext_resource type="Resource" path="res://data/items/log.tres" id="i_log"]
 
 [resource]
 script = ExtResource("1_catalog")
-items = Array[ExtResource("2_item")]([ExtResource("i_turnip_seeds"), ExtResource("i_carrot_seeds"), ExtResource("i_sunflower_seeds"), ExtResource("i_watering_can"), ExtResource("i_wood"), ExtResource("i_wooden_plank"), ExtResource("i_stone"), ExtResource("i_bread"), ExtResource("i_turnip"), ExtResource("i_carrot"), ExtResource("i_sunflower"), ExtResource("i_fertilizer"), ExtResource("i_glowstone_shard"), ExtResource("i_ukulele"), ExtResource("i_grilled_fish"), ExtResource("i_turnip_soup"), ExtResource("i_roasted_carrots"), ExtResource("i_fishermans_stew"), ExtResource("i_sunflower_loaf"), ExtResource("i_garden_pie"), ExtResource("i_tomato_seeds"), ExtResource("i_tomato"), ExtResource("i_pumpkin_seeds"), ExtResource("i_pumpkin"), ExtResource("i_kale_seeds"), ExtResource("i_kale")])
+items = Array[ExtResource("2_item")]([ExtResource("i_turnip_seeds"), ExtResource("i_carrot_seeds"), ExtResource("i_sunflower_seeds"), ExtResource("i_watering_can"), ExtResource("i_wood"), ExtResource("i_wooden_plank"), ExtResource("i_stone"), ExtResource("i_bread"), ExtResource("i_turnip"), ExtResource("i_carrot"), ExtResource("i_sunflower"), ExtResource("i_fertilizer"), ExtResource("i_glowstone_shard"), ExtResource("i_ukulele"), ExtResource("i_grilled_fish"), ExtResource("i_turnip_soup"), ExtResource("i_roasted_carrots"), ExtResource("i_fishermans_stew"), ExtResource("i_sunflower_loaf"), ExtResource("i_garden_pie"), ExtResource("i_tomato_seeds"), ExtResource("i_tomato"), ExtResource("i_pumpkin_seeds"), ExtResource("i_pumpkin"), ExtResource("i_kale_seeds"), ExtResource("i_kale"), ExtResource("i_axe"), ExtResource("i_steel_axe"), ExtResource("i_log")])

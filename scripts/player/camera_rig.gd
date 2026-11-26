@@ -26,6 +26,11 @@ var _target: Node3D
 ## Mouse motion is ignored briefly after capturing, so the cursor warp
 ## doesn't spin the camera.
 var _ignore_mouse_until_msec: int = 0
+## A second camera for set shots (the shop view, ShopFocus): it glides from the
+## follow camera to the shot and back, then hands over again.
+var _focus_cam: Camera3D
+var _focus_tween: Tween
+var _focused := false
 
 @onready var _pitch_pivot: Node3D = $PitchPivot
 @onready var _spring_arm: SpringArm3D = $PitchPivot/SpringArm3D
@@ -58,6 +63,67 @@ func set_yaw(value: float) -> void:
 
 func get_camera() -> Camera3D:
 	return _camera
+
+
+## The camera on screen now (the shot camera while focused).
+func get_active_camera() -> Camera3D:
+	return _focus_cam if _focus_cam and _focus_cam.current else _camera
+
+
+func is_focused() -> bool:
+	return _focused
+
+
+## Glides the view to a set shot (world transform). `h_offset` slides the picture
+## sideways (positive = what you look at sits left of centre).
+func focus_on(shot: Transform3D, h_offset: float = 0.0, seconds: float = 0.9) -> void:
+	if _focus_cam == null:
+		_focus_cam = Camera3D.new()
+		_focus_cam.name = "FocusCamera"
+		_focus_cam.top_level = true
+		_focus_cam.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
+		add_child(_focus_cam)
+	if not _focused:
+		_focus_cam.global_transform = _camera.global_transform
+		_focus_cam.fov = _camera.fov
+		_focus_cam.h_offset = 0.0
+	_focused = true
+	_set_player_shown(false)
+	_focus_cam.make_current()
+	if _focus_tween:
+		_focus_tween.kill()
+	_focus_tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_focus_tween.tween_property(_focus_cam, ^"global_transform", shot, seconds)
+	_focus_tween.tween_property(_focus_cam, ^"h_offset", h_offset, seconds)
+	_focus_tween.tween_property(_focus_cam, ^"fov", _base_fov, seconds)
+
+
+## Glides back behind the player and hands the view back to the follow camera.
+func release_focus(seconds: float = 0.7) -> void:
+	if not _focused or _focus_cam == null:
+		return
+	_focused = false
+	if _focus_tween:
+		_focus_tween.kill()
+	_focus_tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_focus_tween.tween_property(_focus_cam, ^"global_transform", _camera.global_transform, seconds)
+	_focus_tween.tween_property(_focus_cam, ^"h_offset", 0.0, seconds)
+	_focus_tween.chain().tween_callback(func() -> void:
+		if not _focused:
+			_camera.make_current()
+			_set_player_shown(true))
+
+
+## The player steps out of the picture during a set shot (they'd stand in front of the
+## shop), and the HUD (map, quest list) gets out of the way; both are back when the view
+## returns.
+func _set_player_shown(shown: bool) -> void:
+	var visual := _target.get_node_or_null(^"Visual") as Node3D if _target else null
+	if visual:
+		visual.visible = shown
+	var hud := get_tree().get_first_node_in_group(&"hud") as CanvasLayer
+	if hud:
+		hud.visible = shown
 
 
 func snap_to_target() -> void:

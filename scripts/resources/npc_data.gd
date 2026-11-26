@@ -12,6 +12,9 @@ extends Resource
 @export var animations: AnimationLibrary
 @export var model_scale: float = 1.75
 @export var walk_speed: float = 1.25
+## Colour multiplied into the model's materials (white = as modelled). Lets a stand-in
+## model look like someone else until their own model is made.
+@export var tint: Color = Color.WHITE
 
 @export_group("Talking")
 ## First conversation. `intro_action` runs when line `intro_action_line` is shown.

@@ -21,6 +21,8 @@ var _list: VBoxContainer
 var _buy_tab: Button
 var _sell_tab: Button
 var _upgrades_tab: Button
+var _dim: ColorRect
+var _window: PanelContainer
 var _selling: bool = false
 var _upgrades: bool = false
 var _status_tween: Tween
@@ -39,8 +41,21 @@ func is_open() -> bool:
 	return visible
 
 
-func open(title: String = "Willowbrook General Store") -> void:
+## `docked`: the shop view (ShopFocus) - the window sits at the right and the scene
+## stays visible (no dimming).
+func open(title: String = "Willowbrook General Store", docked: bool = false) -> void:
 	_title.text = title
+	_dim.visible = not docked
+	if docked:
+		_window.set_anchors_preset(Control.PRESET_CENTER_RIGHT)
+		_window.offset_left = -780
+		_window.offset_right = -24
+	else:
+		_window.set_anchors_preset(Control.PRESET_CENTER)
+		_window.offset_left = -380
+		_window.offset_right = 380
+	_window.offset_top = -280
+	_window.offset_bottom = 280
 	_selling = false
 	_upgrades = false
 	_status.text = "Welcome! Have a look around."
@@ -109,7 +124,7 @@ func sell(item_id: StringName, quantity: int) -> Dictionary:
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return
-	if event.is_action_pressed(&"toggle_mouse") or event.is_action_pressed(&"interact") or event.is_action_pressed(&"toggle_bag"):
+	if event.is_action_pressed(&"toggle_mouse") or event.is_action_pressed(&"interact") or event.is_action_pressed(&"toggle_bag") or event.is_action_pressed(&"focus_shop"):
 		close()
 		get_viewport().set_input_as_handled()
 
@@ -134,8 +149,10 @@ func _build() -> void:
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	dim.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.add_child(dim)
+	_dim = dim
 
 	var panel := PanelContainer.new()
+	_window = panel
 	panel.set_anchors_preset(Control.PRESET_CENTER)
 	panel.custom_minimum_size = Vector2(760, 560)
 	panel.offset_left = -380

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+item_id = &"steel_axe"
+buy_price = 480
+forge_fee = 160
+materials = {
+&"log": 6
+}
+forge_minutes = 120
+pitch = "Folded steel, a seasoned handle, an edge you could shave with. Half the swings, mark my words. Logs for the handle, mind: proper ones."

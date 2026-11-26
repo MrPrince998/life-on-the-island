@@ -5,7 +5,9 @@ extends Node
 ## panel opens and closes (the journal opens and shuts like a book and turns its pages),
 ## coins when money comes in or goes out, chimes for a new quest, a finished step and a
 ## finished quest, a sweet chime for a new friendship heart, a soft blip for messages and
-## a hummed "mm" for each line a villager says.
+## a hummed "mm" for each line a villager says. The notice board and the shipping orders
+## rustle like paper, taking a request pulls its pin, and at six Captain Marlow's ship's
+## bell rings when he sails with your crates.
 ##
 ## It finds buttons, sliders, tabs, panels and villagers by itself as they are added to
 ## the scene tree, so menus don't need any sound code. It only listens and plays: it
@@ -17,13 +19,15 @@ const DIR := "res://assets/audio/ui/"
 const SOUNDS: Array[StringName] = [
 	&"hover", &"click", &"back", &"deny", &"slider", &"open", &"close", &"book_open",
 	&"book_close", &"page", &"coin_gain", &"coin_spend", &"quest_new", &"quest_step",
-	&"quest_done", &"heart", &"notify", &"talk",
+	&"quest_done", &"heart", &"notify", &"talk", &"board_open", &"board_close", &"board_pin",
+	&"ship_bell",
 ]
 const DB := {
 	&"hover": -20.0, &"click": -12.0, &"back": -12.0, &"deny": -12.0, &"slider": -18.0,
 	&"open": -12.0, &"close": -13.0, &"book_open": -9.0, &"book_close": -10.0, &"page": -10.0,
 	&"coin_gain": -10.0, &"coin_spend": -11.0, &"quest_new": -8.0, &"quest_step": -9.0,
 	&"quest_done": -6.0, &"heart": -8.0, &"notify": -19.0, &"talk": -15.0,
+	&"board_open": -11.0, &"board_close": -12.0, &"board_pin": -9.0, &"ship_bell": -10.0,
 }
 ## The same sound never repeats faster than this (seconds).
 const MIN_GAP := {
@@ -56,6 +60,7 @@ var _pending_step: bool = false
 var _pending_done: bool = false
 var _loading: bool = false
 var _pending_new: bool = false
+var _pending_pin: bool = false
 var _hush_until_ms: int = 0
 
 
@@ -71,7 +76,12 @@ func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 	_watch_all(get_tree().root)
 	InventoryManager.money_changed.connect(_on_money_changed)
-	QuestLog.quest_announced.connect(func(_q: QuestData) -> void: _pending_new = true)
+	QuestLog.quest_announced.connect(func(q: QuestData) -> void:
+		# A request taken off the notice board: its pin, not the new-quest chime.
+		if RequestBoard.is_request(q.id):
+			_pending_pin = true
+		else:
+			_pending_new = true)
 	QuestLog.step_completed.connect(func(_q: QuestData, _i: int) -> void: _pending_step = true)
 	QuestLog.quest_completed.connect(func(_q: QuestData) -> void: _pending_done = true)
 	Friendship.heart_gained.connect(func(_id: StringName, _h: int) -> void: play(&"heart"))
@@ -114,11 +124,17 @@ func _process(_delta: float) -> void:
 			play(&"quest_done")
 		elif _pending_step:
 			play(&"quest_step")
+		elif _pending_pin:
+			# It replaces the click of the "Take" button.
+			if _last_click_voice and now - _last_click_ms < 150:
+				_last_click_voice.stop()
+			play(&"board_pin")
 		elif _pending_new:
 			play(&"quest_new")
 	_pending_done = false
 	_pending_step = false
 	_pending_new = false
+	_pending_pin = false
 	# Panels opening and closing.
 	var keep: Array = []
 	for entry: Array in _panels:
@@ -131,13 +147,19 @@ func _process(_delta: float) -> void:
 		if not panel.is_node_ready():
 			continue
 		var open := bool(panel.call(&"is_open"))
-		if entry[1] != null and open != bool(entry[1]):
+		# A panel made and opened in the same moment (the packing table's orders, the first
+		# time) opens with its sound too, though not while the island is loading.
+		var appeared_open := entry[1] == null and open and not _loading and not _quiet() \
+				and get_tree().get_first_node_in_group(&"player") != null
+		if appeared_open or (entry[1] != null and open != bool(entry[1])):
 			_panel_changed_ms = now
 			# The panel's own sound replaces the click of the button that opened/closed it.
 			if _last_click_voice and now - _last_click_ms < 150:
 				_last_click_voice.stop()
 			if panel is JournalPanel:
 				play(&"book_open" if open else &"book_close")
+			elif panel is RequestBoardPanel or panel is PackingPanel:
+				play(&"board_open" if open else &"board_close")
 			else:
 				play(&"open" if open else &"close")
 		entry[1] = open
@@ -166,7 +188,7 @@ func _on_node_added(node: Node) -> void:
 	# A node moved to a new parent is "added" again: hook it only once.
 	if node.has_meta(&"ui_sounds_hooked"):
 		return
-	if node is BaseButton or node is Slider or node is TabBar or node is TabContainer or node is Villager or node is CanvasLayer:
+	if node is BaseButton or node is Slider or node is TabBar or node is TabContainer or node is Villager or node is CanvasLayer or node is ShippingYard:
 		node.set_meta(&"ui_sounds_hooked", true)
 	if node is BaseButton:
 		_hook_button(node as BaseButton)
@@ -186,6 +208,10 @@ func _on_node_added(node: Node) -> void:
 		villager.line_shown.connect(func(npc_name: String, _text: String) -> void:
 			# Each villager hums at their own pitch.
 			play(&"talk", 0.85 + float(absi(npc_name.hash()) % 9) * 0.05))
+	if node is ShippingYard:
+		(node as ShippingYard).shipped.connect(func(_crates: int, _coins: int) -> void:
+			if not _quiet():
+				play(&"ship_bell"))
 	if node is PlayerController:
 		# Quiet from now until a moment after the island has finished loading.
 		_loading = true

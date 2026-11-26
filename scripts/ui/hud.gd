@@ -34,6 +34,7 @@ var _saved_tween: Tween
 
 
 func _ready() -> void:
+	add_to_group(&"hud")
 	ActivityClock.time_changed.connect(_on_time_changed)
 	WeatherManager.weather_changed.connect(func(_w: int) -> void: _refresh_clock())
 	GameManager.notification_posted.connect(show_toast)
@@ -53,7 +54,10 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	_mouse_hint.visible = Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and DisplayServer.get_name() != "headless"
+	# Not while a window (shop, forge, board...) has the player: clicks go to the window then.
+	var player := get_tree().get_first_node_in_group(&"player") as PlayerController
+	_mouse_hint.visible = Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and DisplayServer.get_name() != "headless" \
+			and not (player and player.is_input_locked())
 
 
 func show_toast(text: String) -> void:

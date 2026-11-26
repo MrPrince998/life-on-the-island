@@ -43,6 +43,7 @@ static func reset_game_state() -> void:
 	WeatherManager.reset()
 	Friendship.reset()
 	QuestLog.reset()
+	RequestBoard.reset()
 
 
 func _ready() -> void:

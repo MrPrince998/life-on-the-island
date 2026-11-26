@@ -7,6 +7,10 @@ extends Node
 ## "harvest", "catch_fish", "sell_crop", "sell_fish"...). Quests never fail or expire,
 ## and the quest log never changes in-game time.
 ##
+## Runtime quests: quests made during play rather than data files, such as the notice
+## board's daily requests (RequestBoard). They are simple deliveries, are saved with their
+## own definition, and are tidied away the morning after they're finished.
+##
 ## Saved through SaveManager's "persistent" group (save key "quests").
 
 signal quest_started(quest: QuestData)
@@ -26,6 +30,8 @@ var catalog: QuestCatalog
 var _state: Dictionary = {}
 ## Active and finished quests, in the order they started.
 var _order: Array[StringName] = []
+## Runtime quests by id (see the note at the top).
+var _runtime: Dictionary = {}
 
 
 func _ready() -> void:
@@ -36,6 +42,7 @@ func _ready() -> void:
 	InventoryManager.money_changed.connect(func(_m: int) -> void: _check_all())
 	# Fish-species steps follow the fish journal.
 	Journal.fish_recorded.connect(_on_fish_recorded)
+	ActivityClock.day_started.connect(func(_day: int) -> void: _forget_finished_runtime())
 	reset()
 
 
@@ -43,6 +50,7 @@ func _ready() -> void:
 func reset() -> void:
 	_state.clear()
 	_order.clear()
+	_runtime.clear()
 	if catalog == null:
 		return
 	for quest in catalog.quests:
@@ -53,6 +61,16 @@ func reset() -> void:
 
 
 # ---- Reading ----------------------------------------------------------------------
+
+## A quest by id: from the catalog, or a runtime quest.
+func get_quest(quest_id: StringName) -> QuestData:
+	var quest := catalog.get_quest(quest_id) if catalog else null
+	return quest if quest else _runtime.get(quest_id) as QuestData
+
+
+func is_runtime(quest_id: StringName) -> bool:
+	return _runtime.has(quest_id)
+
 
 func get_status(quest_id: StringName) -> Status:
 	return int(_state.get(quest_id, {}).get("status", Status.INACTIVE)) as Status
@@ -71,7 +89,7 @@ func get_active_quests() -> Array[QuestData]:
 	var result: Array[QuestData] = []
 	for quest_id in _order:
 		if is_active(quest_id):
-			result.append(catalog.get_quest(quest_id))
+			result.append(get_quest(quest_id))
 	return result
 
 
@@ -80,7 +98,7 @@ func get_step_index(quest_id: StringName) -> int:
 
 
 func get_current_step(quest_id: StringName) -> QuestStep:
-	var quest := catalog.get_quest(quest_id)
+	var quest := get_quest(quest_id)
 	var index := get_step_index(quest_id)
 	return quest.steps[index] if quest and index < quest.steps.size() else null
 
@@ -110,10 +128,10 @@ func record_event(event_id: StringName, amount: int = 1) -> void:
 			continue
 		if step.kind == QuestStep.Kind.EVENT and step.target == event_id:
 			_state[quest_id]["count"] = int(_state[quest_id]["count"]) + amount
-			_check(catalog.get_quest(quest_id))
+			_check(get_quest(quest_id))
 		elif step.or_event == event_id:
 			_state[quest_id]["or_done"] = true
-			_check(catalog.get_quest(quest_id))
+			_check(get_quest(quest_id))
 
 
 ## Starts a quest (if it hasn't started yet). Returns true if it started now.
@@ -140,7 +158,7 @@ func _start(quest: QuestData, announce: bool) -> void:
 func _check_all() -> void:
 	for quest_id in _order.duplicate():
 		if is_active(quest_id):
-			_check(catalog.get_quest(quest_id))
+			_check(get_quest(quest_id))
 
 
 func _check(quest: QuestData) -> void:
@@ -259,9 +277,9 @@ func get_turn_in_for(npc_id: StringName) -> QuestData:
 		if step == null or step.target != npc_id:
 			continue
 		if step.kind == QuestStep.Kind.TALK:
-			return catalog.get_quest(quest_id)
+			return get_quest(quest_id)
 		if step.kind == QuestStep.Kind.DELIVER and _has_delivery(step):
-			return catalog.get_quest(quest_id)
+			return get_quest(quest_id)
 	return null
 
 
@@ -278,7 +296,7 @@ func get_waiting_step_for(npc_id: StringName) -> QuestStep:
 ## Hands over the current TALK/DELIVER step (taking the items) and returns what the
 ## villager says. Empty when nothing could be handed over.
 func turn_in(quest_id: StringName) -> PackedStringArray:
-	var quest := catalog.get_quest(quest_id) if catalog else null
+	var quest := get_quest(quest_id)
 	if quest == null or not is_active(quest_id):
 		return PackedStringArray()
 	var step := get_current_step(quest_id)
@@ -297,6 +315,76 @@ func turn_in(quest_id: StringName) -> PackedStringArray:
 	if lines.is_empty():
 		lines = PackedStringArray(["Thank you!"])
 	return lines
+
+
+# ---- Runtime quests -----------------------------------------------------------------
+
+## Adds a quest made during play and starts it (announced like any new quest). Only
+## simple quests are supported: one or more DELIVER/TALK steps and the usual rewards.
+func add_runtime_quest(quest: QuestData) -> bool:
+	if quest == null or quest.id == &"" or get_quest(quest.id) != null:
+		return false
+	_runtime[quest.id] = quest
+	_start(quest, true)
+	return true
+
+
+## Finished runtime quests are let go of the next morning (and never saved).
+func _forget_finished_runtime() -> void:
+	for quest_id: StringName in _runtime.keys():
+		if is_done(quest_id):
+			_runtime.erase(quest_id)
+			_state.erase(quest_id)
+			_order.erase(quest_id)
+
+
+static func runtime_to_dict(quest: QuestData) -> Dictionary:
+	var steps: Array = []
+	for step in quest.steps:
+		var items := {}
+		for item_id in step.items:
+			items[String(item_id)] = int(step.items[item_id])
+		steps.append({"text": step.text, "kind": int(step.kind), "target": String(step.target), "items": items, "lines": Array(step.lines), "minutes": step.minutes})
+	return {
+		"id": String(quest.id), "title": quest.title, "giver": quest.giver, "giver_id": String(quest.giver_id),
+		"description": quest.description, "reward_coins": quest.reward_coins, "reward_friendship": quest.reward_friendship,
+		"complete_message": quest.complete_message, "steps": steps,
+	}
+
+
+static func runtime_from_dict(data: Dictionary) -> QuestData:
+	var steps: Variant = data.get("steps", [])
+	if str(data.get("id", "")) == "" or typeof(steps) != TYPE_ARRAY or (steps as Array).is_empty():
+		return null
+	var quest := QuestData.new()
+	quest.id = StringName(str(data.get("id")))
+	quest.title = str(data.get("title", ""))
+	quest.giver = str(data.get("giver", ""))
+	quest.giver_id = StringName(str(data.get("giver_id", "")))
+	quest.description = str(data.get("description", ""))
+	quest.reward_coins = maxi(int(data.get("reward_coins", 0)), 0)
+	quest.reward_friendship = maxi(int(data.get("reward_friendship", 0)), 0)
+	quest.complete_message = str(data.get("complete_message", ""))
+	for entry: Variant in steps:
+		if typeof(entry) != TYPE_DICTIONARY:
+			return null
+		var step := QuestStep.new()
+		step.text = str(entry.get("text", ""))
+		step.kind = clampi(int(entry.get("kind", QuestStep.Kind.DELIVER)), 0, QuestStep.Kind.size() - 1) as QuestStep.Kind
+		if not step.kind in [QuestStep.Kind.DELIVER, QuestStep.Kind.TALK]:
+			return null
+		step.target = StringName(str(entry.get("target", "")))
+		var items := {}
+		var saved_items: Variant = entry.get("items", {})
+		if typeof(saved_items) == TYPE_DICTIONARY:
+			for item_id: Variant in saved_items:
+				items[StringName(str(item_id))] = maxi(int(saved_items[item_id]), 1)
+		step.items = items
+		var lines: Variant = entry.get("lines", [])
+		step.lines = PackedStringArray(lines) if typeof(lines) == TYPE_ARRAY else PackedStringArray()
+		step.minutes = maxi(int(entry.get("minutes", 0)), 0)
+		quest.steps.append(step)
+	return quest
 
 
 func _has_delivery(step: QuestStep) -> bool:
@@ -322,12 +410,19 @@ func get_save_key() -> String:
 
 func save_state() -> Dictionary:
 	var quests := {}
+	var runtime := {}
 	for quest_id in _state:
+		# Finished runtime quests aren't kept; active ones are saved with their definition.
+		if _runtime.has(quest_id):
+			if not is_active(quest_id):
+				continue
+			runtime[String(quest_id)] = runtime_to_dict(_runtime[quest_id])
 		quests[String(quest_id)] = (_state[quest_id] as Dictionary).duplicate()
 	var order: Array[String] = []
 	for quest_id in _order:
-		order.append(String(quest_id))
-	return {"version": SAVE_VERSION, "quests": quests, "order": order}
+		if quests.has(String(quest_id)):
+			order.append(String(quest_id))
+	return {"version": SAVE_VERSION, "quests": quests, "order": order, "runtime": runtime}
 
 
 func load_state(data: Dictionary) -> void:
@@ -336,7 +431,17 @@ func load_state(data: Dictionary) -> void:
 		return
 	_state.clear()
 	_order.clear()
-	for quest in catalog.quests:
+	_runtime.clear()
+	var saved_runtime: Variant = data.get("runtime", {})
+	if typeof(saved_runtime) == TYPE_DICTIONARY:
+		for quest_id: Variant in saved_runtime:
+			var made := runtime_from_dict(saved_runtime[quest_id]) if typeof(saved_runtime[quest_id]) == TYPE_DICTIONARY else null
+			if made and catalog.get_quest(made.id) == null:
+				_runtime[made.id] = made
+	var all_quests: Array[QuestData] = catalog.quests.duplicate()
+	for quest: QuestData in _runtime.values():
+		all_quests.append(quest)
+	for quest in all_quests:
 		var entry: Variant = (saved as Dictionary).get(String(quest.id))
 		if typeof(entry) == TYPE_DICTIONARY:
 			_state[quest.id] = {
@@ -352,7 +457,7 @@ func load_state(data: Dictionary) -> void:
 			var id := StringName(str(quest_id))
 			if _state.has(id) and not id in _order:
 				_order.append(id)
-	for quest in catalog.quests:
+	for quest in all_quests:
 		if get_status(quest.id) != Status.INACTIVE and not quest.id in _order:
 			_order.append(quest.id)
 	# Quests added after this save was made: start them if they would have started.
@@ -360,6 +465,6 @@ func load_state(data: Dictionary) -> void:
 		if not (saved as Dictionary).has(String(quest.id)):
 			if quest.starts_active or (quest.start_flag != &"" and GameManager.has_flag(quest.start_flag)):
 				_start(quest, false)
-	for quest in catalog.quests:
+	for quest in all_quests:
 		quest_updated.emit(quest)
 	_check_all()

@@ -295,6 +295,8 @@ func _cheer_villagers() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"toggle_ukulele"):
+		if not _playing and _player.has_method(&"is_hands_busy") and _player.is_hands_busy():
+			return
 		if _playing or not _player.is_input_locked():
 			toggle()
 			get_viewport().set_input_as_handled()

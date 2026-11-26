@@ -10,6 +10,7 @@
 [ext_resource type="Resource" path="res://data/npcs/nana_bea.tres" id="13_nana_bea"]
 [ext_resource type="Resource" path="res://data/npcs/pip.tres" id="14_pip"]
 [ext_resource type="Resource" path="res://data/npcs/ambrose.tres" id="15_ambrose"]
+[ext_resource type="Resource" path="res://data/npcs/bram.tres" id="16_bram"]
 
 [node name="Villagers" type="Node3D"]
 script = ExtResource("4_villagers")
@@ -37,3 +38,6 @@ data = ExtResource("14_pip")
 
 [node name="MrAmbrose" parent="." instance=ExtResource("1_villager")]
 data = ExtResource("15_ambrose")
+
+[node name="Bram" parent="." instance=ExtResource("1_villager")]
+data = ExtResource("16_bram")

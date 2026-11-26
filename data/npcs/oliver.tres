@@ -43,6 +43,7 @@ intro_action_line = 2
 later_lines = PackedStringArray("Calm water, patient hands. That's all fishing ever was.", "Mackerel bite best in the morning. Your grandpa swore by it.", "Emma at the General Store buys whatever you catch. She pays fair.", "Some nights the middle of the lake glows. Your grandfather never told me why…")
 schedule = Array[ExtResource("2_entry")]([SubResource("Entry_dock_morning"), SubResource("Entry_bench"), SubResource("Entry_dock_evening")])
 story_lines = {
+&"lakeside_shared_fish": PackedStringArray("That little corner you cleared feels like home again.", "Your grandpa would have loved our fishing afternoon. Shall we do it again sometime?"),
 &"journal_page_9": PackedStringArray("Go on, then. Luna will know what to do with those stones."),
 &"lighthouse_lit": PackedStringArray("I watched it from the dock last night, sweeping over the water like it used to.", "Your grandpa would've cried. I did, a little. Don't tell anyone.")
 }

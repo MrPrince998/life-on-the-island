@@ -58,7 +58,9 @@ func _on_interact(interactor: Node) -> void:
 	var minutes := get_minutes_for_activity()
 	ActivityClock.advance_minutes(minutes, activity_id)
 	if mode == Mode.SLEEP_UNTIL_MORNING:
-		GameManager.notify("You slept soundly. Good morning!  %s  %s" % [ActivityClock.get_time_string(), WeatherManager.get_morning_line()])
+		var morning := "You slept soundly. Good morning!  %s  %s" % [ActivityClock.get_time_string(), WeatherManager.get_morning_line()]
+		var board_note := RequestBoard.get_morning_note()
+		GameManager.notify(morning + ("  " + board_note if not board_note.is_empty() else ""))
 	else:
 		GameManager.notify("You rested for %s. It's now %s." % [_format_duration(minutes), ActivityClock.get_time_string()])
 

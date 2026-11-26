@@ -21,3 +21,6 @@ collision_height = 0.4
 wind_strength = 0.015
 sway_start = 0.35
 autumn_leaves = false
+choppable = true
+chop_hits = 5
+log_yield = Vector2i(3,5)

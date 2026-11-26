@@ -273,6 +273,7 @@ func _box(xform: Transform3D, size: Vector3, color: Color) -> void:
 func _commit(mesh_name: String) -> void:
 	var material := StandardMaterial3D.new()
 	material.vertex_color_use_as_albedo = true
+	material.vertex_color_is_srgb = true
 	material.roughness = 0.9
 	var mesh_instance := MeshInstance3D.new()
 	mesh_instance.name = mesh_name

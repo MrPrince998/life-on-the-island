@@ -26,7 +26,7 @@ const RUN_METRES_PER_SECOND_AT_SCALE_ONE := 2.686 / 0.7
 const RUN_MIN_PLAYBACK := 0.6
 const RUN_MAX_PLAYBACK := 1.6
 ## Actions that play once and then return to locomotion.
-const ONE_SHOT_ACTIONS: Array[StringName] = [&"fish_cast", &"farm_swing", &"wave", &"stand_up"]
+const ONE_SHOT_ACTIONS: Array[StringName] = [&"fish_cast", &"farm_swing", &"wave", &"stand_up", &"carry_lift", &"carry_reach"]
 
 @export var blend_time: float = 0.2
 ## Longer blend when going from walking back to standing, so the legs settle smoothly.
@@ -42,6 +42,8 @@ var _action_active: bool = false
 var _jumping: bool = false
 ## Clip used when standing still. Holding the rod switches this to "fish_hold".
 var _idle_clip: StringName = &"idle"
+## The walking clip (carrying a crate or pushing the cart swaps it).
+var _walk_clip: StringName = &"walk"
 ## Seated: sit_down plays, then sit_idle loops until stand() is called.
 var _seated: bool = false
 
@@ -60,6 +62,10 @@ func _ready() -> void:
 func set_idle_clip(clip: StringName) -> void:
 	if LIBRARY.has_animation(clip):
 		_idle_clip = clip
+
+
+func set_walk_clip(clip: StringName) -> void:
+	_walk_clip = clip if LIBRARY.has_animation(clip) else &"walk"
 
 
 func get_current_animation() -> StringName:
@@ -87,7 +93,7 @@ func update_locomotion(speed: float, on_floor: bool, sprinting: bool) -> void:
 	elif (running and speed > run_exit_speed) or (sprinting and speed > run_enter_speed):
 		_play(&"run", clampf(speed / RUN_METRES_PER_SECOND_AT_SCALE_ONE, RUN_MIN_PLAYBACK, RUN_MAX_PLAYBACK))
 	else:
-		_play(&"walk", clampf(speed / WALK_METRES_PER_SECOND_AT_SCALE_ONE, MIN_PLAYBACK, MAX_PLAYBACK))
+		_play(_walk_clip, clampf(speed / WALK_METRES_PER_SECOND_AT_SCALE_ONE, MIN_PLAYBACK, MAX_PLAYBACK))
 
 
 ## Starts a named action. Returns false if the name is unknown.

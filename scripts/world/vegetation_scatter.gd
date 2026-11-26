@@ -34,6 +34,11 @@ var _instance_counts: Dictionary = {}
 var _placements: Dictionary = {}
 ## Circles (x, z, radius) around buildings and props, from nodes in group "keep_clear".
 var _clear_zones: Array[Vector3] = []
+## Trees you can fell (FoliageLayer.choppable), per layer id:
+##   {layer, mesh, mesh_xform, material, slots: Array[[MultiMesh, slot]], shapes: Array[CollisionShape3D]}
+var _choppable: Dictionary = {}
+## Choppable trees by 8 m grid cell: Vector2i -> Array of [layer_id, index].
+var _tree_grid: Dictionary = {}
 
 
 func _ready() -> void:
@@ -50,6 +55,83 @@ func get_instance_count(layer_id: StringName) -> int:
 	return _instance_counts.get(layer_id, 0)
 
 
+# ---- Woodcutting (ForestService) ---------------------------------------------------
+
+## The layer ids of trees you can fell.
+func get_choppable_layers() -> Array:
+	return _choppable.keys()
+
+
+## The FoliageLayer of a choppable layer id (null if it isn't one).
+func get_choppable_layer(layer_id: StringName) -> FoliageLayer:
+	var entry: Dictionary = _choppable.get(layer_id, {})
+	return entry.get("layer")
+
+
+## {mesh, mesh_xform, material} to draw one tree of the layer on its own (a falling tree).
+func get_tree_visual(layer_id: StringName) -> Dictionary:
+	var entry: Dictionary = _choppable.get(layer_id, {})
+	if entry.is_empty():
+		return {}
+	return {"mesh": entry.mesh, "mesh_xform": entry.mesh_xform, "material": entry.material}
+
+
+## The choppable tree whose trunk is nearest to `point` (world x/z) within `radius`,
+## as {layer_id, index, transform} ({} when none). `skip(layer_id, index) -> bool` can rule
+## trees out (felled ones).
+func find_tree_near(point: Vector3, radius: float, skip: Callable = Callable()) -> Dictionary:
+	var p := Vector2(point.x, point.z)
+	var best := {}
+	var best_d := radius
+	var cell := Vector2i(floori(p.x / 8.0), floori(p.y / 8.0))
+	var reach := int(ceil(radius / 8.0))
+	for dx in range(-reach, reach + 1):
+		for dz in range(-reach, reach + 1):
+			for entry: Array in _tree_grid.get(cell + Vector2i(dx, dz), []):
+				var t: Transform3D = _placements[entry[0]][entry[1]]
+				var d := Vector2(t.origin.x, t.origin.z).distance_to(p)
+				if d < best_d and (not skip.is_valid() or not skip.call(entry[0], entry[1])):
+					best_d = d
+					best = {"layer_id": entry[0], "index": entry[1], "transform": t}
+	return best
+
+
+## The index of the tree of `layer_id` standing at world x/z `at` (within 0.5 m), or -1.
+func find_tree_at(layer_id: StringName, at: Vector2) -> int:
+	var cell := Vector2i(floori(at.x / 8.0), floori(at.y / 8.0))
+	for entry: Array in _tree_grid.get(cell, []):
+		if entry[0] == layer_id:
+			var t: Transform3D = _placements[layer_id][entry[1]]
+			if Vector2(t.origin.x, t.origin.z).distance_to(at) < 0.5:
+				return entry[1]
+	return -1
+
+
+## Shows a tree at a fraction of its size: 0 = gone (felled), 1 = full grown. It only
+## blocks the way when full grown. `lean` tips it slightly (radians, toward `lean_dir`)
+## for the shake when the axe bites.
+func set_tree_growth(layer_id: StringName, index: int, growth: float, lean: float = 0.0, lean_dir: Vector3 = Vector3.FORWARD) -> void:
+	var entry: Dictionary = _choppable.get(layer_id, {})
+	if entry.is_empty() or index < 0 or index >= entry.slots.size():
+		return
+	var placed: Transform3D = _placements[layer_id][index]
+	var xform: Transform3D
+	if growth <= 0.001:
+		xform = Transform3D(Basis().scaled(Vector3.ONE * 0.0001), placed.origin + Vector3.DOWN * 50.0)
+	else:
+		var basis := placed.basis * growth
+		if absf(lean) > 0.0001:
+			var axis := Vector3.UP.cross(lean_dir.normalized())
+			if axis.length() > 0.01:
+				basis = Basis(axis.normalized(), lean) * basis
+		xform = Transform3D(basis, placed.origin)
+	var slot: Array = entry.slots[index]
+	if slot[0]:
+		(slot[0] as MultiMesh).set_instance_transform(slot[1], xform * (entry.mesh_xform as Transform3D))
+	if index < entry.shapes.size() and entry.shapes[index]:
+		(entry.shapes[index] as CollisionShape3D).disabled = growth < 0.999
+
+
 func generate() -> void:
 	for node in _generated:
 		if is_instance_valid(node):
@@ -58,6 +140,8 @@ func generate() -> void:
 	_blocking.clear()
 	_instance_counts.clear()
 	_placements.clear()
+	_choppable.clear()
+	_tree_grid.clear()
 	_shape = IslandShape.shared()
 	_collect_clear_zones()
 
@@ -369,9 +453,22 @@ func _build_layer(layer: FoliageLayer, transforms: Array[Transform3D], colors: A
 	if material:
 		_setup_foliage_material(material, layer, source, aabb)
 	var chunk_size := SMALL_CHUNK if layer.visibility_range > 0.0 else BIG_CHUNK
+	var choppable := layer.choppable and count_id == layer.id
+	if choppable:
+		var slots: Array = []
+		slots.resize(transforms.size())
+		_choppable[count_id] = {"layer": layer, "mesh": mesh, "mesh_xform": mesh_xform, "material": material, "slots": slots, "shapes": []}
+		for i in transforms.size():
+			var o := transforms[i].origin
+			var cell := Vector2i(floori(o.x / 8.0), floori(o.z / 8.0))
+			if not _tree_grid.has(cell):
+				_tree_grid[cell] = []
+			_tree_grid[cell].append([count_id, i])
 	_add_chunks(layer, transforms, colors, mesh, mesh_xform, material, chunk_size, count_id)
 	if body and layer.collision_radius > 0.0:
-		_add_collision(layer, transforms, body)
+		var shapes := _add_collision(layer, transforms, body)
+		if choppable:
+			_choppable[count_id].shapes = shapes
 
 
 func _setup_foliage_material(material: ShaderMaterial, layer: FoliageLayer, source: Dictionary, aabb: AABB) -> void:
@@ -410,6 +507,10 @@ func _add_chunks(layer: FoliageLayer, transforms: Array[Transform3D], colors: Ar
 		var instance := MultiMeshInstance3D.new()
 		instance.name = "%s_%d_%d" % [count_id, key.x, key.y]
 		instance.multimesh = multimesh
+		if _choppable.has(count_id):
+			var slots: Array = _choppable[count_id].slots
+			for j in indices.size():
+				slots[indices[j]] = [multimesh, j]
 		if material:
 			instance.material_override = material
 		instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if layer.cast_shadows else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -420,7 +521,8 @@ func _add_chunks(layer: FoliageLayer, transforms: Array[Transform3D], colors: Ar
 		_generated.append(instance)
 
 
-func _add_collision(layer: FoliageLayer, transforms: Array[Transform3D], body: StaticBody3D) -> void:
+func _add_collision(layer: FoliageLayer, transforms: Array[Transform3D], body: StaticBody3D) -> Array:
+	var shapes: Array = []
 	for t in transforms:
 		var s := t.basis.get_scale().x
 		var cylinder := CylinderShape3D.new()
@@ -430,6 +532,8 @@ func _add_collision(layer: FoliageLayer, transforms: Array[Transform3D], body: S
 		cs.shape = cylinder
 		cs.position = t.origin + Vector3.UP * cylinder.height * 0.5
 		body.add_child(cs)
+		shapes.append(cs)
+	return shapes
 
 
 ## Floating plants (lily pads) are often modelled tilted. This fits a plane through the

@@ -19,3 +19,6 @@ wind_strength = 0.05
 sway_start = 0.45
 sink = 0.03
 autumn_leaves = false
+choppable = true
+chop_hits = 4
+log_yield = Vector2i(2,3)

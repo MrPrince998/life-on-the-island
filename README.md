@@ -39,6 +39,8 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
 
 ## Things to try
 
+- **A quiet corner at Moonlit Lake:** beside the path southwest of the fishing dock, clear three branch piles with **E**, then choose a bench facing the lake or sunset. Use the invitation sign to meet Oliver at the dock and catch a fish beside him for a daily friendship bonus. Birds return the next morning; the bench and progress are saved.
+
 - Walk anywhere. The clock **does not move** while you explore.
 - Sit on the porch steps, the lakeshore bench or the end of the dock (**E**). Sitting is free: no time passes. Press **E** again or walk to stand up.
 - Sleep in the bed inside the cottage: time skips to 6:00 AM the next day and the sky changes.
@@ -55,6 +57,12 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
 - **Villager quests:** when a villager has a request, a **!** floats above them (usually once you're friends, 1 heart). Chat to accept;
   when you have what they asked for, a **?** shows. Talk to them to hand it over. Oliver (Fish Tales, The One That Got Away), Mia (Sunny Seeds),
   Emma (Back in Stock), Theo (A Bench for Elias, after the bridge), Nana Bea (her Garden Pie recipe), Pip, Luna and Mr. Ambrose all have one.
+- **Woodcutting:** with an axe, stand by any tree and press E. A few swings and it falls away from you, leaving a stump. Cut the trunk into logs, then pick them up. The stump sprouts again and is a full tree a week later.
+- **Bram the blacksmith:** his forge is just south of the village square. He either forges a tool from your materials (cheaper; you wait while he works) or sells one ready-made (dearer; no wait). The Axe takes 4 wood; the Steel Axe takes 6 logs and needs half the swings.
+- **Shop view (F):** at the General Store counter or Bram's forge, press F. The camera frames the shop and its keeper, and the shop window opens at the side.
+- **Daily notice board:** in the village square. Each morning, villagers you've met pin small requests on it ("Nana Bea would love 3 Carrots for a hearty stew").
+  Press **E** to read it and take up to 3 requests; bring the things to that villager for coins and friendship. A **!** over the board means new requests.
+  Requests only ask for things you can get this season, never run out once taken, and untaken ones are swapped for new ones after 3 days.
 - **Friendship:** chat with villagers once a day and give gifts (**G** next to them, one gift each per day). Everyone has favourites, and hearts (up to 5) show above them while you chat. Good friends share more personal things.
 - **Quests** are listed under the minimap: Grandpa's Garden, Friendly Faces, Oliver's Lessons (after he gives you the rod) and Mend the Greenhouse. Steps tick themselves off as you play.
 - **Seasons:** every 28 days the season turns (spring, summer, autumn, winter). Summer is lush, autumn turns the meadows gold and the
@@ -103,6 +111,7 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
 | `RestorationSite` + `BuildingData` | `scripts/systems/restoration/`, `data/buildings/*.tres` | Run-down look, repair cost and time; sets the story flag `restored_<id>`. |
 | `DailyProduce` | `scripts/systems/farming/daily_produce.gd` | Things that make an item each morning (compost bin, greenhouse seedling trays). |
 | `QuestLog` (autoload), `QuestData` | `scripts/systems/quest_log.gd`, `data/quests/*.tres` | Quests and their steps (story flags, items, coins or events like "dig"/"catch_fish"); the tracker under the minimap (`scripts/ui/quest_tracker.gd`) shows them. |
+| `RequestBoard` (autoload), `RequestBoardPanel`, `NoticeBoardSpot` | `scripts/systems/requests/request_board.gd`, `scripts/ui/request_board_panel.gd`, `scripts/world/notice_board_spot.gd` | The village notice board's daily requests. Taken requests become QuestLog *runtime quests* (deliveries saved with their own definition), so the tracker, the villager **?** and turn-in work like any quest. |
 | `Friendship` (autoload), `GiftPanel` | `scripts/systems/friendship.gd`, `scripts/ui/gift_panel.gd` | Hearts per villager (daily chat, gifts), gift tastes from `NPCData`, story flags `hearts_<id>_<n>`. |
 | `UkuleleController`, `MelodyData` | `scripts/systems/music/`, `data/melodies/*.tres` | Grandpa's ukulele: synthesized plucked-string sound, free play, melodies and their time rules. |
 | `JournalPanel` | `scripts/ui/journal_panel.gd` | The collection journal (J): fish, crops harvested, villagers' hearts and discovered tastes, Grandpa's pages, songs. |

@@ -51,6 +51,14 @@ extends Resource
 @export var collision_radius: float = 0.0
 @export var collision_height: float = 0.5
 
+@export_group("Woodcutting")
+## Trees you can fell with an axe (ForestService). Off for bushes, rocks and small plants.
+@export var choppable: bool = false
+## Axe swings to fell one (a sharper axe needs fewer).
+@export var chop_hits: int = 5
+## Logs a felled tree is cut into (min, max).
+@export var log_yield: Vector2i = Vector2i(3, 5)
+
 @export_group("Rendering")
 ## Keep the model's own material (normal maps etc.) instead of the swaying foliage shader.
 ## Use for rocks and other solid props. Tint is not applied in this mode.

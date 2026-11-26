@@ -1,0 +1,180 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/lakeside_project.gd" id="project"]
+[ext_resource type="Script" path="res://scripts/world/lakeside_action.gd" id="action"]
+[ext_resource type="Script" path="res://scripts/world/story_activity.gd" id="work"]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="fit"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/branch-pile.glb" id="branches"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/flowers_cluster.glb" id="flowers"]
+[ext_resource type="PackedScene" path="res://scenes/props/garden_bench.tscn" id="bench"]
+[ext_resource type="PackedScene" path="res://scenes/props/seagull.tscn" id="bird"]
+
+[ext_resource type="PackedScene" path="res://source_assets/tripo/signpost.glb" id="sign"]
+
+[sub_resource type="SphereShape3D" id="reach"]
+radius = 0.8
+
+[node name="LakesideProject" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("project")
+metadata/clear_radius = 5.0
+
+[node name="Signpost" type="Node3D" parent="."]
+position = Vector3(0, 0, 2)
+script = ExtResource("fit")
+model = ExtResource("sign")
+size = 1.4
+collision = 0
+
+[node name="Sign" type="Label3D" parent="."]
+position = Vector3(0, 2.3, 1.6)
+billboard = 1
+font_size = 32
+pixel_size = 0.009
+modulate = Color(1, 0.91, 0.68, 1)
+outline_size = 8
+visibility_range_end = 28.0
+
+[node name="Bench" parent="." instance=ExtResource("bench")]
+position = Vector3(0, 0, -1)
+
+[node name="SitRest" parent="Bench"]
+interaction_id = &"lakeside_project_bench"
+
+[node name="Flowers" type="Node3D" parent="."]
+position = Vector3(1.5, 0, -1)
+script = ExtResource("fit")
+model = ExtResource("flowers")
+size = 1.3
+collision = 0
+
+[node name="Birds" type="Node3D" parent="."]
+
+[node name="Gull1" parent="Birds" instance=ExtResource("bird")]
+position = Vector3(0, 7, -6)
+radius = 5.0
+speed_degrees = 17.0
+
+[node name="Gull2" parent="Birds" instance=ExtResource("bird")]
+position = Vector3(0, 8, -6)
+radius = 7.0
+start_degrees = 130.0
+speed_degrees = 13.0
+
+[node name="Debris0" type="Node3D" parent="."]
+position = Vector3(-2, 0, -1)
+
+[node name="Model" type="Node3D" parent="Debris0"]
+script = ExtResource("fit")
+model = ExtResource("branches")
+size = 1.6
+collision = 0
+
+[node name="Clear" type="Area3D" parent="Debris0"]
+position = Vector3(0, 0.5, 0)
+script = ExtResource("work")
+interaction_id = &"lakeside_clear_0"
+prompt_text = "Clear the fallen branches"
+sets_flag = &"lakeside_clear_0"
+work_minutes = 15
+work_swings = 2
+done_message = "A little more room by the water. Clear all three piles, then choose a place to sit."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Debris0/Clear"]
+shape = SubResource("reach")
+
+[node name="Debris1" type="Node3D" parent="."]
+position = Vector3(2, 0, 0)
+
+[node name="Model" type="Node3D" parent="Debris1"]
+script = ExtResource("fit")
+model = ExtResource("branches")
+size = 1.6
+collision = 0
+
+[node name="Clear" type="Area3D" parent="Debris1"]
+position = Vector3(0, 0.5, 0)
+script = ExtResource("work")
+interaction_id = &"lakeside_clear_1"
+prompt_text = "Clear the fallen branches"
+sets_flag = &"lakeside_clear_1"
+work_minutes = 15
+work_swings = 2
+done_message = "A little more room by the water. Clear all three piles, then choose a place to sit."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Debris1/Clear"]
+shape = SubResource("reach")
+
+[node name="Debris2" type="Node3D" parent="."]
+position = Vector3(0, 0, 2)
+
+[node name="Model" type="Node3D" parent="Debris2"]
+script = ExtResource("fit")
+model = ExtResource("branches")
+size = 1.6
+collision = 0
+
+[node name="Clear" type="Area3D" parent="Debris2"]
+position = Vector3(0, 0.5, 0)
+script = ExtResource("work")
+interaction_id = &"lakeside_clear_2"
+prompt_text = "Clear the fallen branches"
+sets_flag = &"lakeside_clear_2"
+work_minutes = 15
+work_swings = 2
+done_message = "A little more room by the water. Clear all three piles, then choose a place to sit."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Debris2/Clear"]
+shape = SubResource("reach")
+
+[node name="LakeChoice" type="Area3D" parent="."]
+position = Vector3(-2, 0.6, 1)
+script = ExtResource("action")
+interaction_id = &"lakeside_lakechoice"
+
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LakeChoice"]
+shape = SubResource("reach")
+
+[node name="Label" type="Label3D" parent="LakeChoice"]
+position = Vector3(0, 0.5, 0)
+text = "Face the lake"
+billboard = 1
+font_size = 26
+pixel_size = 0.008
+visibility_range_end = 12.0
+
+[node name="SunsetChoice" type="Area3D" parent="."]
+position = Vector3(2, 0.6, 1)
+script = ExtResource("action")
+interaction_id = &"lakeside_sunsetchoice"
+sunset = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SunsetChoice"]
+shape = SubResource("reach")
+
+[node name="Label" type="Label3D" parent="SunsetChoice"]
+position = Vector3(0, 0.5, 0)
+text = "Face the sunset"
+billboard = 1
+font_size = 26
+pixel_size = 0.008
+visibility_range_end = 12.0
+
+[node name="Invite" type="Area3D" parent="."]
+position = Vector3(0, 0.6, 2)
+script = ExtResource("action")
+interaction_id = &"lakeside_invite"
+invitation = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invite"]
+shape = SubResource("reach")
+
+[node name="Label" type="Label3D" parent="Invite"]
+position = Vector3(0, 0.5, 0)
+text = "Invite Oliver"
+billboard = 1
+font_size = 26
+pixel_size = 0.008
+visibility_range_end = 12.0
+
+[editable path="Bench"]
