@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+item_id = &"sickle"
+buy_price = 120
+forge_fee = 30
+materials = {
+&"log": 2
+}
+forge_minutes = 60
+pitch = "Rice in Grandpa's paddy again? Then you'll want a sickle. Drain the water, grab a handful of stalks, and draw the blade toward you. A couple of logs for the handle and I'll make one now."

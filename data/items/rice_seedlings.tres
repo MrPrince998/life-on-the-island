@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/rice_seedlings.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"rice_seedlings"
+display_name = "Rice Seedlings"
+description = "A bundle of young rice plants, enough for one row. Flood Grandpa's paddy (the pump at its corner), then plant them. Rice grows in spring, summer and autumn."
+category = 1
+buy_price = 25
+sell_price = 10
+max_stack = 20
+unique = false
+icon = ExtResource("2_icon")

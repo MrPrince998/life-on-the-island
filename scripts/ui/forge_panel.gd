@@ -50,8 +50,8 @@ func open(docked: bool = false) -> void:
 		_window.set_anchors_preset(Control.PRESET_CENTER)
 		_window.offset_left = -360
 		_window.offset_right = 360
-	_window.offset_top = -260
-	_window.offset_bottom = 260
+	_window.offset_top = -330
+	_window.offset_bottom = 330
 	_note.text = "\"Need a tool? Bring me the makings and I'll forge it while you wait, or take one I made earlier.\""
 	visible = true
 	if player:
@@ -264,9 +264,15 @@ func _build() -> void:
 	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_note.add_theme_font_size_override("font_size", 16)
 	box.add_child(_note)
+	# Scrolls once Bram has more tools than fit.
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 430)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	box.add_child(scroll)
 	_cards = VBoxContainer.new()
 	_cards.add_theme_constant_override("separation", 8)
-	box.add_child(_cards)
+	_cards.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(_cards)
 
 	box.add_child(HSeparator.new())
 	var footer := HBoxContainer.new()

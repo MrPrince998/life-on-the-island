@@ -31,7 +31,21 @@
 [ext_resource type="Resource" path="res://data/items/axe.tres" id="i_axe"]
 [ext_resource type="Resource" path="res://data/items/steel_axe.tres" id="i_steel_axe"]
 [ext_resource type="Resource" path="res://data/items/log.tres" id="i_log"]
+[ext_resource type="Resource" path="res://data/items/sickle.tres" id="i_sickle"]
+[ext_resource type="Resource" path="res://data/items/rice_seedlings.tres" id="i_rice_seedlings"]
+[ext_resource type="Resource" path="res://data/items/rice_sheaf.tres" id="i_rice_sheaf"]
+[ext_resource type="Resource" path="res://data/items/paddy_rice.tres" id="i_paddy_rice"]
+[ext_resource type="Resource" path="res://data/items/rice.tres" id="i_rice"]
+[ext_resource type="Resource" path="res://data/items/straw.tres" id="i_straw"]
+[ext_resource type="Resource" path="res://data/items/fish_rice_bowl.tres" id="i_fish_rice_bowl"]
+[ext_resource type="Resource" path="res://data/items/wheat_seed.tres" id="i_wheat_seed"]
+[ext_resource type="Resource" path="res://data/items/wheat_sheaf.tres" id="i_wheat_sheaf"]
+[ext_resource type="Resource" path="res://data/items/wheat_grain.tres" id="i_wheat_grain"]
+[ext_resource type="Resource" path="res://data/items/flour.tres" id="i_flour"]
+[ext_resource type="Resource" path="res://data/items/hoe.tres" id="i_hoe"]
+[ext_resource type="Resource" path="res://data/items/scythe.tres" id="i_scythe"]
+[ext_resource type="Resource" path="res://data/items/fresh_loaf.tres" id="i_fresh_loaf"]
 
 [resource]
 script = ExtResource("1_catalog")
-items = Array[ExtResource("2_item")]([ExtResource("i_turnip_seeds"), ExtResource("i_carrot_seeds"), ExtResource("i_sunflower_seeds"), ExtResource("i_watering_can"), ExtResource("i_wood"), ExtResource("i_wooden_plank"), ExtResource("i_stone"), ExtResource("i_bread"), ExtResource("i_turnip"), ExtResource("i_carrot"), ExtResource("i_sunflower"), ExtResource("i_fertilizer"), ExtResource("i_glowstone_shard"), ExtResource("i_ukulele"), ExtResource("i_grilled_fish"), ExtResource("i_turnip_soup"), ExtResource("i_roasted_carrots"), ExtResource("i_fishermans_stew"), ExtResource("i_sunflower_loaf"), ExtResource("i_garden_pie"), ExtResource("i_tomato_seeds"), ExtResource("i_tomato"), ExtResource("i_pumpkin_seeds"), ExtResource("i_pumpkin"), ExtResource("i_kale_seeds"), ExtResource("i_kale"), ExtResource("i_axe"), ExtResource("i_steel_axe"), ExtResource("i_log")])
+items = Array[ExtResource("2_item")]([ExtResource("i_turnip_seeds"), ExtResource("i_carrot_seeds"), ExtResource("i_sunflower_seeds"), ExtResource("i_watering_can"), ExtResource("i_wood"), ExtResource("i_wooden_plank"), ExtResource("i_stone"), ExtResource("i_bread"), ExtResource("i_turnip"), ExtResource("i_carrot"), ExtResource("i_sunflower"), ExtResource("i_fertilizer"), ExtResource("i_glowstone_shard"), ExtResource("i_ukulele"), ExtResource("i_grilled_fish"), ExtResource("i_turnip_soup"), ExtResource("i_roasted_carrots"), ExtResource("i_fishermans_stew"), ExtResource("i_sunflower_loaf"), ExtResource("i_garden_pie"), ExtResource("i_tomato_seeds"), ExtResource("i_tomato"), ExtResource("i_pumpkin_seeds"), ExtResource("i_pumpkin"), ExtResource("i_kale_seeds"), ExtResource("i_kale"), ExtResource("i_axe"), ExtResource("i_steel_axe"), ExtResource("i_log"), ExtResource("i_sickle"), ExtResource("i_rice_seedlings"), ExtResource("i_rice_sheaf"), ExtResource("i_paddy_rice"), ExtResource("i_rice"), ExtResource("i_straw"), ExtResource("i_fish_rice_bowl"), ExtResource("i_wheat_seed"), ExtResource("i_wheat_sheaf"), ExtResource("i_wheat_grain"), ExtResource("i_flour"), ExtResource("i_hoe"), ExtResource("i_scythe"), ExtResource("i_fresh_loaf")])

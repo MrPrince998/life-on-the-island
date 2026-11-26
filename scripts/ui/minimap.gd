@@ -9,9 +9,9 @@ extends Control
 ## Purely visual: never changes game state or time.
 
 ## Part of the world the map image covers (metres, x/z), and its resolution.
-const MAP_WORLD_MIN := Vector2(-256.0, -256.0)
-const MAP_WORLD_SIZE := 512.0
-const MAP_RESOLUTION := 384
+const MAP_WORLD_MIN := Vector2(-320.0, -320.0)
+const MAP_WORLD_SIZE := 640.0
+const MAP_RESOLUTION := 480
 ## Radius of the area shown around the player (metres).
 @export var view_radius: float = 70.0
 ## Width of the wooden ring around the map (pixels).

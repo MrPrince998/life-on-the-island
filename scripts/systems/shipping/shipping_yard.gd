@@ -52,6 +52,10 @@ const WANTED: Array = [
 	[&"blue_mackerel", 1, 3, &"shard_1"], [&"wooden_plank", 4, 8, &"restored_bridge"],
 	[&"stone", 4, 8, &""], [&"grilled_fish", 2, 3, &"restored_market"],
 	[&"turnip_soup", 1, 2, &"restored_market"],
+	# Field crops, once you've cut that field for the first time (flour also needs the
+	# windmill's millstones).
+	[&"rice_sheaf", 3, 6, &"field_cut_rice"], [&"rice", 2, 4, &"field_cut_rice"],
+	[&"wheat_sheaf", 3, 6, &"field_cut_wheat"], [&"flour", 2, 4, [&"field_cut_wheat", &"restored_windmill"]],
 ]
 
 ## Open orders: {"id": int, "buyer": String, "items": {item_id: count}, "reward": int}.
@@ -166,8 +170,8 @@ func _wanted_now() -> Array:
 	var out := []
 	var season := ActivityClock.get_season_id()
 	for entry in WANTED:
-		var flag: StringName = entry[3]
-		if flag != &"" and not GameManager.has_flag(flag):
+		var flags: Array = entry[3] if entry[3] is Array else [entry[3]]
+		if flags.any(func(flag: StringName) -> bool: return flag != &"" and not GameManager.has_flag(flag)):
 			continue
 		var crop := _crop_for_harvest(entry[0])
 		if crop and not crop.seasons.is_empty() and not crop.seasons.has(season):

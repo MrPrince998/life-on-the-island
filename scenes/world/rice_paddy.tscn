@@ -1,0 +1,125 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/fields/crop_field.gd" id="1_field"]
+[ext_resource type="Resource" path="res://data/field_crops/rice.tres" id="2_rice"]
+[ext_resource type="Script" path="res://scripts/systems/fields/paddy_pump.gd" id="3_pump"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_stone"]
+albedo_color = Color(0.56, 0.54, 0.5, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Mat_iron"]
+albedo_color = Color(0.24, 0.36, 0.3, 1)
+metallic = 0.5
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_wood"]
+albedo_color = Color(0.5, 0.35, 0.21, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_water"]
+transparency = 1
+albedo_color = Color(0.4, 0.58, 0.62, 0.7)
+roughness = 0.05
+
+[sub_resource type="CylinderShape3D" id="Shape_well"]
+height = 0.8
+radius = 0.75
+
+[sub_resource type="SphereShape3D" id="Shape_pump"]
+radius = 1.5
+
+[node name="RicePaddy" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_field")
+field_id = &"grandpa_paddy"
+crop = ExtResource("2_rice")
+metadata/clear_radius = 12.5
+
+[node name="Pump" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 0, -10.6)
+
+[node name="WellRing" type="CSGCylinder3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+radius = 0.7
+height = 0.7
+sides = 14
+material = SubResource("Mat_stone")
+
+[node name="Hollow" type="CSGCylinder3D" parent="Pump/WellRing"]
+operation = 2
+radius = 0.5
+height = 0.8
+sides = 14
+material = SubResource("Mat_stone")
+
+[node name="WellWater" type="CSGCylinder3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+radius = 0.5
+height = 0.04
+sides = 14
+material = SubResource("Mat_water")
+
+[node name="Post" type="CSGBox3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.85, 0.45)
+size = Vector3(0.18, 1.7, 0.18)
+material = SubResource("Mat_iron")
+
+[node name="Spout" type="CSGCylinder3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.45, 1.25, 0.7)
+radius = 0.05
+height = 0.4
+sides = 8
+material = SubResource("Mat_iron")
+
+[node name="Handle" type="CSGBox3D" parent="Pump"]
+transform = Transform3D(0.94, 0.34, 0, -0.34, 0.94, 0, 0, 0, 1, 0.1, 1.72, 0.45)
+size = Vector3(0.9, 0.06, 0.06)
+material = SubResource("Mat_iron")
+
+[node name="Flume" type="CSGBox3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.62, 1.55)
+size = Vector3(0.36, 0.12, 1.9)
+material = SubResource("Mat_wood")
+
+[node name="FlumeChannel" type="CSGBox3D" parent="Pump/Flume"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
+operation = 2
+size = Vector3(0.24, 0.1, 2.0)
+material = SubResource("Mat_wood")
+
+[node name="FlumeLegA" type="CSGBox3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.28, 1.1)
+size = Vector3(0.08, 0.56, 0.08)
+material = SubResource("Mat_wood")
+
+[node name="FlumeLegB" type="CSGBox3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.28, 2.3)
+size = Vector3(0.08, 0.56, 0.08)
+material = SubResource("Mat_wood")
+
+[node name="Body" type="StaticBody3D" parent="Pump"]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Pump/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("Shape_well")
+
+[node name="PaddyPump" type="Area3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.0, 0.6)
+script = ExtResource("3_pump")
+field_path = NodePath("../..")
+interaction_id = &"paddy_pump"
+prompt_text = "Paddy pump"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pump/PaddyPump"]
+shape = SubResource("Shape_pump")
+
+[node name="Sign" type="Label3D" parent="Pump"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 2.05, 0.45)
+billboard = 1
+pixel_size = 0.004
+text = "Grandpa's Paddy"
+font_size = 56
+outline_size = 12
+modulate = Color(1, 0.94, 0.78, 1)
+outline_modulate = Color(0.35, 0.2, 0.1, 1)

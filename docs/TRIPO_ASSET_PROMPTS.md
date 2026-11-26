@@ -388,4 +388,42 @@ The game uses simple built-in shapes for these until the models exist.
 **`log.glb`** — ⬜ not made yet (logs are drawn in code)
 > single cut log about one metre long, rough brown bark, pale wood rings showing on both cut ends, lying on its side
 
-Coming next slice: **`sickle.glb`** (curved harvesting sickle with a wooden handle), rice plants at each growth stage, a rice sheaf (tied bundle), and a pedal threshing machine.
+## Realistic farming, slice 2: rice
+The paddy, rice plants, thresher and huller are built in code until these exist.
+
+**`sickle.glb`** — ⬜ not made yet
+> rice harvesting sickle, thin crescent-shaped steel blade with a finely serrated inner edge, short round wooden handle, lying flat
+
+**`rice_sheaf.glb`** — ⬜ not made yet
+> bundle of freshly cut golden rice stalks tied around the middle with a twist of straw, drooping grain heads at one end, lying on its side
+
+**`pedal_thresher.glb`** — ⬜ not made yet
+> old wooden pedal-powered rice threshing machine, a wide drum studded with wire loops under a curved hood, red painted wooden side panels, a foot treadle at the front, a catching tray below
+
+**`rice_huller.glb`** — ⬜ not made yet
+> small hand-cranked wooden rice huller, a square hopper on top, a big iron crank wheel on one side, a chute at the front pouring into a sack, standing on four legs
+
+**`threshing_shed.glb`** — ⬜ not made yet
+> open-sided farm shed, four rough timber posts, a thick golden thatched roof, packed-earth floor, open on all sides
+
+**`hand_pump_well.glb`** — ⬜ not made yet
+> old cast-iron farm hand pump painted green, on a low round stone well, with a short wooden water trough leading away from the spout
+
+## Realistic farming, slice 3: wheat on Amber Plains
+Wheat plants, the hoe, the scythe and the millstone are built in code until these exist.
+
+**`hoe.glb`** — ⬜ not made yet
+> farm hoe, a broad flat steel blade set at a right angle to a long straight ash handle, lying flat
+
+**`scythe.glb`** — ⬜ not made yet
+> traditional farm scythe, long gently curved steel blade, long wooden snath (handle) with two small hand grips, lying flat
+
+**`wheat_sheaf.glb`** — ⬜ not made yet
+> bundle of cut golden wheat stalks tied round the middle with a twist of straw, plump bearded ears at one end, standing upright
+
+**`flour_sack.glb`** — ⬜ not made yet
+> plump cloth sack of flour tied at the top with string, a faint wheat-ear stamp on the front, a dusting of flour on the cloth
+
+**`millstone.glb`** — ⬜ not made yet
+> round grey stone millstone with a square hole in the centre and grooves cut across its face, leaning on its edge
+

@@ -47,12 +47,18 @@ static func materials_text(recipe: ToolRecipe) -> String:
 	return " + ".join(parts)
 
 
-## "Log" or "Logs" for that many ("Wood" stays "Wood").
+## "Log" or "Logs" for that many ("Wood", "Rice" and "Straw" stay as they are; a
+## "Sheaf" becomes "Sheaves").
 static func item_name(item_id: StringName, amount: int) -> String:
 	var label := ItemDB.get_display_name(item_id)
-	if amount != 1 and not label.ends_with("s") and label != "Wood":
-		label += "s"
-	return label
+	if amount == 1 or label.ends_with("s"):
+		return label
+	for word in ["Wood", "Rice", "Straw", "Flour", "Grain"]:
+		if label.ends_with(word):
+			return label
+	if label.ends_with("f"):
+		return label.trim_suffix("f") + "ves"
+	return label + "s"
 
 
 static func has_materials(recipe: ToolRecipe) -> bool:

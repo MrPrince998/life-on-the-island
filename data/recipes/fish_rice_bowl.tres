@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+id = &"fish_rice_bowl"
+ingredients = {"any_fish": 1, "rice": 2}
+result_item = &"fish_rice_bowl"
+result_amount = 1
+minutes = 30

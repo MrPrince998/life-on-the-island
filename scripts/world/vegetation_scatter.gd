@@ -9,7 +9,7 @@ extends Node3D
 ## - Trees and bushes get simple trunk collision.
 
 const FOLIAGE_SHADER := preload("res://shaders/foliage.gdshader")
-const ISLAND_HALF_EXTENT := Vector2(265.0, 245.0)
+const ISLAND_HALF_EXTENT := Vector2(310.0, 245.0)
 const BIG_CHUNK := 64.0
 const SMALL_CHUNK := 32.0
 ## The fishing dock runs north from the shore into Moonlit Lake (world x, z).
@@ -171,7 +171,8 @@ func generate() -> void:
 		var colors: Array[Color] = []
 		var own: Dictionary = {}
 		var attempts := 0
-		var max_attempts := layer.count * 25
+		# Beach plants get more tries: the coast is a thin band of a big area.
+		var max_attempts := layer.count * (45 if layer.coast > 0.0 else 25)
 		while transforms.size() < layer.count and attempts < max_attempts:
 			attempts += 1
 			var p := _sample_point(layer, rng)

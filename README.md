@@ -59,6 +59,20 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
   Emma (Back in Stock), Theo (A Bench for Elias, after the bridge), Nana Bea (her Garden Pie recipe), Pip, Luna and Mr. Ambrose all have one.
 - **Woodcutting:** with an axe, stand by any tree and press E. A few swings and it falls away from you, leaving a stump. Cut the trunk into logs, then pick them up. The stump sprouts again and is a full tree a week later.
 - **Bram the blacksmith:** his forge is just south of the village square. He either forges a tool from your materials (cheaper; you wait while he works) or sells one ready-made (dearer; no wait). The Axe takes 4 wood; the Steel Axe takes 6 logs and needs half the swings.
+- **Rice, the real way:** Grandpa's paddy is just west of the farm's garden beds.
+  1. Work the **pump** at its corner to flood it (20 min). Buy **Rice Seedlings** at the General Store (spring to autumn).
+  2. Press **E** in a row to plant it (20 min, one bundle a row). Rice grows a day at a time while the paddy holds water (4 days). Drained, it just waits; it never dies.
+  3. When it's golden, **drain** the paddy (the pump again) and cut each row with a **sickle** from Bram (2 logs + 30 coins, or 120 coins). The cut stalks lie in the row.
+  4. Press **E** again to gather and tie them into **Rice Sheaves**.
+  5. In the **Threshing Shed** at the paddy's north end, the pedal **thresher** beats each sheaf into 3 Unhusked Rice + 1 Straw. The **huller** turns 3 Unhusked Rice into 2 Rice.
+  Each step is worth more: sheaves sell for 8, rice for 12 each. Cook it in the Fish and Rice Bowl.
+- **Amber Plains and wheat:** the island now reaches further east. Follow the new path from the farm's east gate to **Amber Plains**, a wide flat stretch of farmland with a 10-row wheat field.
+  1. **Till** a row with a **hoe** from Bram (1 log + 25 coins). It turns to dark furrowed soil (30 min).
+  2. **Sow** it with a sack of **Wheat Seed** from Emma (autumn, winter and spring). No watering: it lives on the rain and is ripe in 5 days.
+  3. **Cut** it with a sickle, or a **scythe** from Bram (3 logs + 80 coins), which takes half the strokes and is quicker. Tie the cut wheat into **Wheat Sheaves**; the row then needs tilling again.
+  4. The pedal **thresher** by the paddy takes wheat too: 1 sheaf gives 3 Wheat Grain + 1 Straw.
+  5. Once the **windmill** is restored, its **millstones** grind 3 grain into 2 **Flour**. Bake flour into a **Fresh Farmhouse Loaf**.
+  Wheat is for the cool seasons and rice for the warm ones, so there's always something to grow.
 - **Shop view (F):** at the General Store counter or Bram's forge, press F. The camera frames the shop and its keeper, and the shop window opens at the side.
 - **Daily notice board:** in the village square. Each morning, villagers you've met pin small requests on it ("Nana Bea would love 3 Carrots for a hearty stew").
   Press **E** to read it and take up to 3 requests; bring the things to that villager for coins and friendship. A **!** over the board means new requests.

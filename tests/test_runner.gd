@@ -1564,6 +1564,8 @@ func _run() -> void:
 	await preload("res://tests/request_board_tests.gd").new().run(self)
 	await preload("res://tests/shipping_sound_tests.gd").new().run(self)
 	await preload("res://tests/forestry_tests.gd").new().run(self)
+	await preload("res://tests/rice_tests.gd").new().run(self)
+	await preload("res://tests/wheat_tests.gd").new().run(self)
 
 	print("== NPCs ==")
 	ActivityClock.reset()

@@ -1,14 +1,18 @@
 class_name WoodcuttingController
 extends Node
-## The player's axe work: shows the axe in the right hand and swings it at a tree
-## (felling) or a fallen trunk (cutting it into logs). Lives on the player as "Woodcutting".
-## The ForestService decides what happens on each hit; this only does the swinging.
-## Swinging itself costs no time: the ForestService charges the activity when it's done.
+## The player's hand-tool work: shows the axe or the sickle in the right hand and swings
+## it: the axe at a tree (felling) or a fallen trunk (cutting it into logs), the sickle
+## low through a row of ripe rice. Lives on the player as "Woodcutting".
+## The ForestService / CropField decides what happens on each stroke; this only does the
+## swinging. Swinging itself costs no time: they charge the activity when it's done.
 
 signal swing_hit(index: int, at: Vector3)
 
 const AXE := &"axe"
 const STEEL_AXE := &"steel_axe"
+const SICKLE := &"sickle"
+const SCYTHE := &"scythe"
+const HOE := &"hoe"
 ## One swing (the farm_swing clip); the blade bites at HIT_TIME.
 const SWING_LENGTH := 1.25
 const HIT_TIME := 0.55
@@ -18,6 +22,12 @@ var _animator: CharacterAnimator
 var _skeleton: Skeleton3D
 var _hand_bone := -1
 var _axe: Node3D
+var _sickle: Node3D
+var _scythe: Node3D
+var _hoe: Node3D
+## The tool in hand while swinging.
+var _tool: Node3D
+var _tool_id: StringName = AXE
 var _swinging := false
 var _swing_time := 0.0
 var _chips: CPUParticles3D
@@ -34,6 +44,23 @@ static func best_axe() -> StringName:
 
 static func has_axe() -> bool:
 	return best_axe() != &""
+
+
+static func has_sickle() -> bool:
+	return InventoryManager.has_item(SICKLE)
+
+
+static func has_scythe() -> bool:
+	return InventoryManager.has_item(SCYTHE)
+
+
+## Something to cut a ripe crop with (sickle or scythe).
+static func has_cutter() -> bool:
+	return has_sickle() or has_scythe()
+
+
+static func has_hoe() -> bool:
+	return InventoryManager.has_item(HOE)
 
 
 ## Swings needed for `hits` at the layer's toughness with the best axe (steel: half).
@@ -65,19 +92,39 @@ func get_axe_node() -> Node3D:
 	return _axe
 
 
-## Swings the axe `times` times at `target` (a world point). Locks the player while
-## swinging and calls `on_hit(i)` as each swing lands. Await it.
-func swing(times: int, target: Vector3, on_hit: Callable = Callable()) -> void:
+func get_sickle_node() -> Node3D:
+	return _sickle
+
+
+## The tool being swung right now (&"axe" or &"sickle").
+func get_tool_id() -> StringName:
+	return _tool_id
+
+
+## Swings the axe (or, with `tool` = SICKLE, the sickle) `times` times at `target` (a
+## world point). Locks the player while swinging and calls `on_hit(i)` as each stroke
+## lands. Await it.
+func swing(times: int, target: Vector3, on_hit: Callable = Callable(), tool: StringName = AXE) -> void:
 	if _swinging or _player == null:
 		return
 	_swinging = true
+	_tool_id = tool
+	_tool = {SICKLE: _sickle, SCYTHE: _scythe, HOE: _hoe}.get(tool, _axe)
 	_player.set_input_locked(true)
 	var to_target := target - _player.global_position
 	_player.face_yaw(atan2(-to_target.x, -to_target.z))
-	_axe.visible = true
+	_tool.visible = true
 	if not _chips.is_inside_tree():
 		await _player.get_tree().process_frame
-	_chips.global_position = Vector3(target.x, _player.global_position.y + 0.9, target.z)
+	# Wood chips from the axe; bits of straw from the sickle, down low.
+	var low := tool != AXE and tool != STEEL_AXE
+	_chips.global_position = Vector3(target.x, _player.global_position.y + (0.3 if low else 0.9), target.z)
+	var chip_color := Color(0.86, 0.7, 0.48)
+	if tool == SICKLE or tool == SCYTHE:
+		chip_color = Color(0.86, 0.76, 0.42)  # bits of straw
+	elif tool == HOE:
+		chip_color = Color(0.36, 0.26, 0.17)  # clods of earth
+	(_chips.mesh.material as StandardMaterial3D).albedo_color = chip_color
 	var tree := _player.get_tree()
 	for i in times:
 		_swing_time = 0.0
@@ -90,13 +137,13 @@ func swing(times: int, target: Vector3, on_hit: Callable = Callable()) -> void:
 		if on_hit.is_valid():
 			on_hit.call(i)
 		await tree.create_timer(SWING_LENGTH - HIT_TIME).timeout
-	_axe.visible = false
+	_tool.visible = false
 	_player.set_input_locked(false)
 	_swinging = false
 
 
 func _process(delta: float) -> void:
-	if _axe == null or not _axe.visible:
+	if _tool == null or not _tool.visible:
 		return
 	_swing_time += delta
 	var visual := _player.get_node(^"Visual") as Node3D
@@ -107,8 +154,14 @@ func _process(delta: float) -> void:
 	# Raised over the shoulder, then brought down and forward into the trunk.
 	var t := _swing_time
 	var down := smoothstep(0.25, HIT_TIME, t) * (1.0 - smoothstep(0.85, SWING_LENGTH, t))
+	if _tool_id == SICKLE or _tool_id == SCYTHE:
+		# A low sweep across the stalks: from out to the right, round to the left.
+		var sweep := lerpf(-1.0, 1.1, down)
+		var tilt := -0.9 if _tool_id == SICKLE else -1.25
+		_tool.global_transform = Transform3D(facing * Basis(Vector3.UP, sweep) * Basis(Vector3.RIGHT, tilt), hand)
+		return
 	var pitch := lerpf(1.2, -0.25, down)  # radians: + = head back over the shoulder
-	_axe.global_transform = Transform3D(facing * Basis(Vector3.RIGHT, pitch), hand)
+	_tool.global_transform = Transform3D(facing * Basis(Vector3.RIGHT, pitch), hand)
 
 
 ## A simple iron axe until a modelled one arrives: an ash handle and a grey head.
@@ -156,6 +209,8 @@ func _build_axe() -> void:
 	edge.material_override = bright
 	edge.position = Vector3(0, 0.56, -0.145)
 	_axe.add_child(edge)
+	_build_sickle(wood, iron)
+	_build_long_tools(wood, iron)
 	# Wood chips when the blade bites.
 	_chips = CPUParticles3D.new()
 	_chips.name = "Chips"
@@ -177,6 +232,93 @@ func _build_axe() -> void:
 	chip.material = chip_material
 	_chips.mesh = chip
 	_attach(_chips)
+
+
+## A simple sickle until a modelled one arrives: a short handle and a curved blade
+## (a ring of small steel pieces). Origin = the grip; the handle runs up local +Y.
+func _build_sickle(wood: Material, iron: Material) -> void:
+	_sickle = Node3D.new()
+	_sickle.name = "Sickle"
+	_sickle.top_level = true
+	_sickle.visible = false
+	_attach(_sickle)
+	var handle := MeshInstance3D.new()
+	handle.name = "Handle"
+	var handle_mesh := CylinderMesh.new()
+	handle_mesh.top_radius = 0.018
+	handle_mesh.bottom_radius = 0.02
+	handle_mesh.height = 0.3
+	handle_mesh.radial_segments = 8
+	handle.mesh = handle_mesh
+	handle.material_override = wood
+	handle.position = Vector3(0, 0.08, 0)
+	_sickle.add_child(handle)
+	var blade_mesh := BoxMesh.new()
+	blade_mesh.size = Vector3(0.012, 0.03, 0.07)
+	var steel := (iron as StandardMaterial3D).duplicate() as StandardMaterial3D
+	steel.albedo_color = Color(0.78, 0.8, 0.82)
+	# A crescent: from the top of the handle, curving forward and back down.
+	var center := Vector3(0, 0.36, -0.13)
+	for i in 9:
+		var a := lerpf(-PI * 0.5, PI * 0.42, i / 8.0)
+		var piece := MeshInstance3D.new()
+		piece.name = "Blade%d" % i
+		piece.mesh = blade_mesh
+		piece.material_override = steel
+		var r := 0.14
+		piece.position = center + Vector3(0, sin(a) * r, cos(a) * r * -1.0 + 0.0)
+		piece.rotation = Vector3(-a, 0, 0)
+		_sickle.add_child(piece)
+
+
+## The hoe (a flat blade at right angles to a long handle) and the scythe (a long
+## curved blade on a long handle). Origin = the grip; handles run up local +Y.
+func _build_long_tools(wood: Material, iron: Material) -> void:
+	var handle_mesh := CylinderMesh.new()
+	handle_mesh.top_radius = 0.018
+	handle_mesh.bottom_radius = 0.02
+	handle_mesh.height = 1.3
+	handle_mesh.radial_segments = 8
+	var steel := (iron as StandardMaterial3D).duplicate() as StandardMaterial3D
+	steel.albedo_color = Color(0.72, 0.74, 0.76)
+	_hoe = Node3D.new()
+	_hoe.name = "Hoe"
+	_hoe.top_level = true
+	_hoe.visible = false
+	_attach(_hoe)
+	var hoe_handle := MeshInstance3D.new()
+	hoe_handle.mesh = handle_mesh
+	hoe_handle.material_override = wood
+	hoe_handle.position = Vector3(0, 0.45, 0)
+	_hoe.add_child(hoe_handle)
+	var hoe_blade := MeshInstance3D.new()
+	var blade_mesh := BoxMesh.new()
+	blade_mesh.size = Vector3(0.18, 0.02, 0.15)
+	hoe_blade.mesh = blade_mesh
+	hoe_blade.material_override = steel
+	hoe_blade.position = Vector3(0, 1.08, -0.08)
+	_hoe.add_child(hoe_blade)
+	_scythe = Node3D.new()
+	_scythe.name = "Scythe"
+	_scythe.top_level = true
+	_scythe.visible = false
+	_attach(_scythe)
+	var snath := MeshInstance3D.new()
+	snath.mesh = handle_mesh
+	snath.material_override = wood
+	snath.position = Vector3(0, 0.45, 0)
+	_scythe.add_child(snath)
+	var piece_mesh := BoxMesh.new()
+	piece_mesh.size = Vector3(0.012, 0.05, 0.1)
+	for i in 8:
+		var t := i / 7.0
+		var piece := MeshInstance3D.new()
+		piece.mesh = piece_mesh
+		piece.material_override = steel
+		# Out sideways from the top of the snath, curving back.
+		piece.position = Vector3(0.0, 1.08 - t * t * 0.12, -0.06 - t * 0.62)
+		piece.rotation = Vector3(t * 0.35, 0, 0)
+		_scythe.add_child(piece)
 
 
 ## Adds a node to the player now, or once the player has finished loading.

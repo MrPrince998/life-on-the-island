@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/sickle.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"sickle"
+display_name = "Sickle"
+description = "A curved steel blade on a short handle. Drain the paddy, then press E at a ripe row to cut the rice. The stalks lie where they fall."
+category = 2
+buy_price = 0
+sell_price = 0
+max_stack = 1
+unique = true
+icon = ExtResource("2_icon")

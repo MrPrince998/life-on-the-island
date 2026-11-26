@@ -39,6 +39,22 @@ func run(t: Node) -> void:
 		orders_ok = orders_ok and not (order.items as Dictionary).is_empty() and int(order.reward) > value and str(order.buyer) != ""
 	t.check(orders_ok, "from Day 2, three orders each morning, paying more than the store would")
 
+	# Field crops join the orders once that field has been cut (flour: and the windmill).
+	var wants := func(item_id: StringName) -> bool:
+		return yard._wanted_now().any(func(entry: Array) -> bool: return entry[0] == item_id)
+	var known := true
+	for item_id: StringName in [&"rice", &"rice_sheaf", &"wheat_sheaf", &"flour"]:
+		known = known and ItemDB.get_item(item_id) != null
+	var none_yet: bool = not wants.call(&"rice") and not wants.call(&"wheat_sheaf") and not wants.call(&"flour")
+	GameManager.set_flag(&"field_cut_rice")
+	var rice_only: bool = wants.call(&"rice") and wants.call(&"rice_sheaf") and not wants.call(&"wheat_sheaf")
+	t.check(known and none_yet and rice_only, "rice orders only start once you've cut the paddy (and wheat ones the wheat)")
+	GameManager.set_flag(&"field_cut_wheat")
+	var sheaf_no_flour: bool = wants.call(&"wheat_sheaf") and not wants.call(&"flour")
+	GameManager.set_flag(&"restored_windmill")
+	t.check(sheaf_no_flour and wants.call(&"flour"), "flour orders wait for the windmill's millstones too")
+	GameManager.reset_flags()
+
 	# Packing.
 	var order: Dictionary = yard.orders[0]
 	t.check(not yard.can_pack(int(order.id)), "you can't pack an order without the goods")

@@ -145,6 +145,10 @@
 
 [ext_resource type="PackedScene" path="res://scenes/buildings/forge.tscn" id="bf_forge"]
 [ext_resource type="Script" path="res://scripts/systems/forestry/forest_service.gd" id="bf_forestry"]
+[ext_resource type="PackedScene" path="res://scenes/world/rice_paddy.tscn" id="bf_paddy"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/threshing_shed.tscn" id="bf_shed"]
+[ext_resource type="PackedScene" path="res://scenes/world/wheat_field.tscn" id="bf_wheat"]
+[ext_resource type="Script" path="res://scripts/systems/fields/processing_machine.gd" id="bf_machine"]
 
 [sub_resource type="SphereShape3D" id="NoticeBoardReach"]
 radius = 1.5
@@ -294,6 +298,22 @@ radius = 55.0
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hills"]
 height = 140.0
 radius = 75.0
+
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_plains"]
+height = 80.0
+radius = 62.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_millstones"]
+radius = 4.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_flour_sack"]
+albedo_color = Color(0.93, 0.9, 0.82, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_millstone"]
+albedo_color = Color(0.6, 0.58, 0.55, 1)
+roughness = 0.95
 
 [node name="Island" type="Node3D"]
 
@@ -498,6 +518,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 26, 3.95, 119)
 [node name="Forge" parent="Buildings" instance=ExtResource("bf_forge")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 8, 4.02, 140)
 
+[node name="RicePaddy" parent="Buildings" instance=ExtResource("bf_paddy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94, 5.0, 62.5)
+
+[node name="ThreshingShed" parent="Buildings" instance=ExtResource("bf_shed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.5, 5.06, 46.5)
+
+[node name="WheatField" parent="Buildings" instance=ExtResource("bf_wheat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 236, 5.5, 66)
+
 [node name="Lanterns" type="Node3D" parent="Buildings"]
 
 [node name="LanternCottage" parent="Buildings/Lanterns" instance=ExtResource("13_lantern")]
@@ -556,6 +585,16 @@ display_name = "Sunflower Fields"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/SunflowerFields"]
 shape = SubResource("CylinderShape3D_farm")
+
+[node name="AmberPlains" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 238, 10, 66)
+script = ExtResource("10_region")
+region_id = &"amber_plains"
+display_name = "Amber Plains"
+region_priority = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Regions/AmberPlains"]
+shape = SubResource("CylinderShape3D_plains")
 
 [node name="WhisperingCoastHeadland" type="Area3D" parent="Regions"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 165, 20, -88)
@@ -1145,6 +1184,50 @@ model = ExtResource("sp_33")
 size = 12
 fit = 1
 collision_fraction = Vector3(0.4, 1, 0.4)
+
+[node name="AfterMillstones" type="Area3D" parent="StoryPlaces/Farm/Windmill"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
+script = ExtResource("bf_machine")
+input_item = &"wheat_grain"
+input_amount = 3
+outputs = {
+&"flour": 2
+}
+minutes_per_batch = 5
+max_batches = 30
+verb_text = "Grind wheat at the millstones"
+quest_event = &"grind_flour"
+missing_message = "The millstones grind wheat grain into flour (3 grain make 2 flour). Thresh some wheat sheaves first."
+requires_flag = &"restored_windmill"
+interaction_id = &"windmill_millstones"
+prompt_text = "Millstones"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Farm/Windmill/AfterMillstones"]
+shape = SubResource("SphereShape3D_millstones")
+
+[node name="AfterFlourSacks" type="Node3D" parent="StoryPlaces/Farm/Windmill"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 0, 1.8)
+
+[node name="SackA" type="CSGSphere3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
+transform = Transform3D(1, 0, 0, 0, 1.35, 0, 0, 0, 1, 0, 0.3, 0)
+radius = 0.28
+radial_segments = 10
+rings = 6
+material = SubResource("Mat_flour_sack")
+
+[node name="SackB" type="CSGSphere3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
+transform = Transform3D(0.95, 0, 0.3, 0, 1.3, 0, -0.3, 0, 0.95, 0.55, 0.28, 0.2)
+radius = 0.26
+radial_segments = 10
+rings = 6
+material = SubResource("Mat_flour_sack")
+
+[node name="Millstone" type="CSGCylinder3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
+transform = Transform3D(1, 0, 0, 0, 0.17, -0.985, 0, 0.985, 0.17, -0.6, 0.55, -0.4)
+radius = 0.55
+height = 0.2
+sides = 16
+material = SubResource("Mat_millstone")
 
 [node name="Orchard1" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 87)

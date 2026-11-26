@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <path d="M14 20 L50 20 L54 56 C44 60 20 60 10 56 Z" fill="#D8C7A4" stroke="#6A5434" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M14 20 C18 14 46 14 50 20" fill="#F7F3EA" stroke="#6A5434" stroke-width="3"/>
+  <ellipse cx="26" cy="17" rx="2" ry="3.2" fill="#FFFFFF" stroke="#BDB4A2" stroke-width="1"/>
+  <ellipse cx="32" cy="15.5" rx="2" ry="3.2" fill="#FFFFFF" stroke="#BDB4A2" stroke-width="1"/>
+  <ellipse cx="38" cy="17" rx="2" ry="3.2" fill="#FFFFFF" stroke="#BDB4A2" stroke-width="1"/>
+  <path d="M14 26 C26 29 38 29 50 26" fill="none" stroke="#8A6A3A" stroke-width="2.5"/>
+  <text x="32" y="47" font-family="sans-serif" font-size="13" font-weight="bold" fill="#6A5434" text-anchor="middle">RICE</text>
+</svg>

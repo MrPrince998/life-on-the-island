@@ -26,8 +26,12 @@ static func get_stock() -> Array[ItemData]:
 	return result
 
 
-## Seeds are only stocked in the seasons their crop grows in; everything else always is.
+## Seeds (and field-crop seedlings) are only stocked in the seasons their crop grows in;
+## everything else always is.
 static func is_in_season(item_id: StringName) -> bool:
+	var field_crop := FieldCropData.for_planting_item(item_id)
+	if field_crop:
+		return field_crop.grows_in(ActivityClock.get_season_id())
 	var crop := CropCatalog.shared().get_crop_for_seed(item_id)
 	return crop == null or crop.grows_in(ActivityClock.get_season_id())
 

@@ -28,6 +28,14 @@ const LAKE_CENTER := Vector2(10.0, 15.0)
 const LAKE_RADIUS := 42.0
 const LAKE_ISLAND_CENTER := Vector2(-8.0, 2.0)
 const FARM_CENTER := Vector2(115.0, 70.0)
+## Amber Plains: a wide, flat stretch of farmland on the east coast, beyond the farm
+## (big wheat fields). It's an extra lobe of land pushing the coast out to the east.
+const PLAINS_CENTER := Vector2(238.0, 64.0)
+## Fully flat within about 0.75 x this, easing back into the natural ground by 1.3 x.
+const PLAINS_RADIUS := 46.0
+const PLAINS_HEIGHT := 5.5
+## How far the new land reaches from PLAINS_CENTER before it meets the sea.
+const PLAINS_LAND_RADIUS := 68.0
 const FARM_RADIUS := 36.0
 const FARM_HEIGHT := 5.0
 ## Centre of the garden beds, relative to FARM_CENTER (see FarmField in island.tscn).
@@ -150,6 +158,8 @@ func _init() -> void:
 		PackedVector2Array([Vector2(35, 108), Vector2(52, 70), Vector2(56, 40), Vector2(52, 20)]),
 		# Farm's east gate -> the shipping jetty (ShippingYard), clear of the orchard
 		PackedVector2Array([Vector2(131, 75), Vector2(148, 84), Vector2(158, 102), Vector2(161, 116)]),
+		# Farm's east gate -> Amber Plains (the big fields)
+		PackedVector2Array([Vector2(148, 84), Vector2(172, 78), Vector2(196, 72), Vector2(212, 70)]),
 	]
 	for path in paths:
 		_path_bounds.append(_bounds_of(path))
@@ -173,7 +183,12 @@ func get_land_factor(x: float, z: float) -> float:
 	var dir := Vector2(cos(angle), sin(angle))
 	var coast := COAST_RADIUS * (1.0 + 0.17 * _coast_noise.get_noise_2d(dir.x * 100.0, dir.y * 100.0))
 	var q := Vector2(x / EAST_WEST_STRETCH, z)
-	return 1.0 - q.length() / coast
+	var land := 1.0 - q.length() / coast
+	# Amber Plains reach out into the sea in the east.
+	var plains := 0.42 * (1.0 - Vector2(x, z).distance_to(PLAINS_CENTER) / PLAINS_LAND_RADIUS)
+	if plains < 0.0:
+		plains *= 3.0  # a short beach, then deep water (keeps the shipping bay open)
+	return maxf(land, plains)
 
 
 func get_height(x: float, z: float) -> float:
@@ -211,6 +226,7 @@ func _base_height(x: float, z: float) -> float:
 	# Flatten building zones.
 	h = lerpf(h, VILLAGE_HEIGHT + _detail_noise.get_noise_2d(x, z) * 0.15, _flat_weight(p, VILLAGE_CENTER, VILLAGE_RADIUS))
 	h = lerpf(h, FARM_HEIGHT, _flat_weight(p, FARM_CENTER, FARM_RADIUS))
+	h = lerpf(h, PLAINS_HEIGHT + _detail_noise.get_noise_2d(x, z) * 0.03, _flat_weight(p, PLAINS_CENTER, PLAINS_RADIUS))
 
 	# Carve Moonlit Lake (bottom stays above sea level so the sea never shows through).
 	var lake_d := get_lake_distance(p)

@@ -4,7 +4,10 @@
 [ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="2_recipe"]
 [ext_resource type="Resource" path="res://data/tools/axe.tres" id="3_axe"]
 [ext_resource type="Resource" path="res://data/tools/steel_axe.tres" id="4_steel_axe"]
+[ext_resource type="Resource" path="res://data/tools/sickle.tres" id="5_sickle"]
+[ext_resource type="Resource" path="res://data/tools/hoe.tres" id="6_hoe"]
+[ext_resource type="Resource" path="res://data/tools/scythe.tres" id="7_scythe"]
 
 [resource]
 script = ExtResource("1_catalog")
-recipes = Array[ExtResource("2_recipe")]([ExtResource("3_axe"), ExtResource("4_steel_axe")])
+recipes = Array[ExtResource("2_recipe")]([ExtResource("3_axe"), ExtResource("4_steel_axe"), ExtResource("5_sickle"), ExtResource("6_hoe"), ExtResource("7_scythe")])

@@ -17,7 +17,7 @@ func run(t: Node) -> void:
 	var stove := main.get_node("Island/Buildings/Cottage/Interior/CookingSpot") as CookingSpot
 	var player := main.get_node("Player") as PlayerController
 	var recipes := CookingService.get_recipes()
-	t.check(recipes.size() == 6, "Grandpa's recipe book has 6 recipes")
+	t.check(recipes.size() == 8, "Grandpa's recipe book has 8 recipes (with the Fish and Rice Bowl and the Farmhouse Loaf)")
 	var bad_items: Array[String] = []
 	for r in recipes:
 		var dish := ItemDB.get_item(r.result_item)

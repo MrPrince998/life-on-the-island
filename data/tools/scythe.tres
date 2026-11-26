@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+item_id = &"scythe"
+buy_price = 260
+forge_fee = 80
+materials = {
+&"log": 3
+}
+forge_minutes = 120
+pitch = "Out on the plains you'll want a scythe, not a sickle. Long blade, long reach, half the work. Three logs for the snath and it's yours."

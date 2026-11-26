@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/fresh_loaf.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"fresh_loaf"
+display_name = "Fresh Farmhouse Loaf"
+description = "A crusty loaf baked from your own flour. The whole cottage smells of it."
+category = 4
+buy_price = 0
+sell_price = 40
+max_stack = 20
+unique = false
+icon = ExtResource("2_icon")

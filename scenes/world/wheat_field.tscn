@@ -1,0 +1,72 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/fields/crop_field.gd" id="1_field"]
+[ext_resource type="Resource" path="res://data/field_crops/wheat.tres" id="2_wheat"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_post"]
+albedo_color = Color(0.48, 0.33, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_board"]
+albedo_color = Color(0.62, 0.45, 0.28, 1)
+roughness = 0.85
+
+[node name="WheatField" type="Node3D" groups=["keep_clear"]]
+script = ExtResource("1_field")
+field_id = &"amber_wheat_field"
+crop = ExtResource("2_wheat")
+rows = 10
+row_width = 3.0
+row_length = 36.0
+lines_per_row = 4
+metadata/clear_radius = 26.0
+
+[node name="CornerNW" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 0.5, -18.6)
+radius = 0.1
+height = 1.1
+sides = 6
+material = SubResource("Mat_post")
+
+[node name="CornerNE" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 0.5, -18.6)
+radius = 0.1
+height = 1.1
+sides = 6
+material = SubResource("Mat_post")
+
+[node name="CornerSW" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 0.5, 18.6)
+radius = 0.1
+height = 1.1
+sides = 6
+material = SubResource("Mat_post")
+
+[node name="CornerSE" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 0.5, 18.6)
+radius = 0.1
+height = 1.1
+sides = 6
+material = SubResource("Mat_post")
+
+[node name="SignPost" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 0.9, 4.0)
+radius = 0.08
+height = 1.9
+sides = 6
+material = SubResource("Mat_post")
+
+[node name="SignBoard" type="CSGBox3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -18.5, 1.6, 4.0)
+size = Vector3(1.6, 0.6, 0.06)
+material = SubResource("Mat_board")
+
+[node name="SignText" type="Label3D" parent="."]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -18.62, 1.6, 4.0)
+pixel_size = 0.004
+text = "Amber Plains
+Wheat Field"
+font_size = 48
+outline_size = 10
+modulate = Color(1, 0.94, 0.78, 1)
+outline_modulate = Color(0.35, 0.2, 0.1, 1)
