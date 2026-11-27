@@ -135,7 +135,7 @@ Ambient set: fireflies by the lake at night, crabs on the beach, fog over the co
 
 ## Painted sky (implemented)
 
-The island uses `shaders/painted_sky.gdshader`: seamless rounded cloud shapes with soft pigment shading. DayNightController sets cream daylight, warm dusk, muted night colours and thicker grey weather coverage alongside the existing lighting and fog.
+The island uses `shaders/painted_sky.gdshader`: seamless rounded cloud shapes with layered brush grain, smaller cloud lobes, warm highlights and cool shaded undersides. A layered horizon-to-zenith gradient, sun disc and halo following the daylight direction, and cloud-occluded moon and fixed stars add sky depth. Celestial details fade with weather and daylight. A deeper blue sky, reduced sky fog, restrained saturation and gentle scene contrast keep the painted colours balanced. DayNightController sets cream daylight, warm dusk, muted night colours and thicker grey weather coverage alongside the existing lighting and fog.
 
 ## Quest guidance (implemented)
 

@@ -15,6 +15,10 @@ Current state: **Phase 5 started**: the greenhouse can be restored. Also farming
 
 On macOS it works the same way: open Godot, choose **Import**, select `project.godot`, then press **F5**.
 
+## Fast review (temporary cheats)
+
+Press **F8** in-game, or **Esc → Review cheats**, for supplies, crop growth, time/weather, chapter unlocks and travel. The first cheat saves your normal progress and switches to a separate review save. Return to the title screen and Continue to resume normal play. See [game review and cheat guide](docs/GAME_REVIEW.md).
+
 ## Controls
 
 | Key | Action |

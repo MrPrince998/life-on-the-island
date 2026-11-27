@@ -226,9 +226,10 @@ fog_enabled = true
 fog_light_color = Color(0.72, 0.82, 0.9, 1)
 fog_density = 0.0011
 fog_aerial_perspective = 0.55
-fog_sky_affect = 0.25
+fog_sky_affect = 0.12
 adjustment_enabled = true
-adjustment_saturation = 1.12
+adjustment_contrast = 1.035
+adjustment_saturation = 1.04
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sea"]
 size = Vector2(3000, 3000)

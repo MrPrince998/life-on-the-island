@@ -47,6 +47,7 @@ static func reset_game_state() -> void:
 
 
 func _ready() -> void:
+	ReviewCheats.leave_review()
 	GameSettings.ensure_loaded()
 	get_tree().paused = false
 	reset_game_state()

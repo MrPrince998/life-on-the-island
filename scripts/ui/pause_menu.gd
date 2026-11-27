@@ -180,6 +180,7 @@ func _build_main() -> Control:
 	box.add_child(spacer)
 
 	_resume_button = _button(box, "Resume", resume)
+	_button(box, "Review cheats · F8", func() -> void: get_parent().get_node("ReviewPanel").open())
 	_button(box, "Settings", func() -> void: _show_page(Page.SETTINGS))
 	_button(box, "Main menu", func() -> void: ask_leave(true))
 	_button(box, "Quit game", func() -> void: ask_leave(false))

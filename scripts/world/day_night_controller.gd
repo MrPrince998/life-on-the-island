@@ -184,11 +184,11 @@ func _apply(total_minutes: float) -> void:
 		env.fog_density = _base_fog_density * lerpf(1.0, 2.4, _overcast)
 		var sky_material := env.sky.sky_material as ShaderMaterial if env.sky else null
 		if sky_material:
-			var top_day := Color(0.36, 0.6, 0.86)
-			var horizon_day := Color(0.74, 0.86, 0.93)
+			var top_day := Color(0.24, 0.48, 0.75)
+			var horizon_day := Color(0.77, 0.85, 0.88)
 			var top_night := Color(0.04, 0.06, 0.16)
 			var horizon_night := Color(0.11, 0.14, 0.27)
-			var horizon_dusk := Color(0.98, 0.66, 0.48)
+			var horizon_dusk := Color(0.96, 0.63, 0.48)
 			# Rain clouds: soft blue-grey instead of blue.
 			top_day = top_day.lerp(Color(0.5, 0.56, 0.63), _overcast)
 			horizon_day = horizon_day.lerp(Color(0.68, 0.72, 0.76), _overcast)
@@ -199,8 +199,13 @@ func _apply(total_minutes: float) -> void:
 			sky_material.set_shader_parameter("ground_bottom_color", top_night.lerp(Color(0.2, 0.3, 0.38), daylight))
 			sky_material.set_shader_parameter("sky_energy", lerpf(0.55, 1.0, daylight))
 			sky_material.set_shader_parameter("overcast", _overcast)
+			sky_material.set_shader_parameter("daylight", daylight)
+			sky_material.set_shader_parameter("twilight", twilight)
+			sky_material.set_shader_parameter("sun_visible", smoothstep(-0.02, 0.08, height))
+			if sun:
+				sky_material.set_shader_parameter("sun_direction", sun.global_basis.z.normalized())
 			var cream := Color(1.0, 0.97, 0.9).lerp(Color(1.0, 0.72, 0.52), twilight * 0.7)
-			var shade := Color(0.65, 0.75, 0.85).lerp(Color(0.68, 0.53, 0.65), twilight * 0.65)
+			var shade := Color(0.48, 0.59, 0.76).lerp(Color(0.58, 0.43, 0.62), twilight * 0.65)
 			cream = cream.lerp(Color(0.68, 0.72, 0.77), _overcast)
 			shade = shade.lerp(Color(0.4, 0.46, 0.55), _overcast)
 			sky_material.set_shader_parameter("cloud_light", Color(0.19, 0.24, 0.38).lerp(cream, maxf(daylight, twilight * 0.65)))

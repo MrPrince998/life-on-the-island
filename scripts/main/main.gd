@@ -17,6 +17,9 @@ func _ready() -> void:
 	var pause_menu := PAUSE_MENU.instantiate()
 	pause_menu.name = "PauseMenu"
 	add_child(pause_menu)
+	var review := ReviewPanel.new()
+	review.name = "ReviewPanel"
+	add_child(review)
 	# Background sound: surf, lake, birds, wind, rain... (fades in; silent during the opening)
 	add_child(IslandAmbience.new())
 	var spawn := _island.get_node("SpawnPoint") as Marker3D
