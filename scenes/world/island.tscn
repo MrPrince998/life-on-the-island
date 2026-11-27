@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/world/water_body.gd" id="4_water"]
 [ext_resource type="Material" path="res://resources/materials/sea_material.tres" id="5_sea_mat"]
 [ext_resource type="Material" path="res://resources/materials/lake_material.tres" id="6_lake_mat"]
+[ext_resource type="Shader" path="res://shaders/painted_sky.gdshader" id="painted_sky"]
 [ext_resource type="Script" path="res://scripts/world/day_night_controller.gd" id="7_daynight"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/cottage.tscn" id="8_cottage"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/fishing_dock.tscn" id="9_dock"]
@@ -201,15 +202,11 @@ radius = 2
 [sub_resource type="SphereShape3D" id="SpSphere_15"]
 radius = 1.8
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
-sky_top_color = Color(0.36, 0.6, 0.86, 1)
-sky_horizon_color = Color(0.74, 0.86, 0.93, 1)
-ground_bottom_color = Color(0.2, 0.3, 0.38, 1)
-ground_horizon_color = Color(0.67, 0.78, 0.84, 1)
-sun_angle_max = 20.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("painted_sky")
 
 [sub_resource type="Sky" id="Sky_main"]
-sky_material = SubResource("ProceduralSkyMaterial_sky")
+sky_material = SubResource("ShaderMaterial_sky")
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 2

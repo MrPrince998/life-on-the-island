@@ -182,7 +182,7 @@ func _apply(total_minutes: float) -> void:
 		if _base_fog_density < 0.0:
 			_base_fog_density = env.fog_density
 		env.fog_density = _base_fog_density * lerpf(1.0, 2.4, _overcast)
-		var sky_material := env.sky.sky_material as ProceduralSkyMaterial if env.sky else null
+		var sky_material := env.sky.sky_material as ShaderMaterial if env.sky else null
 		if sky_material:
 			var top_day := Color(0.36, 0.6, 0.86)
 			var horizon_day := Color(0.74, 0.86, 0.93)
@@ -194,9 +194,15 @@ func _apply(total_minutes: float) -> void:
 			horizon_day = horizon_day.lerp(Color(0.68, 0.72, 0.76), _overcast)
 			var top := top_night.lerp(top_day, daylight)
 			var horizon := horizon_night.lerp(horizon_day, daylight).lerp(horizon_dusk, twilight * 0.75 * (1.0 - _overcast * 0.7))
-			sky_material.sky_top_color = top
-			sky_material.sky_horizon_color = horizon
-			sky_material.ground_horizon_color = horizon.darkened(0.1)
-			sky_material.ground_bottom_color = top_night.lerp(Color(0.2, 0.3, 0.38), daylight)
-			sky_material.sky_energy_multiplier = lerpf(0.55, 1.0, daylight)
+			sky_material.set_shader_parameter("sky_top_color", top)
+			sky_material.set_shader_parameter("sky_horizon_color", horizon)
+			sky_material.set_shader_parameter("ground_bottom_color", top_night.lerp(Color(0.2, 0.3, 0.38), daylight))
+			sky_material.set_shader_parameter("sky_energy", lerpf(0.55, 1.0, daylight))
+			sky_material.set_shader_parameter("overcast", _overcast)
+			var cream := Color(1.0, 0.97, 0.9).lerp(Color(1.0, 0.72, 0.52), twilight * 0.7)
+			var shade := Color(0.65, 0.75, 0.85).lerp(Color(0.68, 0.53, 0.65), twilight * 0.65)
+			cream = cream.lerp(Color(0.68, 0.72, 0.77), _overcast)
+			shade = shade.lerp(Color(0.4, 0.46, 0.55), _overcast)
+			sky_material.set_shader_parameter("cloud_light", Color(0.19, 0.24, 0.38).lerp(cream, maxf(daylight, twilight * 0.65)))
+			sky_material.set_shader_parameter("cloud_shadow", Color(0.07, 0.1, 0.2).lerp(shade, daylight))
 		env.fog_light_color = Color(0.12, 0.15, 0.26).lerp(Color(0.72, 0.82, 0.9).lerp(Color(0.62, 0.66, 0.7), _overcast), daylight).lerp(Color(0.95, 0.7, 0.55), twilight * 0.5 * (1.0 - _overcast))

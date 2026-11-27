@@ -133,6 +133,10 @@ Each region has its own building language, so players can tell where they are at
 
 Ambient set: fireflies by the lake at night, crabs on the beach, fog over the coast in the morning, wind chimes in the village.
 
+## Painted sky (implemented)
+
+The island uses `shaders/painted_sky.gdshader`: seamless rounded cloud shapes with soft pigment shading. DayNightController sets cream daylight, warm dusk, muted night colours and thicker grey weather coverage alongside the existing lighting and fog.
+
 ## Quest guidance (implemented)
 
 The journal opens on a Quests tab with every active objective, landmark directions and live progress. The HUD keeps four objectives and points to J for the complete list. Early quests describe routes to Emma, Oliver, Mia, the garden shed and the shop; Emma introduces the cottage mailbox requests.
