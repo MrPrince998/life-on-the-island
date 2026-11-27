@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/garden_bench.tscn" id="bench"]
 [ext_resource type="PackedScene" path="res://scenes/props/seagull.tscn" id="bird"]
 
-[ext_resource type="PackedScene" path="res://source_assets/tripo/signpost.glb" id="sign"]
+
 
 [sub_resource type="SphereShape3D" id="reach"]
 radius = 0.8
@@ -17,22 +17,6 @@ radius = 0.8
 [node name="LakesideProject" type="Node3D" groups=["keep_clear"]]
 script = ExtResource("project")
 metadata/clear_radius = 5.0
-
-[node name="Signpost" type="Node3D" parent="."]
-position = Vector3(0, 0, 2)
-script = ExtResource("fit")
-model = ExtResource("sign")
-size = 1.4
-collision = 0
-
-[node name="Sign" type="Label3D" parent="."]
-position = Vector3(0, 2.3, 1.6)
-billboard = 1
-font_size = 32
-pixel_size = 0.009
-modulate = Color(1, 0.91, 0.68, 1)
-outline_size = 8
-visibility_range_end = 28.0
 
 [node name="Bench" parent="." instance=ExtResource("bench")]
 position = Vector3(0, 0, -1)
@@ -135,14 +119,6 @@ interaction_id = &"lakeside_lakechoice"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LakeChoice"]
 shape = SubResource("reach")
 
-[node name="Label" type="Label3D" parent="LakeChoice"]
-position = Vector3(0, 0.5, 0)
-text = "Face the lake"
-billboard = 1
-font_size = 26
-pixel_size = 0.008
-visibility_range_end = 12.0
-
 [node name="SunsetChoice" type="Area3D" parent="."]
 position = Vector3(2, 0.6, 1)
 script = ExtResource("action")
@@ -152,29 +128,11 @@ sunset = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SunsetChoice"]
 shape = SubResource("reach")
 
-[node name="Label" type="Label3D" parent="SunsetChoice"]
-position = Vector3(0, 0.5, 0)
-text = "Face the sunset"
-billboard = 1
-font_size = 26
-pixel_size = 0.008
-visibility_range_end = 12.0
-
 [node name="Invite" type="Area3D" parent="."]
-position = Vector3(0, 0.6, 2)
+position = Vector3(1.1, 0.6, -1)
 script = ExtResource("action")
 interaction_id = &"lakeside_invite"
 invitation = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Invite"]
 shape = SubResource("reach")
-
-[node name="Label" type="Label3D" parent="Invite"]
-position = Vector3(0, 0.5, 0)
-text = "Invite Oliver"
-billboard = 1
-font_size = 26
-pixel_size = 0.008
-visibility_range_end = 12.0
-
-[editable path="Bench"]

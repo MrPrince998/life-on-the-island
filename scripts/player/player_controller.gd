@@ -9,6 +9,8 @@ extends CharacterBody3D
 signal respawned
 signal sat_down
 signal stood_up
+signal started_driving(vehicle: Node3D)
+signal stopped_driving
 
 ## Sitting: the sit clips put the hips this far above the feet (metres, at the model's
 ## size), with thighs level. A seat's surface sits a little under the hips.
@@ -57,6 +59,9 @@ var _sitting: bool = false
 var _standing_up: bool = false
 var _stand_point: Vector3
 var _sit_tween: Tween
+## The vehicle you're driving (a Tractor), or null. While driving you sit on its seat and
+## ride along; the vehicle reads the movement keys.
+var _vehicle: Node3D = null
 
 @onready var _visual: Node3D = $Visual
 @onready var _camera_rig: CameraRig = $CameraRig
@@ -72,6 +77,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _vehicle:
+		_ride()
+		return
 	if _sitting or _standing_up:
 		velocity = Vector3.ZERO
 		# Moving or jumping while seated stands you up. Sitting never uses time.
@@ -182,6 +190,60 @@ func _finish_standing() -> void:
 	set_input_locked(false)
 	_last_safe_position = global_position
 	stood_up.emit()
+
+
+# ---- Driving ------------------------------------------------------------------
+
+func is_driving() -> bool:
+	return _vehicle != null
+
+
+func get_vehicle() -> Node3D:
+	return _vehicle
+
+
+## Climbs onto a vehicle's seat (it must have get_seat() -> Node3D). Driving, like
+## walking, never uses in-game time.
+func start_driving(vehicle: Node3D) -> bool:
+	if _vehicle or _sitting or _standing_up or _input_locked or vehicle == null:
+		return false
+	_vehicle = vehicle
+	set_input_locked(true)
+	velocity = Vector3.ZERO
+	# (The body stays on, so region areas still know where you are; the vehicle ignores it.)
+	if vehicle is PhysicsBody3D:
+		(vehicle as PhysicsBody3D).add_collision_exception_with(self)
+	_animator.sit()
+	_ride()
+	_camera_rig.set_vehicle_view(vehicle)
+	started_driving.emit(vehicle)
+	return true
+
+
+## Climbs down beside the vehicle, at `stand_point`.
+func stop_driving(stand_point: Vector3) -> void:
+	if _vehicle == null:
+		return
+	var vehicle := _vehicle
+	_vehicle = null
+	teleport_to(stand_point)
+	if vehicle is PhysicsBody3D:
+		(vehicle as PhysicsBody3D).remove_collision_exception_with(self)
+	_animator.stand_finished()
+	set_input_locked(false)
+	_last_safe_position = stand_point
+	_camera_rig.set_vehicle_view(null)
+	stopped_driving.emit()
+
+
+## Rides along on the seat: hips on the seat, facing the way the vehicle faces.
+func _ride() -> void:
+	var seat := _vehicle.call(&"get_seat") as Node3D
+	if seat == null:
+		return
+	velocity = Vector3.ZERO
+	global_position = seat.global_position - Vector3.UP * SIT_HIP_ABOVE_ORIGIN
+	_visual.rotation.y = seat.global_rotation.y
 
 
 ## Turns the character to face a camera-style yaw (0 = north).

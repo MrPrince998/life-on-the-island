@@ -1,6 +1,7 @@
 class_name JournalPanel
 extends CanvasLayer
-## The collection journal (J): everything you've found and everyone you know.
+## The journal (J): active quests, everything you've found and everyone you know.
+##   Quests     all active objectives, route descriptions and current progress
 ##   Fish       every species: caught ones with count and best size; others as a
 ##              mystery with a hint about where and when they bite
 ##   Crops      how many of each you've harvested
@@ -9,9 +10,9 @@ extends CanvasLayer
 ##   Songs      Grandpa's ukulele melodies, known and still to find
 ## Only reads the game's records; opening it costs no time.
 
-enum Tab { FISH, CROPS, VILLAGERS, PAGES, SONGS }
+enum Tab { FISH, CROPS, VILLAGERS, PAGES, SONGS, QUESTS }
 
-const TAB_NAMES := ["Fish", "Crops", "Villagers", "Grandpa's Pages", "Songs"]
+const TAB_NAMES := ["Fish", "Crops", "Villagers", "Grandpa's Pages", "Songs", "Quests"]
 const WATER_NAMES := {"moonlit_lake": "Moonlit Lake", "sea": "the sea"}
 const RARITY_NAMES := ["Common", "Uncommon", "Rare"]
 
@@ -21,7 +22,8 @@ var _tab_buttons: Array[Button] = []
 var _list: VBoxContainer
 var _scroll: ScrollContainer
 var _summary: Label
-var _tab: int = Tab.FISH
+var _tab: int = Tab.QUESTS
+var _quest_refresh_queued := false
 
 
 func _ready() -> void:
@@ -29,6 +31,11 @@ func _ready() -> void:
 	layer = 4
 	_build()
 	_root.hide()
+	QuestLog.quest_started.connect(_quest_changed)
+	QuestLog.quest_updated.connect(_quest_changed)
+	QuestLog.quest_completed.connect(_quest_changed)
+	InventoryManager.inventory_changed.connect(func(_id: StringName, _count: int) -> void: _quest_changed(null))
+	InventoryManager.money_changed.connect(func(_money: int) -> void: _quest_changed(null))
 
 
 func is_open() -> bool:
@@ -53,6 +60,7 @@ func open(tab: int = -1) -> bool:
 	if DisplayServer.get_name() != "headless":
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	show_tab(tab if tab >= 0 else _tab)
+	_tab_buttons[_tab].grab_focus()
 	return true
 
 
@@ -118,6 +126,8 @@ func _rebuild() -> void:
 			_pages_tab()
 		Tab.SONGS:
 			_songs_tab()
+		Tab.QUESTS:
+			_quests_tab()
 	_scroll.scroll_vertical = 0
 
 
@@ -330,10 +340,11 @@ func _build() -> void:
 		tab_button.text = TAB_NAMES[i]
 		tab_button.toggle_mode = true
 		tab_button.button_group = group
-		tab_button.focus_mode = Control.FOCUS_NONE
+		tab_button.focus_mode = Control.FOCUS_ALL
 		tab_button.pressed.connect(func() -> void: show_tab(i))
 		tabs.add_child(tab_button)
 		_tab_buttons.append(tab_button)
+	tabs.move_child(_tab_buttons[Tab.QUESTS], 0)
 	box.add_child(tabs)
 	box.add_child(HSeparator.new())
 
@@ -360,3 +371,28 @@ func _build() -> void:
 	close_button.pressed.connect(close)
 	footer.add_child(close_button)
 	box.add_child(footer)
+
+func _quest_changed(_quest: QuestData) -> void:
+	if not is_open() or _tab != Tab.QUESTS or _quest_refresh_queued:
+		return
+	_quest_refresh_queued = true
+	_refresh_quests.call_deferred()
+
+func _refresh_quests() -> void:
+	_quest_refresh_queued = false
+	if is_open() and _tab == Tab.QUESTS:
+		_rebuild()
+
+func _quests_tab() -> void:
+	var active := QuestLog.get_active_quests()
+	active.reverse()
+	_summary.text = "Active quests: %d" % active.size()
+	if active.is_empty():
+		_card(UIPalette.icon("book"), "No active quests", "Talk to your neighbours or check the village mailbox beside your cottage for requests.", true)
+	for quest in active:
+		var step := QuestLog.get_current_step(quest.id)
+		var detail := quest.description + "\n\nNext: " + (step.text if step else "Complete")
+		if step and step.shows_count():
+			var progress := QuestLog.get_step_progress(quest.id)
+			detail += "  %d/%d" % [progress.x, progress.y]
+		_card(UIPalette.icon("book"), quest.title, detail, true)

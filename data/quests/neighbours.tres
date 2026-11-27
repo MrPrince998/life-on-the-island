@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Step_1"]
 script = ExtResource("2_step")
-text = "Say hello to Oliver at the fishing dock"
+text = "Meet Oliver by the lake north of the village"
 kind = 0
 target = &"met_oliver"
 amount = 1
@@ -13,7 +13,7 @@ or_event = &""
 
 [sub_resource type="Resource" id="Step_2"]
 script = ExtResource("2_step")
-text = "Say hello to Mia at the farm"
+text = "Meet Mia at the garden beds east of the village"
 kind = 0
 target = &"met_mia"
 amount = 1
@@ -24,7 +24,7 @@ script = ExtResource("1_quest")
 id = &"neighbours"
 title = "Friendly Faces"
 giver = "Grandpa's letter"
-description = "Grandpa had good friends on the island. Say hello."
+description = "Take the north path from the village to Moonlit Lake. Oliver fishes at the dock in the morning and evening, and sits on the nearby bench at midday. Mia works around the garden beds in Sunflower Fields, east of the village."
 steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2")])
 starts_active = true
 start_flag = &""

@@ -34,6 +34,7 @@ explore & gather → fish / farm / help villagers → coins, items, friendship
 
 | Feature | Status | Scope | Summary | Docs |
 |---|---|---|---|---|
+| Interaction clarity | implemented | MVP | Camera-directed selection, a stable focus diamond and clearer requirement hints | [design](features/interactions/design.md) |
 | Lakeside project | implemented | MVP | Clear a quiet corner, choose a bench view, invite Oliver to the dock and bring birds back | [design](features/lakeside-project/design.md) |
 | World layout | in progress | MVP | Five regions, building placement, house styles, environment, assets to make | [design](features/world-layout/design.md) |
 | Villagers | in progress | MVP | All nine villagers in the world with schedules and lines; gifts and friendship to come | [design](features/villagers/design.md) |

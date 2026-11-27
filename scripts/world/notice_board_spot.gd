@@ -1,9 +1,9 @@
 class_name NoticeBoardSpot
 extends Interactable
-## The village notice board: press E to read today's requests (RequestBoardPanel).
-## A "!" floats above the board while new requests are waiting. Reading costs no time.
+## The village mailbox: press E to read today's requests (RequestBoardPanel).
+## A "!" floats above the mailbox while new requests are waiting. Reading costs no time.
 
-const MARKER_HEIGHT := 2.9
+const MARKER_HEIGHT := 1.8
 
 var _marker: Label3D
 var _bob := 0.0
@@ -11,7 +11,7 @@ var _bob := 0.0
 
 func _ready() -> void:
 	if prompt_text == "Interact":
-		prompt_text = "Read the notice board"
+		prompt_text = "Check village requests"
 	_marker = Label3D.new()
 	_marker.name = "NewMarker"
 	_marker.text = "!"

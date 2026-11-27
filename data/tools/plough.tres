@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+item_id = &"plough"
+buy_price = 380
+forge_fee = 120
+materials = {
+&"log": 3
+}
+forge_minutes = 120
+pitch = "Three good shares on a stout frame. Hitch it to that old tractor of your grandpa's and you'll turn a row in minutes, not half an hour."

@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Step_1"]
 script = ExtResource("2_step")
-text = "Find Grandpa's watering can by the farm shed"
+text = "Go east to the farm; collect the can and seeds by the garden shed"
 kind = 1
 target = &"watering_can"
 amount = 1
@@ -13,7 +13,7 @@ or_event = &""
 
 [sub_resource type="Resource" id="Step_2"]
 script = ExtResource("2_step")
-text = "Dig over a garden bed"
+text = "Dig one of the small garden beds beside the shed"
 kind = 3
 target = &"dig"
 amount = 1
@@ -21,7 +21,7 @@ or_event = &""
 
 [sub_resource type="Resource" id="Step_3"]
 script = ExtResource("2_step")
-text = "Plant some seeds"
+text = "Plant the free turnip seeds in your dug garden bed"
 kind = 3
 target = &"plant"
 amount = 1
@@ -29,7 +29,7 @@ or_event = &""
 
 [sub_resource type="Resource" id="Step_4"]
 script = ExtResource("2_step")
-text = "Water it, let it grow, then harvest"
+text = "Water the crop, sleep at your cottage, then return to harvest"
 kind = 3
 target = &"harvest"
 amount = 1
@@ -37,7 +37,7 @@ or_event = &""
 
 [sub_resource type="Resource" id="Step_5"]
 script = ExtResource("2_step")
-text = "Sell a crop at the General Store"
+text = "Sell a crop at the shop counter east of the village well"
 kind = 3
 target = &"sell_crop"
 amount = 1
@@ -48,7 +48,7 @@ script = ExtResource("1_quest")
 id = &"grandpas_garden"
 title = "Grandpa's Garden"
 giver = "Grandpa's letter"
-description = "The garden beds on the Sunflower Fields have run wild. Grow something again."
+description = "Follow the east path from Willowbrook to Sunflower Fields. The garden shed is northwest of the small garden beds, with a watering can and free seeds outside. Interact with a bed to dig, plant and water. Time advances when you work or rest, not while you wait; sleep at your cottage and return to check the crop."
 steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2"), SubResource("Step_3"), SubResource("Step_4"), SubResource("Step_5")])
 starts_active = true
 start_flag = &""

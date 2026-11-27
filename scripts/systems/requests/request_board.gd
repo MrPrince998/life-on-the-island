@@ -127,13 +127,13 @@ func get_empty_reason() -> String:
 	if not get_requests().is_empty():
 		return ""
 	if _met_givers().is_empty():
-		return "The board is bare. Say hello to the villagers: they'll pin up requests once they know you."
+		return "No requests yet. Say hello to the villagers: they'll leave requests in the village mailbox once they know you."
 	return "All of today's requests have been taken. New ones go up every morning."
 
 
 ## A short line for the morning message ("" when there's nothing new).
 func get_morning_note() -> String:
-	return "New requests are pinned on the village notice board." if has_news() else ""
+	return "New requests are waiting in the village mailbox." if has_news() else ""
 
 
 # ---- Taking a request -----------------------------------------------------------------
@@ -154,7 +154,7 @@ func accept(request_id: StringName) -> Dictionary:
 		slot["refill_day"] = ActivityClock.get_day() + 1
 		board_changed.emit()
 		return {"ok": true, "reason": "", "quest": quest}
-	return {"ok": false, "reason": "That request isn't on the board any more."}
+	return {"ok": false, "reason": "That request is no longer available."}
 
 
 ## The quest for a request: hand the things over to the villager who asked.

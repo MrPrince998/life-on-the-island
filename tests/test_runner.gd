@@ -847,7 +847,7 @@ func _run() -> void:
 	var q_map_rect := (main.get_node("HUD").get_node("%Minimap") as Control).get_global_rect()
 	check(q_tracker.visible and q_tracker_rect.position.y >= q_map_rect.end.y and absf(q_tracker_rect.position.x - q_map_rect.position.x) < 1.0, "the quest list sits right under the minimap")
 	var q_lines := q_tracker.get_lines()
-	check(q_lines.size() == 2 and q_lines[1][1] == "Say hello to Oliver at the fishing dock" and q_lines[0][1] == "Find Grandpa's watering can by the farm shed", "it shows each quest's next step (newest first)")
+	check(q_lines.size() == 2 and q_lines[1][1] == "Meet Oliver by the lake north of the village" and q_lines[0][1] == "Go east to the farm; collect the can and seeds by the garden shed", "it shows each quest's next step (newest first)")
 	var q_clock := ActivityClock.total_minutes
 	InventoryManager.add_item(&"watering_can")
 	check(QuestLog.get_current_step(&"grandpas_garden").target == &"dig", "picking up the watering can ticks the step off")
@@ -856,7 +856,7 @@ func _run() -> void:
 	for ev in [&"dig", &"plant", &"harvest"]:
 		QuestLog.record_event(ev)
 	await _frames(3)
-	check(q_tracker.get_lines()[0][1] == "Sell a crop at the General Store" and q_tracker.find_child("Flashes", true, false).get_child_count() > 0, "the tracker moves to the next step and flashes a tick")
+	check(q_tracker.get_lines()[0][1] == "Sell a crop at the shop counter east of the village well" and q_tracker.find_child("Flashes", true, false).get_child_count() > 0, "the tracker moves to the next step and flashes a tick")
 	var q_money := InventoryManager.get_money()
 	InventoryManager.add_item(&"turnip", 1)
 	ShopService.sell(&"turnip", 1)
@@ -1557,6 +1557,9 @@ func _run() -> void:
 	await preload("res://tests/chapter4_tests.gd").new().run(self)
 	await preload("res://tests/finale_tests.gd").new().run(self)
 	await preload("res://tests/gathering_tests.gd").new().run(self)
+	await preload("res://tests/sign_tests.gd").new().run(self)
+	await preload("res://tests/quest_guidance_tests.gd").new().run(self)
+	await preload("res://tests/interaction_tests.gd").new().run(self)
 	await preload("res://tests/lakeside_tests.gd").new().run(self)
 	await preload("res://tests/cooking_tests.gd").new().run(self)
 	await preload("res://tests/upgrade_tests.gd").new().run(self)
@@ -1567,6 +1570,7 @@ func _run() -> void:
 	await preload("res://tests/rice_tests.gd").new().run(self)
 	await preload("res://tests/wheat_tests.gd").new().run(self)
 	await preload("res://tests/music_tests.gd").new().run(self)
+	await preload("res://tests/tractor_tests.gd").new().run(self)
 
 	print("== NPCs ==")
 	ActivityClock.reset()

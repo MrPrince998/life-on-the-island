@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tool_recipe.gd" id="1_recipe"]
+
+[resource]
+script = ExtResource("1_recipe")
+item_id = &"harvester"
+buy_price = 1200
+forge_fee = 400
+materials = {
+&"log": 6
+}
+forge_minutes = 180
+pitch = "My finest piece: a reaper-thresher header for the front of the tractor. Cuts the crop and beats out the grain in one pass. The straw it leaves behind."

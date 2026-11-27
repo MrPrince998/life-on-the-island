@@ -128,7 +128,10 @@ func record_event(event_id: StringName, amount: int = 1) -> void:
 			continue
 		if step.kind == QuestStep.Kind.EVENT and step.target == event_id:
 			_state[quest_id]["count"] = int(_state[quest_id]["count"]) + amount
+			var previous_step := get_step_index(quest_id)
 			_check(get_quest(quest_id))
+			if is_active(quest_id) and get_step_index(quest_id) == previous_step:
+				quest_updated.emit(get_quest(quest_id))
 		elif step.or_event == event_id:
 			_state[quest_id]["or_done"] = true
 			_check(get_quest(quest_id))

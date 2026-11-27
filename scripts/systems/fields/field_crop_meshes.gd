@@ -36,6 +36,12 @@ static func _build(crop: FieldCropData, stage: int) -> Mesh:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 1000 + stage
 	var h := crop.height
+	if crop.look == &"corn":
+		_build_corn(st, rng, crop, stage)
+		st.generate_normals()
+		var corn_mesh := st.commit()
+		corn_mesh.surface_set_material(0, material())
+		return corn_mesh
 	if crop.look == &"wheat":
 		_build_wheat(st, rng, crop, stage)
 		st.generate_normals()
@@ -83,6 +89,52 @@ static func _build_wheat(st: SurfaceTool, rng: RandomNumberGenerator, crop: Fiel
 				_ear(st, rng, top, 0.11, ear_color, 0.12 if ripe else 0.0)
 		Stage.STUBBLE:
 			_tuft(st, rng, 10, 0.1, 0.008, 0.06, crop.ripe_color.darkened(0.15))
+
+
+## Corn: one tall stalk with long arching leaves; from heading on a tassel on top and a
+## cob or two in husks on the side (golden husks and a pale tassel when ripe).
+static func _build_corn(st: SurfaceTool, rng: RandomNumberGenerator, crop: FieldCropData, stage: int) -> void:
+	var h := crop.height
+	match stage:
+		Stage.SEEDLING:
+			_tuft(st, rng, 4, h * 0.14, 0.03, 0.45, crop.young_color)
+			return
+		Stage.STUBBLE:
+			_tuft(st, rng, 3, 0.18, 0.025, 0.05, crop.ripe_color.darkened(0.2))
+			return
+	var ripe := stage == Stage.RIPE
+	var tall := h * (0.6 if stage == Stage.GROWING else 1.0)
+	var leaf := crop.ripe_color if ripe else crop.growing_color
+	# The stalk: a thick, straight blade.
+	var top := _blade(st, Vector3.ZERO, Vector3.RIGHT, Vector3.FORWARD, tall, 0.0, 0.035, leaf.darkened(0.1))
+	_blade(st, Vector3.ZERO, Vector3.FORWARD, Vector3.LEFT, tall * 0.98, 0.0, 0.035, leaf.darkened(0.1))
+	# Long leaves arching out from up the stalk, alternating sides.
+	for i in 6:
+		var angle := i * 2.4 + rng.randf_range(-0.3, 0.3)
+		var out := Vector3(cos(angle), 0.0, sin(angle))
+		var side := Vector3.UP.cross(out).normalized()
+		var base := Vector3.UP * tall * (0.15 + i * 0.12)
+		_blade(st, base, out, side, tall * 0.45, 1.1, 0.045, leaf * rng.randf_range(0.9, 1.08))
+	if stage == Stage.GROWING:
+		return
+	# Tassel on top.
+	for i in 5:
+		var a := TAU * i / 5.0
+		var out := Vector3(cos(a), 0.0, sin(a))
+		_blade(st, top, out, Vector3.UP.cross(out).normalized(), 0.22, 0.9, 0.008, crop.grain_color.lerp(Color(0.95, 0.9, 0.75), 0.5))
+	# One or two cobs in their husks, leaning out from the stalk.
+	for i in (2 if ripe else 1):
+		var a := rng.randf() * TAU
+		var out := Vector3(cos(a), 0.0, sin(a))
+		var base := Vector3.UP * tall * (0.45 + i * 0.12) + out * 0.03
+		var axis := (Vector3.UP * 0.8 + out * 0.6).normalized()
+		var cob := crop.grain_color if ripe else crop.growing_color.lerp(crop.grain_color, 0.3)
+		for side: Vector3 in [Vector3.UP.cross(out).normalized(), out.cross(axis).normalized()]:
+			var w := side * 0.045
+			var mid := base + axis * 0.1
+			var tip := base + axis * 0.22
+			_quad(st, base - w * 0.5, base + w * 0.5, mid + w, mid - w, cob, cob)
+			_quad(st, mid - w, mid + w, tip + w * 0.3, tip - w * 0.3, cob, cob * 1.05)
 
 
 ## An upright ear of grain on top of a stalk: two crossed tapered spikes and a few

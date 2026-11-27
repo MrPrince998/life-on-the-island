@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/item_data.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/seed_drill.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"seed_drill"
+display_name = "Seed Drill"
+description = "Sows a whole row as you drive along it. Hitch it to the tractor, lower it over a ploughed row and keep seed in your bag."
+category = 2
+buy_price = 0
+sell_price = 0
+max_stack = 1
+unique = true
+icon = ExtResource("2_icon")

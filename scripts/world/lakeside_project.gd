@@ -36,7 +36,7 @@ func place_bench(sunset: bool) -> bool:
 	birds_due = ActivityClock.total_minutes + ActivityClock.minutes_until(6)
 	GameManager.set_flag(BENCH_FLAG)
 	ActivityClock.advance_minutes(15, &"lakeside_bench")
-	GameManager.notify("A place to linger. Invite Oliver using the little sign, or sit and enjoy the view. Look for birds tomorrow morning!")
+	GameManager.notify("A place to linger. Invite Oliver beside the bench, or sit and enjoy the view. Look for birds tomorrow morning!")
 	return true
 
 func _flag_changed(_flag: StringName, _value: bool) -> void:
@@ -61,7 +61,6 @@ func _refresh() -> void:
 	$Flowers.visible = built
 	$Birds.visible = GameManager.has_flag(BIRDS_FLAG)
 	$Birds.process_mode = Node.PROCESS_MODE_INHERIT if $Birds.visible else Node.PROCESS_MODE_DISABLED
-	$Sign.text = "A quiet corner\nClear the three branch piles" if not all_clear() else ("A quiet corner\nChoose which way your bench faces" if not built else "A quiet corner\nSit, or invite Oliver by the sign")
 
 func _time_changed(_day: int, _minute: int) -> void:
 	if birds_due >= 0 and ActivityClock.total_minutes >= birds_due and GameManager.has_flag(BENCH_FLAG) and not GameManager.has_flag(BIRDS_FLAG):

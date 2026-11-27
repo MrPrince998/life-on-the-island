@@ -9,6 +9,8 @@ signal interacted(interactor: Node)
 @export var interaction_id: StringName = &""
 @export var prompt_text: String = "Interact"
 @export var enabled: bool = true
+## Position of the selected-object diamond relative to this interaction area.
+@export var focus_offset: Vector3 = Vector3(0, 2.0, 0)
 
 
 func _init() -> void:
@@ -20,6 +22,10 @@ func _init() -> void:
 
 func get_prompt() -> String:
 	return prompt_text
+
+
+func get_focus_position() -> Vector3:
+	return to_global(focus_offset)
 
 
 func interact(interactor: Node) -> void:

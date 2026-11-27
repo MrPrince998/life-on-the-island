@@ -158,7 +158,7 @@ func get_prompt(plot: FarmPlot) -> String:
 		Action.WATER:
 			return "Water the %s · %d min" % [crop.get_lower_name(), water_minutes]
 		Action.NEED_CAN:
-			return "The %s are thirsty · find a watering can" % crop.get_lower_name()
+			return "The %s are thirsty · watering can: garden shed by the farm gate" % crop.get_lower_name()
 		Action.GROWING:
 			return "%s growing · about %s to go" % [crop.display_name, _hours_text(plot.get_minutes_to_harvest())]
 		Action.HARVEST:

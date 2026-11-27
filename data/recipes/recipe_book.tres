@@ -11,7 +11,8 @@
 
 [ext_resource type="Resource" path="res://data/recipes/fish_rice_bowl.tres" id="r_fish_rice_bowl"]
 [ext_resource type="Resource" path="res://data/recipes/fresh_loaf.tres" id="r_fresh_loaf"]
+[ext_resource type="Resource" path="res://data/recipes/cornbread.tres" id="r_cornbread"]
 
 [resource]
 script = ExtResource("1_book")
-recipes = Array[ExtResource("2_recipe")]([ExtResource("r_grilled_fish"), ExtResource("r_turnip_soup"), ExtResource("r_roasted_carrots"), ExtResource("r_fishermans_stew"), ExtResource("r_sunflower_loaf"), ExtResource("r_garden_pie"), ExtResource("r_fish_rice_bowl"), ExtResource("r_fresh_loaf")])
+recipes = Array[ExtResource("2_recipe")]([ExtResource("r_grilled_fish"), ExtResource("r_turnip_soup"), ExtResource("r_roasted_carrots"), ExtResource("r_fishermans_stew"), ExtResource("r_sunflower_loaf"), ExtResource("r_garden_pie"), ExtResource("r_fish_rice_bowl"), ExtResource("r_fresh_loaf"), ExtResource("r_cornbread")])

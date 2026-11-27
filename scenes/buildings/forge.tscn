@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://source_assets/tripo/firewood_stack.glb" id="4_firewood"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/wooden_crate.glb" id="5_crate"]
 
+
 [sub_resource type="StandardMaterial3D" id="Mat_stone"]
 albedo_color = Color(0.55, 0.52, 0.48, 1)
 roughness = 0.95
@@ -243,15 +244,6 @@ script = ExtResource("3_fitted")
 model = ExtResource("5_crate")
 size = 0.8
 collision = 1
-
-[node name="Sign" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.45, 2.05)
-pixel_size = 0.006
-text = "Blacksmith"
-font_size = 64
-outline_size = 14
-modulate = Color(1, 0.94, 0.78, 1)
-outline_modulate = Color(0.35, 0.2, 0.1, 1)
 
 [node name="Collision" type="StaticBody3D" parent="."]
 collision_mask = 0

@@ -3,7 +3,7 @@ extends Interactable
 ## The spot in front of a run-down building where you press E to restore it.
 ##
 ## While run-down, the building's model gets a weathered grime-and-moss overlay, broken
-## planks and weeds lie around it and a "Needs repair" sign stands by the door (or a
+## planks and weeds lie around it (or a
 ## dedicated ruined model is shown when BuildingData.ruined_model_path exists).
 ## Restoring costs the coins and materials in BuildingData, takes work_minutes of in-game
 ## time, and sets the story flag "restored_<id>". The flag is saved with the game, and the
@@ -230,39 +230,6 @@ func _build_ruin() -> void:
 		weeds.position = base + Vector3(cos(angle) * (half.x + 0.3), 0.0, sin(angle) * (half.y + 0.3))
 		weeds.scale = Vector3(1.6, 1.8, 1.6)
 		_ruin.add_child(weeds)
-	# A little wooden sign by the door.
-	var sign_root := Node3D.new()
-	sign_root.name = "Sign"
-	sign_root.position = base + Vector3(half.x + 0.9, 0, half.y + 0.6)
-	sign_root.rotation.y = 0.35
-	_ruin.add_child(sign_root)
-	var post := MeshInstance3D.new()
-	var post_mesh := BoxMesh.new()
-	post_mesh.size = Vector3(0.09, 1.1, 0.09)
-	post_mesh.material = wood_dark
-	post.mesh = post_mesh
-	post.position.y = 0.55
-	sign_root.add_child(post)
-	var board := MeshInstance3D.new()
-	var board_mesh := BoxMesh.new()
-	board_mesh.size = Vector3(0.85, 0.36, 0.05)
-	var board_wood := StandardMaterial3D.new()
-	board_wood.albedo_color = Color(0.78, 0.62, 0.42)
-	board_wood.roughness = 1.0
-	board_mesh.material = board_wood
-	board.mesh = board_mesh
-	board.position = Vector3(0, 1.0, 0.05)
-	board.rotation.z = deg_to_rad(-4.0)
-	sign_root.add_child(board)
-	var label := Label3D.new()
-	label.text = "Needs repair"
-	label.font_size = 44
-	label.pixel_size = 0.004
-	label.outline_size = 0
-	label.modulate = Color(0.2, 0.11, 0.05)
-	label.position = Vector3(0, 1.0, 0.08)
-	label.rotation.z = deg_to_rad(-4.0)
-	sign_root.add_child(label)
 
 
 func _puff_dust() -> void:

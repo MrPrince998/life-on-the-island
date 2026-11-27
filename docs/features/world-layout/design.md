@@ -133,6 +133,14 @@ Each region has its own building language, so players can tell where they are at
 
 Ambient set: fireflies by the lake at night, crabs on the beach, fog over the coast in the morning, wind chimes in the village.
 
+## Quest guidance (implemented)
+
+The journal opens on a Quests tab with every active objective, landmark directions and live progress. The HUD keeps four objectives and points to J for the complete list. Early quests describe routes to Emma, Oliver, Mia, the garden shed and the shop; Emma introduces the cottage mailbox requests.
+
+The village junction keeps one three-arrow signpost, with carved destination lettering and moss-coloured 3D vines. All other signboards and floating location-name replacements are absent: welcome boards, building plaques, farm boards, repair signs, shipping signs and the notice-board model are removed from the active scenes. Quests and existing interaction prompts guide the player.
+
+Daily village requests are available at the existing village mailbox; their saved interaction ID and request progress are unchanged. Bench choices and invitations remain available beside the lakeside bench, without a sign or floating labels. `tests/sign_tests.gd` checks that only the village junction sign loads and that the affected activities remain usable.
+
 ## New models to make (Tripo)
 The full list of models, their status, priority and generation batches is in [art assets](../art-assets/design.md); prompts are in `docs/TRIPO_ASSET_PROMPTS.md`. Restorable buildings need **two models with the same footprint**: ruined and restored.
 

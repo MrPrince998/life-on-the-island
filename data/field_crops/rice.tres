@@ -7,6 +7,7 @@ script = ExtResource("1_crop")
 id = &"rice"
 display_name = "Rice"
 planting_item = &"rice_seedlings"
+grain_item = &"paddy_rice"
 sheaf_item = &"rice_sheaf"
 sheaves_per_row = Vector2i(6, 8)
 grow_days = 4

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/wooden_barrel.tscn" id="4_barrel"]
 [ext_resource type="Script" path="res://scripts/world/night_light.gd" id="5_night"]
 
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_body"]
 size = Vector3(8.370, 6.0, 5.643)
 
@@ -47,15 +48,6 @@ prompt_text = "Browse the General Store"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShopCounter"]
 shape = SubResource("SphereShape3D_counter")
-
-[node name="Sign" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 5.05, 3.45)
-pixel_size = 0.006
-text = "General Store"
-font_size = 64
-outline_size = 14
-modulate = Color(1, 0.94, 0.78, 1)
-outline_modulate = Color(0.35, 0.2, 0.1, 1)
 
 [node name="CrateA" parent="." instance=ExtResource("3_crate")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 3.6)

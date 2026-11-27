@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Step_1"]
 script = ExtResource("2_step")
-text = "Find Emma at the General Store"
+text = "Meet Emma at the red-roofed shop east of the village well"
 kind = 0
 target = &"met_emma"
 amount = 1
@@ -16,7 +16,7 @@ script = ExtResource("1_quest")
 id = &"arrival"
 title = "Welcome to Willowbrook"
 giver = "Grandpa's letter"
-description = "Grandpa's letter says Emma at the General Store is keeping the cottage key."
+description = "Follow the path inland from the beach to Willowbrook Village. Emma runs the red-roofed General Store east of the well. She waits by the shop, or visits the well in the evening. Speak to her or use the shop counter."
 steps = Array[ExtResource("2_step")]([SubResource("Step_1")])
 starts_active = false
 start_flag = &"opening_seen"

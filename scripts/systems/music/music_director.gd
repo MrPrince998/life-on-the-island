@@ -56,6 +56,7 @@ enum Mode { SILENT, TITLE, WORLD, FINALE }
 
 var mode: int = Mode.SILENT
 var _players: Array[AudioStreamPlayer] = []
+var _fade_outs: Array[Tween] = [null, null]
 var _active := 0
 var _current: StringName = &""
 var _resting := false
@@ -208,20 +209,31 @@ func _start(track: StringName, fade: float) -> void:
 	var old := _players[_active]
 	if track == _current and old.playing:
 		return
+	_cancel_fade(_active)
 	if old.playing:
 		var out := create_tween()
+		_fade_outs[_active] = out
 		out.tween_property(old, ^"volume_db", SILENT_DB, fade if track != &"" else FADE_OUT)
 		out.tween_callback(old.stop)
 	_current = track
 	if track == &"":
 		return
 	_active = 1 - _active
+	# This speaker may still have a fade-out scheduled for its previous track.
+	_cancel_fade(_active)
 	var player := _players[_active]
 	player.stop()
 	player.stream = _stream(track)
 	player.volume_db = SILENT_DB
 	player.play()
 	# It fades in from silence in _process (and follows ducking the same way).
+
+
+func _cancel_fade(index: int) -> void:
+	var fade := _fade_outs[index]
+	if fade != null and fade.is_valid():
+		fade.kill()
+	_fade_outs[index] = null
 
 
 func _on_finished(index: int) -> void:

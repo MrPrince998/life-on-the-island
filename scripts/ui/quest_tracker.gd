@@ -34,7 +34,7 @@ func _ready() -> void:
 	header.add_child(icon)
 	var title := Label.new()
 	title.name = "Title"
-	title.text = "Quests"
+	title.text = "Quests · J"
 	title.theme_type_variation = &"HeaderLabel"
 	title.add_theme_font_size_override("font_size", 18)
 	header.add_child(title)
@@ -81,7 +81,7 @@ func rebuild() -> void:
 		var more := Label.new()
 		more.theme_type_variation = &"SubtleLabel"
 		more.add_theme_font_size_override("font_size", 14)
-		more.text = "+%d more" % (active.size() - MAX_SHOWN)
+		more.text = "+%d more · J: all quests" % (active.size() - MAX_SHOWN)
 		_list.add_child(more)
 	_update_visibility()
 

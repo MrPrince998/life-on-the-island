@@ -1,12 +1,17 @@
 class_name PlayerInteraction
 extends Area3D
-## Finds the nearest Interactable in reach and triggers it when E is pressed.
+## Selects a nearby Interactable using distance and camera facing, with a stable
+## focus marker shared by mouse and gamepad look.
 ## Lives on an Area3D child of the player.
 
 var _current: Interactable = null
 var _prompt: String = ""
 
 const STAND_UP_PROMPT := "Stand up"
+## A target behind the camera pays up to 3 metres of extra selection cost.
+const FACING_WEIGHT := 1.5
+const SWITCH_MARGIN := 0.2
+var _focus_marker: Label3D
 
 
 func _ready() -> void:
@@ -14,33 +19,67 @@ func _ready() -> void:
 	collision_mask = 4  # interactables
 	monitoring = true
 	monitorable = false
+	_focus_marker = Label3D.new()
+	_focus_marker.name = "FocusMarker"
+	_focus_marker.text = "◇"
+	_focus_marker.font_size = 64
+	_focus_marker.pixel_size = 0.006
+	_focus_marker.modulate = Color(1.0, 0.87, 0.52)
+	_focus_marker.outline_modulate = Color(0.19, 0.12, 0.06)
+	_focus_marker.outline_size = 12
+	_focus_marker.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	# Keep the cue readable when the character stands between camera and target.
+	_focus_marker.no_depth_test = true
+	_focus_marker.top_level = true
+	_focus_marker.hide()
+	add_child(_focus_marker)
 
 
 func _physics_process(_delta: float) -> void:
+	_refresh_selection()
+
+
+func _eligible(candidate: Interactable, player: PlayerController) -> bool:
+	if not is_instance_valid(candidate) or candidate.is_queued_for_deletion() or not candidate.enabled or not candidate.can_process():
+		return false
+	if player and (player.is_input_locked() or player.is_sitting()):
+		return false
+	if candidate.has_method(&"can_interact_now"):
+		return bool(candidate.call(&"can_interact_now", player))
+	return player == null or not player.is_hands_busy()
+
+
+func _score(candidate: Interactable, forward: Vector3) -> float:
+	var offset := candidate.global_position - global_position
+	offset.y = 0.0
+	var distance := offset.length()
+	# Underfoot beds should not jump between directions as the player crosses them.
+	var facing_cost := 0.0 if distance < 0.35 else FACING_WEIGHT * (1.0 - forward.dot(offset / distance))
+	return distance + facing_cost
+
+
+func _refresh_selection() -> void:
 	var nearest: Interactable = null
 	var best := INF
+	var current_score := INF
 	var player := get_parent() as PlayerController
-	var busy := player != null and player.is_input_locked()
-	var hands_full := player != null and player.is_hands_busy()
-	for area in ([] if busy else get_overlapping_areas()):
+	var rig := player.get_node_or_null("CameraRig") as CameraRig if player else null
+	var forward := Vector3.FORWARD.rotated(Vector3.UP, rig.get_yaw()) if rig else -global_basis.z
+	for area in get_overlapping_areas():
 		var candidate := area as Interactable
-		if candidate == null or not candidate.enabled:
+		if not _eligible(candidate, player):
 			continue
-		# Some things only answer at certain times (a crate needs free hands, the jetty a
-		# crate in them). With a crate or the cart in your hands, nothing else answers.
-		if candidate.has_method(&"can_interact_now"):
-			if not candidate.call(&"can_interact_now", player):
-				continue
-		elif hands_full:
-			continue
-		var distance := global_position.distance_squared_to(candidate.global_position)
-		if distance < best:
-			best = distance
+		var score := _score(candidate, forward)
+		if candidate == _current:
+			current_score = score
+		if score < best:
+			best = score
 			nearest = candidate
-	# Prompts can change while you stand there (a garden bed after time passes, a
-	# different seed chosen), so refresh when the text changes too.
+	# Keep the current eligible target through small camera/position jitter.
+	if current_score < INF and current_score <= best + SWITCH_MARGIN:
+		nearest = _current
 	var prompt := nearest.get_prompt() if nearest else ""
-	if nearest == null and hands_full:
+	if nearest == null and player and player.is_hands_busy() and not player.is_input_locked():
 		var carry := PlayerCarry.find(player)
 		prompt = carry.get_free_prompt() if carry else ""
 	if player and player.is_sitting():
@@ -49,10 +88,17 @@ func _physics_process(_delta: float) -> void:
 		_current = nearest
 		_prompt = prompt
 		GameManager.set_interaction_prompt(prompt)
+	_focus_marker.visible = nearest != null and not prompt.is_empty()
+	if nearest:
+		_focus_marker.global_position = nearest.get_focus_position()
+
+
+func is_focus_marker_visible() -> bool:
+	return is_instance_valid(_focus_marker) and _focus_marker.visible
 
 
 func get_current() -> Interactable:
-	return _current
+	return _current if is_instance_valid(_current) else null
 
 
 ## The prompt shown right now ("" when there is none).
@@ -61,7 +107,12 @@ func get_prompt_text() -> String:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not (event.is_action_pressed(&"interact") or event.is_action_pressed(&"give_gift") or event.is_action_pressed(&"focus_shop")):
+		return
 	var player := get_parent() as PlayerController
+	if player and player.is_input_locked():
+		return
+	_refresh_selection()
 	if event.is_action_pressed(&"interact") and player and player.is_sitting():
 		get_viewport().set_input_as_handled()
 		player.stand_up()
@@ -78,6 +129,5 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"interact") and _current:
 		get_viewport().set_input_as_handled()
 		_current.interact(get_parent())
-		# Prompt text may change after interacting (e.g. sleep time).
-		_prompt = _current.get_prompt() if _current.enabled else ""
-		GameManager.set_interaction_prompt(_prompt)
+		# An action can disable/free its target or lock the player for a window.
+		_refresh_selection()

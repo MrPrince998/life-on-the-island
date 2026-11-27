@@ -15,6 +15,12 @@ extends Resource
 @export var sheaf_item: StringName = &""
 ## Sheaves one row gives (min, max).
 @export var sheaves_per_row: Vector2i = Vector2i(6, 8)
+## What the threshed grain is (the harvester machine gives this straight from the field),
+## and how much grain one sheaf's worth makes.
+@export var grain_item: StringName = &""
+@export var grain_per_sheaf: int = 3
+## What the gathered harvest is called in prompts ("sheaves" for grain, "cobs" for corn).
+@export var bundle_word: String = "sheaves"
 ## Days of growing (each new morning counts, if conditions were right) until it's ripe.
 @export var grow_days: int = 4
 ## Seasons it can be planted in (empty = any). Planted rows keep growing when the season turns.
@@ -65,7 +71,7 @@ func get_seasons_text() -> String:
 ## Every field crop (data/field_crops/*.tres).
 static func all() -> Array[FieldCropData]:
 	var result: Array[FieldCropData] = []
-	for path in ["res://data/field_crops/rice.tres", "res://data/field_crops/wheat.tres"]:
+	for path in ["res://data/field_crops/rice.tres", "res://data/field_crops/wheat.tres", "res://data/field_crops/corn.tres"]:
 		var crop := load(path) as FieldCropData
 		if crop:
 			result.append(crop)

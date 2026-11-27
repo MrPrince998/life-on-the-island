@@ -52,7 +52,7 @@ func get_prompt() -> String:
 	var yard := get_yard()
 	var count := yard.orders.size() if yard else 0
 	if count == 0:
-		return "Packing table · no orders yet" if ActivityClock.get_day() < ShippingYard.FIRST_ORDER_DAY else "Packing table · no orders right now"
+		return "First shipping orders arrive tomorrow morning" if ActivityClock.get_day() < ShippingYard.FIRST_ORDER_DAY else "Packing table · no orders right now"
 	return "Look at the shipping orders (%d)" % count
 
 

@@ -70,7 +70,6 @@
 [ext_resource type="PackedScene" path="res://source_assets/tripo/village_library.glb" id="sp_18"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/ruined_village_house.glb" id="sp_19"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/house.glb" id="sp_20"]
-[ext_resource type="PackedScene" path="res://source_assets/tripo/notice_board.glb" id="sp_21"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/barzier.glb" id="sp_22"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/mailbox.glb" id="sp_23"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/firewood_stack.glb" id="sp_24"]
@@ -114,7 +113,6 @@
 [ext_resource type="PackedScene" path="res://source_assets/tripo/rock_boulder_a.glb" id="sp_62"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/beach_jetty.tscn" id="sp_63"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/mail_boat.glb" id="sp_64"]
-[ext_resource type="PackedScene" path="res://source_assets/tripo/welcome_sign.glb" id="sp_65"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/driftwood.glb" id="sp_66"]
 [ext_resource type="PackedScene" path="res://scenes/props/seagull.tscn" id="sp_67"]
 [ext_resource type="PackedScene" path="res://source_assets/tripo/watchtower_ruins.glb" id="sp_68"]
@@ -148,7 +146,9 @@
 [ext_resource type="PackedScene" path="res://scenes/world/rice_paddy.tscn" id="bf_paddy"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/threshing_shed.tscn" id="bf_shed"]
 [ext_resource type="PackedScene" path="res://scenes/world/wheat_field.tscn" id="bf_wheat"]
+[ext_resource type="PackedScene" path="res://scenes/vehicles/tractor_spot.tscn" id="bf_tractor"]
 [ext_resource type="Script" path="res://scripts/systems/fields/processing_machine.gd" id="bf_machine"]
+
 
 [sub_resource type="SphereShape3D" id="NoticeBoardReach"]
 radius = 1.5
@@ -526,6 +526,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.5, 5.06, 46.5)
 
 [node name="WheatField" parent="Buildings" instance=ExtResource("bf_wheat")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 236, 5.5, 66)
+
+[node name="TractorSpot" parent="Buildings" instance=ExtResource("bf_tractor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 145, 5.04, 72)
 
 [node name="Lanterns" type="Node3D" parent="Buildings"]
 
@@ -962,23 +965,6 @@ model = ExtResource("sp_20")
 size = 7
 collision_fraction = Vector3(0.85, 0.75, 0.7)
 
-[node name="NoticeBoard" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
-transform = Transform3D(0.4961, 0, -0.8682, 0, 1, 0, 0.8682, 0, 0.4961, 7, 0, 108)
-script = ExtResource("sp_2")
-model = ExtResource("sp_21")
-size = 2.4
-fit = 1
-collision_fraction = Vector3(0.9, 1, 0.4)
-metadata/clear_radius = 1.6
-
-[node name="Requests" type="Area3D" parent="StoryPlaces/Village/NoticeBoard"]
-script = ExtResource("nb_spot")
-interaction_id = &"village_notice_board"
-prompt_text = "Read the notice board"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Village/NoticeBoard/Requests"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("NoticeBoardReach")
 [node name="BrazierWest" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 112)
 script = ExtResource("sp_2")
@@ -1006,6 +992,14 @@ fit = 1
 collision_fraction = Vector3(0.5, 1, 0.5)
 metadata/clear_radius = 0.8
 
+[node name="Requests" type="Area3D" parent="StoryPlaces/Village/Mailbox"]
+script = ExtResource("nb_spot")
+interaction_id = &"village_notice_board"
+prompt_text = "Check village requests"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoryPlaces/Village/Mailbox/Requests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("NoticeBoardReach")
 [node name="Firewood" type="Node3D" parent="StoryPlaces/Village" groups=["keep_clear"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, 105.6)
 script = ExtResource("sp_2")
@@ -2059,15 +2053,6 @@ model = ExtResource("sp_64")
 size = 10
 collision_fraction = Vector3(0.75, 0.3, 0.85)
 snap_to_ground = false
-
-[node name="WelcomeSign" type="Node3D" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"]]
-transform = Transform3D(0.8924, 0, -0.4512, 0, 1, 0, 0.4512, 0, 0.8924, -78.3089, 0, 171.8584)
-script = ExtResource("sp_2")
-model = ExtResource("sp_65")
-size = 2.3
-fit = 1
-collision_fraction = Vector3(0.9, 1, 0.3)
-metadata/clear_radius = 1.5
 
 [node name="Driftwood1" type="Node3D" parent="StoryPlaces/Coast/BeachJetty" groups=["keep_clear"]]
 transform = Transform3D(0.9397, 0, 0.342, 0, 1, 0, -0.342, 0, 0.9397, -86.2935, 0, 167.261)

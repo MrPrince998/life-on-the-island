@@ -1,6 +1,6 @@
 class_name RequestBoardPanel
 extends CanvasLayer
-## The notice board screen: today's villager requests (RequestBoard), each with its
+## Village requests collected at the mailbox: today's villager requests (RequestBoard), each with its
 ## reward and a "Take request" button, plus the requests you're helping with.
 ## Reading and taking requests costs no time. Esc, E or the Close button closes it.
 
@@ -230,7 +230,7 @@ func _build() -> void:
 	var title := Label.new()
 	title.theme_type_variation = &"HeaderLabel"
 	title.add_theme_font_size_override("font_size", 28)
-	title.text = "Village Notice Board"
+	title.text = "Village Requests"
 	names.add_child(title)
 	_subtitle = Label.new()
 	_subtitle.theme_type_variation = &"SubtleLabel"

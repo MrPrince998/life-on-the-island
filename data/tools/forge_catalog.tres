@@ -7,7 +7,10 @@
 [ext_resource type="Resource" path="res://data/tools/sickle.tres" id="5_sickle"]
 [ext_resource type="Resource" path="res://data/tools/hoe.tres" id="6_hoe"]
 [ext_resource type="Resource" path="res://data/tools/scythe.tres" id="7_scythe"]
+[ext_resource type="Resource" path="res://data/tools/plough.tres" id="8_plough"]
+[ext_resource type="Resource" path="res://data/tools/seed_drill.tres" id="9_drill"]
+[ext_resource type="Resource" path="res://data/tools/harvester.tres" id="10_harvester"]
 
 [resource]
 script = ExtResource("1_catalog")
-recipes = Array[ExtResource("2_recipe")]([ExtResource("3_axe"), ExtResource("4_steel_axe"), ExtResource("5_sickle"), ExtResource("6_hoe"), ExtResource("7_scythe")])
+recipes = Array[ExtResource("2_recipe")]([ExtResource("3_axe"), ExtResource("4_steel_axe"), ExtResource("5_sickle"), ExtResource("6_hoe"), ExtResource("7_scythe"), ExtResource("8_plough"), ExtResource("9_drill"), ExtResource("10_harvester")])

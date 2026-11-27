@@ -39,6 +39,8 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
 
 ## Things to try
 
+- **Clear interaction targets:** look toward a nearby object with the mouse or right stick. A warm diamond marks the selected target; the prompt tells you what E will do. Small camera movements keep the selection steady.
+
 - **A quiet corner at Moonlit Lake:** beside the path southwest of the fishing dock, clear three branch piles with **E**, then choose a bench facing the lake or sunset. Use the invitation sign to meet Oliver at the dock and catch a fish beside him for a daily friendship bonus. Birds return the next morning; the bench and progress are saved.
 
 - Walk anywhere. The clock **does not move** while you explore.
@@ -74,6 +76,11 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
   5. Once the **windmill** is restored, its **millstones** grind 3 grain into 2 **Flour**. Bake flour into a **Fresh Farmhouse Loaf**.
   Wheat is for the cool seasons and rice for the warm ones, so there's always something to grow.
 - **Music:** each place has its own gentle track (village, farm and paddy, Amber Plains, lake and forest), with the title theme on the title screen and a finale theme for the credits. Tracks fade into each other as you walk between places, rest quietly for half a minute between plays, dip while you chat or a story jingle plays, and fade out while you play the ukulele. Volume: Settings → Music.
+- **Grandpa's tractor:** it's rusting just east of the barn. Restore it with Theo's help (4 logs, 6 wooden planks, 250 coins, 3 hours), then press **E** beside it to climb on.
+  - **W / S** drive and reverse, **A / D** steer, **E** climb off (when stopped). The camera settles in behind you. Driving, like walking, takes no in-game time.
+  - Bram sells three implements: a **plough**, a **seed drill** and a **harvester**. **Q** hitches one (when stopped, 5 min) and **Space** lowers or raises it.
+  - Lower it over a field row and drive the length of the row. The plough tills it, the seed drill sows it (keep seed in your bag), and the harvester cuts a ripe row and puts the grain straight into your bag (the straw stays in the field). You can watch each stretch change as you pass.
+  - A row takes 8 / 6 / 10 minutes with a machine, against 30 to till and about 50 to cut and tie by hand.
 - **Shop view (F):** at the General Store counter or Bram's forge, press F. The camera frames the shop and its keeper, and the shop window opens at the side.
 - **Daily notice board:** in the village square. Each morning, villagers you've met pin small requests on it ("Nana Bea would love 3 Carrots for a hearty stew").
   Press **E** to read it and take up to 3 requests; bring the things to that villager for coins and friendship. A **!** over the board means new requests.

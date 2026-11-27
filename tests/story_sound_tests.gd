@@ -124,6 +124,11 @@ func run(t: Node) -> void:
 	ActivityClock.from_dict({"total_minutes": minutes})
 
 	# The end credits have the finale track (MusicDirector): story sounds stay out of it.
+	await _idle(t)  # flush queued story sounds before waiting for playback
+	var sting_wait := 0
+	while story.is_playing() and sting_wait < 600:
+		await t._frames(1)
+		sting_wait += 1
 	var credits := FinaleCredits.play(t.get_tree())
 	await t._frames(20)
 	t.check(not story.is_playing() and story.get_node_or_null("CreditsMusic") == null, "the end credits are left to the finale music")
@@ -144,7 +149,7 @@ func run(t: Node) -> void:
 		player.teleport_to(wood.global_position + Vector3(0, 0.3, 1.0), 0.0)
 		await t._frames(10)
 		wood.interact(player)
-		waited = 0
+		var waited := 0
 		while player.is_input_locked() and waited < 600:
 			await t._frames(1)
 			waited += 1

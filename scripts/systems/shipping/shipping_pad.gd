@@ -30,17 +30,6 @@ func _ready() -> void:
 		Vector3(1.6, 0, 0.6), Vector3(1.6, 0, -0.3), Vector3(1.6, 0, -1.2),
 	])
 	add_child(_rack)
-	# A little sign so you know where crates go.
-	var board := Label3D.new()
-	board.text = "Shipping · sails at 6 PM"
-	board.font_size = 40
-	board.pixel_size = 0.004
-	board.outline_size = 8
-	board.modulate = Color(0.32, 0.2, 0.1)
-	board.outline_modulate = Color(0.95, 0.88, 0.72)
-	board.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-	board.position = Vector3(0, 2.2, -2.2)
-	add_child(board)
 
 
 func get_crates() -> Array[ShippingCrate]:

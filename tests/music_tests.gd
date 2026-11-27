@@ -48,6 +48,9 @@ func run(t: Node) -> void:
 	var playing: AudioStreamPlayer = md._players[md._active]
 	t.check(playing.playing and playing.stream == md._stream(&"lake_forest"), "and the track really plays (crossfading from the last)")
 
+	await t.get_tree().create_timer(MusicDirector.CROSSFADE + 0.2).timeout
+	t.check(playing.playing and playing.stream == md._stream(&"lake_forest"), "rapid region changes do not let an old fade stop the reused music player")
+
 	# Late at night there's no night track yet: the calm lake music stands in.
 	GameManager.current_region_id = &"willowbrook_village"
 	ActivityClock.advance_minutes(ActivityClock.minutes_until(23), &"test")

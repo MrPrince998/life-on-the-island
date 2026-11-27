@@ -427,3 +427,23 @@ Wheat plants, the hoe, the scythe and the millstone are built in code until thes
 **`millstone.glb`** — ⬜ not made yet
 > round grey stone millstone with a square hole in the centre and grooves cut across its face, leaning on its edge
 
+## Realistic farming, slice 4: Grandpa's tractor and implements
+The tractor and its implements are built in code until these exist. Models for vehicles need the
+wheels as separate parts; if Tripo gives one solid mesh, Claude can still use it with spinning
+wheels drawn in code.
+
+**`tractor.glb`** — ⬜ not made yet
+> small vintage farm tractor from the 1950s, faded red paint, big ridged rear wheels and small front wheels, cream wheel hubs, rounded engine hood with a front grille, single tall exhaust pipe, open driver's seat with a little backrest, steering wheel, rear mudguards, no cab, side view friendly proportions
+
+**`tractor_rusty.glb`** — ⬜ not made yet
+> the same small vintage farm tractor, rusted and weathered, flaking red paint, one flat front tyre, weeds growing round the wheels, cracked seat
+
+**`plough_implement.glb`** — ⬜ not made yet
+> three-furrow tractor plough, sturdy grey steel frame with a towing drawbar, three curved polished mouldboard shares
+
+**`seed_drill.glb`** — ⬜ not made yet
+> small tractor-towed seed drill, long green seed hopper box with a hinged lid, a row of small steel discs underneath, two little rubber wheels at the ends
+
+**`harvester_header.glb`** — ⬜ not made yet
+> front-mounted grain harvester header for a small tractor, wide yellow cutting platform with a row of pointed guards, a red slatted reel turning above it
+

@@ -33,6 +33,12 @@ const BUND := Color(0.42, 0.5, 0.25)
 const FIELD_GROUND := Color(0.5, 0.48, 0.3)
 const TILLED_SOIL := Color(0.36, 0.26, 0.17)
 const FURROW := Color(0.28, 0.2, 0.13)
+## Machines (a tractor's implements, see Tractor) work a row as they pass over it, a
+## SEGMENT at a time; once MACHINE_DONE of the row has been covered the job is done.
+const SEGMENT := 1.0
+const MACHINE_DONE := 0.85
+## In-game minutes per row with a machine (by hand: till 30, sow 15, cut + tie 50).
+const MACHINE_MINUTES := {&"plough": 8, &"seed_drill": 6, &"harvester": 10}
 ## How much faster a scythe is than a sickle.
 const SCYTHE_SWINGS := 0.5
 const SCYTHE_MINUTES := 0.6
@@ -53,6 +59,9 @@ var _busy := false
 var _water: MeshInstance3D
 var _row_nodes: Array[Dictionary] = []  # {spot, plants, lying, stubble, soil, clumps: Array[Transform3D]}
 var _rng := RandomNumberGenerator.new()
+## Machine work in progress: row -> {tool, cells: PackedByteArray}. Not saved: a row
+## half-ploughed when you leave is simply started afresh.
+var _coverage: Dictionary = {}
 
 
 func _ready() -> void:
@@ -164,7 +173,9 @@ func row_prompt(index: int) -> String:
 				return "Ripe! You need a sickle or a scythe to cut it (Bram's forge)"
 			return "Cut the %s with your %s  (%d swings · %d min)" % [crop.display_name.to_lower(), "scythe" if WoodcuttingController.has_scythe() else "sickle", cut_swings(), cut_minutes()]
 		RowState.CUT:
-			return "Gather and tie into %d sheaves  (%d min)" % [int(row.sheaves), crop.tie_minutes]
+			if crop.bundle_word == "sheaves":
+				return "Gather and tie into %d sheaves  (%d min)" % [int(row.sheaves), crop.tie_minutes]
+			return "Gather the %d %s  (%d min)" % [int(row.sheaves), crop.bundle_word, crop.tie_minutes]
 	return ""
 
 
@@ -357,6 +368,7 @@ func _grow_overnight() -> void:
 
 
 func _changed(index: int) -> void:
+	_coverage.erase(index)
 	_refresh_row(index)
 	row_changed.emit(index, int(_rows[index].state))
 
@@ -386,6 +398,202 @@ func _bend(player: PlayerController, at: Vector3, times: int) -> void:
 			animator.play_action(&"farm_swing")
 		await player.get_tree().create_timer(1.25).timeout
 	player.set_input_locked(false)
+
+
+# ---- Machines (tractor implements) -------------------------------------------
+
+## What `tool` (&"plough", &"seed_drill", &"harvester") would do to the row it's over, or
+## why not: {index, ok, verb, reason}. {} when `world_pos` isn't over this field.
+func machine_check(tool: StringName, world_pos: Vector3) -> Dictionary:
+	var index := row_at(world_pos)
+	if index < 0 or crop == null:
+		return {}
+	var state := int(_rows[index].state)
+	var result := {"index": index, "ok": false, "verb": "", "reason": ""}
+	match tool:
+		&"plough":
+			result.verb = "Ploughing"
+			if not needs_tilling():
+				result.reason = "A paddy isn't ploughed"
+			elif state != RowState.EMPTY:
+				result.reason = "Row %d is already worked" % (index + 1)
+			else:
+				result.ok = true
+		&"seed_drill":
+			result.verb = "Sowing"
+			if not needs_tilling():
+				result.reason = "Rice is planted by hand"
+			elif state != RowState.TILLED:
+				result.reason = "Row %d needs ploughing first" % (index + 1) if state == RowState.EMPTY else "Row %d is already sown" % (index + 1)
+			elif not crop.grows_in(ActivityClock.get_season_id()):
+				result.reason = "%s only grows in %s" % [crop.display_name, crop.get_seasons_text()]
+			elif not InventoryManager.has_item(crop.planting_item):
+				result.reason = "No %s in your bag" % ItemDB.get_display_name(crop.planting_item)
+			else:
+				result.ok = true
+		&"harvester":
+			result.verb = "Harvesting"
+			if state != RowState.RIPE:
+				result.reason = "Row %d isn't ripe" % (index + 1)
+			elif needs_water() and flooded:
+				result.reason = "Drain the paddy first"
+			elif InventoryManager.get_room_for(crop.grain_item) <= 0:
+				result.reason = "Your bag is full"
+			else:
+				result.ok = true
+		_:
+			return {}
+	return result
+
+
+## A machine passing over the field at `world_pos`: marks that stretch of the row done and
+## finishes the row once it's mostly covered. Returns machine_check() plus "progress"
+## (0..1 of the row) and "finished" (true on the pass that completes it).
+func machine_work(tool: StringName, world_pos: Vector3) -> Dictionary:
+	var result := machine_check(tool, world_pos)
+	if result.is_empty() or not result.ok:
+		return result
+	var index: int = result.index
+	var cells := _coverage_cells(index, tool)
+	var local := to_local(world_pos)
+	var segment := clampi(int(floor((local.z + row_length * 0.5) / SEGMENT)), 0, cells.size() - 1)
+	var changed := cells[segment] == 0
+	cells[segment] = 1
+	var progress := _coverage_progress(index)
+	result.progress = progress
+	result.finished = false
+	if changed:
+		_show_machine_progress(index, tool, cells)
+	if progress >= MACHINE_DONE:
+		_finish_machine(index, tool)
+		result.finished = true
+		result.progress = 1.0
+	return result
+
+
+## The row under a world point (-1 if it's off the field).
+func row_at(world_pos: Vector3) -> int:
+	var local := to_local(world_pos)
+	if absf(local.z) > row_length * 0.5 + 0.2:
+		return -1
+	var index := int(round(local.x / row_width + (rows - 1) * 0.5))
+	if index < 0 or index >= rows:
+		return -1
+	if absf(local.x - _row_x(index)) > row_width * 0.5:
+		return -1
+	return index
+
+
+func get_machine_progress(index: int) -> float:
+	return _coverage_progress(index) if _coverage.has(index) else 0.0
+
+
+func _coverage_cells(index: int, tool: StringName) -> PackedByteArray:
+	var entry: Dictionary = _coverage.get(index, {})
+	if entry.is_empty() or entry.tool != tool:
+		var cells := PackedByteArray()
+		cells.resize(int(ceil(row_length / SEGMENT)))
+		cells.fill(0)
+		entry = {"tool": tool, "cells": cells}
+		_coverage[index] = entry
+	return entry.cells
+
+
+func _coverage_progress(index: int) -> float:
+	var cells: PackedByteArray = _coverage[index].cells
+	var done := 0
+	for c in cells:
+		done += c
+	return float(done) / maxi(cells.size(), 1)
+
+
+func _finish_machine(index: int, tool: StringName) -> void:
+	_coverage.erase(index)
+	var row: Dictionary = _rows[index]
+	match tool:
+		&"plough":
+			row.state = RowState.TILLED
+			row.stubble = false
+			QuestLog.record_event(StringName("till_" + String(crop.id)))
+		&"seed_drill":
+			InventoryManager.remove_item(crop.planting_item, 1)
+			row.state = RowState.GROWING
+			row.grown = 0
+			QuestLog.record_event(StringName("plant_" + String(crop.id)))
+		&"harvester":
+			# Cut and threshed in one pass: the grain goes straight into the bag, and the
+			# straw is left lying in the field.
+			_rng.seed = hash([field_id, index, ActivityClock.get_day()])
+			var sheaves := _rng.randi_range(crop.sheaves_per_row.x, crop.sheaves_per_row.y)
+			var grain := InventoryManager.add_item(crop.grain_item, sheaves * crop.grain_per_sheaf)
+			row.state = RowState.EMPTY
+			row.sheaves = 0
+			row.stubble = true
+			QuestLog.record_event(StringName("cut_" + String(crop.id)))
+			QuestLog.record_event(StringName("harvest_machine_" + String(crop.id)), grain)
+			GameManager.set_flag(StringName("field_cut_" + String(crop.id)))
+			GameManager.set_flag(&"first_field_cut")
+			GameManager.notify("+%d %s" % [grain, BlacksmithService.item_name(crop.grain_item, grain)])
+	ActivityClock.advance_minutes(int(MACHINE_MINUTES.get(tool, 10)), StringName("machine_" + String(tool)))
+	_changed(index)
+
+
+## While a machine works a row, the stretches it has done change: ploughed soil appears,
+## seedlings come up, ripe plants vanish into the harvester (stubble left behind).
+func _show_machine_progress(index: int, tool: StringName, cells: PackedByteArray) -> void:
+	if index >= _row_nodes.size():
+		return
+	var nodes: Dictionary = _row_nodes[index]
+	var clumps: Array[Transform3D] = nodes.clumps
+	var plants: MultiMeshInstance3D = nodes.plants
+	match tool:
+		&"plough":
+			var tiles := _soil_tiles(index)
+			tiles.visible = true
+			for i in cells.size():
+				var z := -row_length * 0.5 + (i + 0.5) * SEGMENT
+				var at := Vector3(_row_x(index), 0.045, z)
+				tiles.multimesh.set_instance_transform(i, Transform3D(Basis() if cells[i] else Basis().scaled(Vector3.ONE * 0.0001), at))
+		&"seed_drill", &"harvester":
+			var sowing := tool == &"seed_drill"
+			plants.visible = true
+			if sowing:
+				plants.multimesh.mesh = FieldCropMeshes.get_mesh(crop, FieldCropMeshes.Stage.SEEDLING)
+			else:
+				(nodes.stubble as MultiMeshInstance3D).visible = true
+			var shown := 0
+			for i in clumps.size():
+				var segment := clampi(int(floor((clumps[i].origin.z + row_length * 0.5) / SEGMENT)), 0, cells.size() - 1)
+				var show := cells[segment] == 1 if sowing else cells[segment] == 0
+				plants.multimesh.set_instance_transform(i, clumps[i] if show else Transform3D(Basis().scaled(Vector3.ONE * 0.0001), clumps[i].origin))
+				shown += 1 if show else 0
+			plants.set_meta(&"shown", shown)
+
+
+## A row's strip of ploughed-soil tiles (one per SEGMENT), made the first time it's needed.
+func _soil_tiles(index: int) -> MultiMeshInstance3D:
+	var nodes: Dictionary = _row_nodes[index]
+	if nodes.has("tiles"):
+		return nodes.tiles
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	var box := BoxMesh.new()
+	box.size = Vector3(row_width * 0.94, 0.05, SEGMENT + 0.02)
+	var soil := StandardMaterial3D.new()
+	soil.albedo_color = TILLED_SOIL
+	soil.roughness = 1.0
+	box.material = soil
+	mm.mesh = box
+	mm.instance_count = int(ceil(row_length / SEGMENT))
+	for i in mm.instance_count:
+		mm.set_instance_transform(i, Transform3D(Basis().scaled(Vector3.ONE * 0.0001), Vector3(_row_x(index), 0.045, 0)))
+	var tiles := MultiMeshInstance3D.new()
+	tiles.name = "SoilTiles%d" % index
+	tiles.set_meta(&"built", true)
+	tiles.multimesh = mm
+	add_child(tiles)
+	nodes.tiles = tiles
+	return tiles
 
 
 # ---- Look ---------------------------------------------------------------------
@@ -576,6 +784,8 @@ func _refresh_row(index: int) -> void:
 	(nodes.stubble as MultiMeshInstance3D).visible = bool(row.stubble)
 	if nodes.has("soil"):
 		(nodes.soil as Node3D).visible = is_row_tilled(index)
+	if nodes.has("tiles"):
+		(nodes.tiles as Node3D).visible = false
 
 
 ## While the sickle works: the first part of the row lies cut, the rest still stands.

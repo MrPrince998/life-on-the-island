@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/building_data.gd" id="1_building"]
+
+[resource]
+script = ExtResource("1_building")
+id = &"tractor"
+display_name = "Grandpa's Tractor"
+description = "Grandpa's old red tractor, rusted up beside the barn. Its seat is cracked and the engine hasn't turned over in years, but Theo thinks it could run again."
+cost_coins = 250
+materials = {"log": 4, "wooden_plank": 6}
+work_minutes = 180
+restored_message = "You and Theo scrub off the rust, patch the seat and coax the old engine back to life. It coughs, then rumbles! Press E to climb on."

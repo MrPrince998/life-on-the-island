@@ -18,7 +18,7 @@ func run(t: Node) -> void:
 	t.add_child(main)
 	await t._frames(6)
 	var player := main.get_node("Player") as PlayerController
-	var spot := main.get_node("Island/StoryPlaces/Village/NoticeBoard/Requests") as NoticeBoardSpot
+	var spot := main.get_node("Island/StoryPlaces/Village/Mailbox/Requests") as NoticeBoardSpot
 	var panel := main.get_node("RequestBoardPanel") as RequestBoardPanel
 	var tracker := main.get_node("HUD").get_node("%QuestTracker") as QuestTracker
 
@@ -33,7 +33,7 @@ func run(t: Node) -> void:
 	for request in requests:
 		givers[str(request["giver"])] = true
 	t.check(requests.size() == RequestBoard.SLOTS and givers.size() == requests.size(), "after meeting Emma, Oliver and Mia, three requests go up, one from each")
-	t.check(spot.has_marker() and spot.get_prompt().contains("3 requests"), "a \"!\" over the board says something new is up (\"Read the notice board (3 requests)\")")
+	t.check(spot.has_marker() and spot.get_prompt().contains("3 requests"), "a \"!\" over the mailbox says something new is up (\"Check village requests (3 requests)\")")
 	var sensible := true
 	for request in requests:
 		var item_id := StringName(str(request["item"]))
@@ -97,7 +97,7 @@ func run(t: Node) -> void:
 	await t._frames(2)
 	var morning := RequestBoard.get_requests()
 	t.check(morning.size() == RequestBoard.SLOTS and RequestBoard.has_news() and spot.has_marker(), "next morning new requests fill the board, and the \"!\" is back")
-	t.check(RequestBoard.get_morning_note().contains("notice board"), "the wake-up message mentions the new requests")
+	t.check(RequestBoard.get_morning_note().contains("mailbox"), "the wake-up message mentions the new requests")
 	t.check(QuestLog.get_quest(quest.id) == null, "yesterday's finished request is tidied away")
 	var taken_givers := {}
 	for active in RequestBoard.get_active():

@@ -31,6 +31,15 @@ var _ignore_mouse_until_msec: int = 0
 var _focus_cam: Camera3D
 var _focus_tween: Tween
 var _focused := false
+## Driving: the camera sits further back and higher, and swings round behind the vehicle
+## when you leave the mouse alone for a moment.
+var _vehicle: Node3D = null
+var _last_look_msec: int = 0
+var _walk_distance: float = 0.0
+const VEHICLE_DISTANCE := 7.5
+const VEHICLE_HEIGHT := 2.4
+## Seconds without mouse/stick look before the camera eases round behind the vehicle.
+const VEHICLE_FOLLOW_DELAY := 1.2
 
 @onready var _pitch_pivot: Node3D = $PitchPivot
 @onready var _spring_arm: SpringArm3D = $PitchPivot/SpringArm3D
@@ -63,6 +72,26 @@ func set_yaw(value: float) -> void:
 
 func get_camera() -> Camera3D:
 	return _camera
+
+
+## Switches to (vehicle) or from (null) the driving view.
+func set_vehicle_view(vehicle: Node3D) -> void:
+	# The spring arm mustn't bump into the vehicle itself.
+	if _vehicle is CollisionObject3D:
+		_spring_arm.remove_excluded_object((_vehicle as CollisionObject3D).get_rid())
+	if vehicle is CollisionObject3D:
+		_spring_arm.add_excluded_object((vehicle as CollisionObject3D).get_rid())
+	if vehicle and _vehicle == null:
+		_walk_distance = _target_distance
+		_target_distance = VEHICLE_DISTANCE
+	elif vehicle == null and _vehicle:
+		_target_distance = _walk_distance if _walk_distance > 0.0 else default_distance
+	_vehicle = vehicle
+	_last_look_msec = Time.get_ticks_msec()
+
+
+func is_vehicle_view() -> bool:
+	return _vehicle != null
 
 
 ## The camera on screen now (the shot camera while focused).
@@ -138,6 +167,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if Time.get_ticks_msec() < _ignore_mouse_until_msec:
 			return
 		var motion := event as InputEventMouseMotion
+		_last_look_msec = Time.get_ticks_msec()
 		var sensitivity := mouse_sensitivity * GameSettings.mouse_sensitivity
 		_yaw -= motion.relative.x * sensitivity
 		_pitch -= motion.relative.y * sensitivity
@@ -161,11 +191,18 @@ func _process(delta: float) -> void:
 		return
 	var look := Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
 	if look.length() > 0.0:
+		_last_look_msec = Time.get_ticks_msec()
 		_yaw -= look.x * gamepad_sensitivity * delta
 		_pitch -= look.y * gamepad_sensitivity * 0.7 * delta
 		_clamp_pitch()
 
-	var target_position := _target.get_global_transform_interpolated().origin + Vector3.UP * height_offset
+	if _vehicle and is_instance_valid(_vehicle) and Time.get_ticks_msec() - _last_look_msec > VEHICLE_FOLLOW_DELAY * 1000.0:
+		# Ease round behind the vehicle (its forward is -Z, like the camera's).
+		var moving := _vehicle.has_method(&"get_speed") and absf(float(_vehicle.call(&"get_speed"))) > 0.5
+		if moving:
+			_yaw = lerp_angle(_yaw, _vehicle.global_rotation.y, 1.0 - exp(-1.8 * delta))
+	var lift := VEHICLE_HEIGHT if _vehicle else height_offset
+	var target_position := _target.get_global_transform_interpolated().origin + Vector3.UP * lift
 	global_position = global_position.lerp(target_position, 1.0 - exp(-follow_sharpness * delta))
 	rotation = Vector3(0.0, _yaw, 0.0)
 	_pitch_pivot.rotation = Vector3(_pitch, 0.0, 0.0)

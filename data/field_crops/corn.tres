@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="FieldCropData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/field_crop_data.gd" id="1_crop"]
+
+[resource]
+script = ExtResource("1_crop")
+id = &"corn"
+display_name = "Corn"
+planting_item = &"corn_seed"
+grain_item = &"corn"
+sheaf_item = &"corn"
+sheaves_per_row = Vector2i(10, 14)
+grain_per_sheaf = 1
+bundle_word = "cobs"
+grow_days = 6
+seasons = Array[StringName]([&"spring", &"summer"])
+needs_flooding = false
+needs_tilling = true
+look = &"corn"
+till_minutes = 30
+till_swings = 5
+plant_minutes = 15
+cut_minutes = 30
+tie_minutes = 20
+cut_swings = 6
+young_color = Color(0.48, 0.74, 0.3, 1)
+growing_color = Color(0.34, 0.6, 0.22, 1)
+ripe_color = Color(0.72, 0.66, 0.36, 1)
+grain_color = Color(0.98, 0.82, 0.3, 1)
+height = 1.9
