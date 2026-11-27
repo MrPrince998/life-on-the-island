@@ -8,18 +8,17 @@ extends Node
 ## fire whooshes alight, the boathouse ropes creak to a little shanty), a leafy sparkle when a path is cleared or trees are planted, birdsong and a
 ## rising chord when the great oak grows back, the market's handbell on Market Day, a
 ## magical hum when something awakens, a warm fanfare for an important gift (Oliver's
-## rod), and a big swell when the lighthouse is lit. The opening theme plays again
-## softly under the end credits.
+## rod), and a big swell when the lighthouse is lit. (The finale and credits music is
+## MusicDirector's.)
 ##
 ## It listens for the story flags being set during play (loading a save doesn't set them
 ## one by one, so loading is silent). While a sting plays, the island's ambience and
 ## market music dip, and the interface holds back its smaller chimes so they don't
-## clash. Stings and the credits music play on the Music bus. It never changes the game.
+## clash. Stings play on the Music bus. It never changes the game.
 
 signal played(sound: StringName)
 
 const DIR := "res://assets/audio/story/"
-const CREDITS_MUSIC := "res://assets/audio/opening/music.wav"
 const SOUNDS: Array[StringName] = [
 	&"shard_found", &"memory_found", &"restored", &"world_change", &"bloom",
 	&"market_bell", &"glow", &"lighthouse_lit", &"gift",
@@ -47,14 +46,8 @@ const DB := {
 }
 ## Each shard sounds a step higher: D, E, F#, G, A.
 const SHARD_STEPS := [0, 2, 4, 5, 7]
-const CREDITS_DB := -6.0
-const CREDITS_FADE_IN := 2.0
-const CREDITS_FADE_OUT := 2.5
 
 var _sting: AudioStreamPlayer
-var _credits: AudioStreamPlayer
-var _credits_level: float = 0.0
-var _credits_target: float = 0.0
 var _streams: Dictionary = {}
 ## Story moments waiting to be played at the end of this frame: [sound, pitch].
 var _pending: Array = []
@@ -67,12 +60,7 @@ func _ready() -> void:
 	_sting.bus = &"Music"
 	_sting.max_polyphony = 2
 	add_child(_sting)
-	_credits = AudioStreamPlayer.new()
-	_credits.name = "CreditsMusic"
-	_credits.bus = &"Music"
-	add_child(_credits)
 	GameManager.flag_changed.connect(_on_flag_changed)
-	get_tree().node_added.connect(_on_node_added)
 
 
 ## The sound a story flag plays when it is set (&"" for none).
@@ -110,13 +98,9 @@ func _hush_ui(sound: StringName, pitch: float) -> void:
 		ui.call(&"hush", minf(stream.get_length() / pitch, 3.0))
 
 
-## True while a story sting or the credits music is playing (the ambience dips).
+## True while a story sting is playing (the ambience and the music dip).
 func is_playing() -> bool:
-	return _sting.playing or _credits.playing
-
-
-func is_credits_music_playing() -> bool:
-	return _credits.playing and _credits_target > 0.0
+	return _sting.playing
 
 
 func _on_flag_changed(flag: StringName, value: bool) -> void:
@@ -140,25 +124,7 @@ static func priority_of(sound: StringName) -> int:
 	return BUILDING_PRIORITY if String(sound).begins_with("restored_") else 0
 
 
-func _on_node_added(node: Node) -> void:
-	if node is FinaleCredits:
-		var credits := node as FinaleCredits
-		_start_credits_music()
-		credits.finished.connect(func() -> void: _credits_target = 0.0, CONNECT_ONE_SHOT)
-
-
-func _start_credits_music() -> void:
-	var music := load(CREDITS_MUSIC) as AudioStream
-	if music == null:
-		return
-	_credits.stream = music
-	_credits_level = 0.0
-	_credits_target = 1.0
-	_credits.volume_db = -60.0
-	_credits.play()
-
-
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not _pending.is_empty():
 		var best: Array = _pending[0]
 		for entry: Array in _pending:
@@ -166,14 +132,6 @@ func _process(delta: float) -> void:
 				best = entry
 		_pending.clear()
 		play(best[0], best[1])
-	if not _credits.playing:
-		return
-	var rate := delta / (CREDITS_FADE_IN if _credits_target > _credits_level else CREDITS_FADE_OUT)
-	_credits_level = move_toward(_credits_level, _credits_target, rate)
-	if _credits_level <= 0.0 and _credits_target <= 0.0:
-		_credits.stop()
-		return
-	_credits.volume_db = CREDITS_DB + linear_to_db(maxf(_credits_level, 0.001))
 
 
 func _stream(sound: StringName) -> AudioStream:

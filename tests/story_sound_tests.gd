@@ -123,16 +123,12 @@ func run(t: Node) -> void:
 	t.check(amb.get_target(&"workshop") > 0.9, "by day Theo saws and hammers in his workshop")
 	ActivityClock.from_dict({"total_minutes": minutes})
 
-	# The end credits: the opening theme returns, and fades away when they finish.
+	# The end credits have the finale track (MusicDirector): story sounds stay out of it.
 	var credits := FinaleCredits.play(t.get_tree())
 	await t._frames(20)
-	t.check(story.is_credits_music_playing(), "the opening theme plays again under the end credits")
+	t.check(not story.is_playing() and story.get_node_or_null("CreditsMusic") == null, "the end credits are left to the finale music")
 	credits._end()
-	var waited := 0
-	while story.get_node("CreditsMusic").playing and waited < 400:
-		await t._frames(1)
-		waited += 1
-	t.check(not story.get_node("CreditsMusic").playing, "and fades away when they end (%d frames)" % waited)
+	await t._frames(5)
 
 	# Work swings: gathering wood snaps branches.
 	var player := main.get_node("Player") as PlayerController

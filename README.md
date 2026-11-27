@@ -73,6 +73,7 @@ A gamepad also works (left stick moves, right stick looks, A jumps, X interacts)
   4. The pedal **thresher** by the paddy takes wheat too: 1 sheaf gives 3 Wheat Grain + 1 Straw.
   5. Once the **windmill** is restored, its **millstones** grind 3 grain into 2 **Flour**. Bake flour into a **Fresh Farmhouse Loaf**.
   Wheat is for the cool seasons and rice for the warm ones, so there's always something to grow.
+- **Music:** each place has its own gentle track (village, farm and paddy, Amber Plains, lake and forest), with the title theme on the title screen and a finale theme for the credits. Tracks fade into each other as you walk between places, rest quietly for half a minute between plays, dip while you chat or a story jingle plays, and fade out while you play the ukulele. Volume: Settings → Music.
 - **Shop view (F):** at the General Store counter or Bram's forge, press F. The camera frames the shop and its keeper, and the shop window opens at the side.
 - **Daily notice board:** in the village square. Each morning, villagers you've met pin small requests on it ("Nana Bea would love 3 Carrots for a hearty stew").
   Press **E** to read it and take up to 3 requests; bring the things to that villager for coins and friendship. A **!** over the board means new requests.

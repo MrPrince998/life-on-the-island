@@ -30,6 +30,7 @@ QuestLog="*res://scripts/systems/quest_log.gd"
 RequestBoard="*res://scripts/systems/requests/request_board.gd"
 UISounds="*res://scripts/systems/ui_sounds.gd"
 StorySounds="*res://scripts/systems/story_sounds.gd"
+MusicDirector="*res://scripts/systems/music/music_director.gd"
 
 [display]
 
