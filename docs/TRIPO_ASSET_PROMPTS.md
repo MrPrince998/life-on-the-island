@@ -43,7 +43,7 @@ Then use Tripo's **Auto-Rig** (humanoid) and download the rigged .glb. If you'd 
 **`rock_boulder_b.glb`** — ✅ in the game as `boulder.glb`
 > wide flat grey stone slab with cracks and a little moss, low and broad
 
-**`rock_cluster.glb`** — ⬜ not made yet
+**`rock_cluster.glb`** — ✅ in the game: gatherable stone piles, alongside the new pebble variants
 > cluster of three small smooth grey pebbles and stones of different sizes, sitting together
 
 ## Priority 2: Moonlit Lake and the village
@@ -123,7 +123,7 @@ Already in the game: **Azure Manta** (`Azure_manta.glb`) and **Flying Fish** (`E
 **`fish_sunfish.glb`** — ✅ in the game as `sunfish.glb`
 > round chubby golden-orange sunfish, warm yellow belly, tiny blue spots on the cheeks, rounded fins, friendly face
 
-**`fish_moonfin_koi.glb`** — ⬜ not made yet
+**`fish_moonfin_koi.glb`** — ✅ in the game: as `koi.glb`, used for Moonfin Koi catches
 > elegant koi fish, pearl-white body with soft blue and silver patches, long flowing fins that glow faintly pale blue, magical gentle look
 
 **`fish_sea_bream.glb`** — ✅ in the game as `sea_bream.glb`
@@ -137,7 +137,7 @@ Already in the game: **Azure Manta** (`Azure_manta.glb`) and **Flying Fish** (`E
 The store is in the village square, using a copy of the cottage model with a sign.
 A proper building would make the village read better:
 
-**`general_store.glb`** — ⬜ not made yet (the store borrows the cottage model, `house.glb`, for now)
+**`general_store.glb`** — ✅ in the game: the village General Store
 > cozy village general store, two storeys, cream plaster walls with timber frame, wide shop front window with goods on display, striped green-and-cream fabric awning over the door, wooden hanging shop sign with a blank board, crates of vegetables and a barrel beside the door, terracotta tile roof, single building, no ground base
 
 
@@ -168,28 +168,28 @@ Crops: **no soil, no pot, no base**, one plant, upright:
 
 Added with seasons, the ukulele and the greenhouse. Same rules: one object, upright, no base.
 
-**`crop_tomato_ready.glb`** — ⬜ not made yet
+**`crop_tomato_ready.glb`** — ✅ in the game: ripe tomato beds
 > bushy tomato plant tied to a short wooden stake, deep green leaves, several clusters of round shiny red tomatoes and a couple of green ones
 
-**`crop_pumpkin_ready.glb`** — ⬜ not made yet
+**`crop_pumpkin_ready.glb`** — ✅ in the game: ripe pumpkin beds
 > one big round orange pumpkin with deep ribs and a curly green stem, a few broad green pumpkin leaves and a curling vine around it
 
-**`crop_kale_ready.glb`** — ⬜ not made yet
+**`crop_kale_ready.glb`** — ✅ in the game: as `crop_kale.glb`, ripe kale beds
 > leafy kale plant, tall frilly curly leaves in blue-green with purple veins, a little frost on the leaf tips
 
-**`crop_sprout.glb`** — ⬜ not made yet (one shared sprout for every crop's early stage)
+**`crop_sprout.glb`** — ✅ in the game: early tomato, pumpkin and kale growth stages
 > tiny generic vegetable seedling, three small bright-green leaves on a short stem
 
-**`ukulele.glb`** — ⬜ not made yet: Grandpa's ukulele, held by the player
+**`ukulele.glb`** — ✅ in the game: the cottage pickup and the instrument the player holds
 > small old wooden ukulele, warm honey-brown body with a darker edge binding, round sound hole with a little painted flower around it, four strings, short neck with wooden tuning pegs, a faded ribbon tied to the headstock
 
-**`seed_sack.glb`** — ⬜ not made yet: fertilizer and seed sacks (compost bin, greenhouse)
+**`seed_sack.glb`** — ✅ in the game: supplies beside the thresher
 > small burlap sack tied at the top with string, slightly slumped, a painted leaf symbol on the front
 
-**`seed_tray.glb`** — ⬜ not made yet: the greenhouse's daily seed trays
+**`seed_tray.glb`** — ✅ in the game: the greenhouse’s daily seed trays
 > shallow wooden seed tray with rows of tiny green seedlings in dark soil
 
-**`message_bottle.glb`** — ⬜ not made yet: bottles washed up on the beach
+**`message_bottle.glb`** — ✅ in the game: the beach journal bottle
 > old green glass bottle lying on its side, cork stopper, a rolled paper letter tied with twine visible inside, a little sand and a tiny shell stuck to it
 
 ## Phase 5: Restoration
@@ -197,7 +197,7 @@ Added with seasons, the ukulele and the greenhouse. Same rules: one object, upri
 Run-down buildings use a grime overlay plus loose planks and weeds until a matching
 "ruined" model exists. Same building, same size and footprint, same facing, so it swaps cleanly:
 
-**`greenhouse_ruined.glb`** — ⬜ not made yet (picked up automatically by file name)
+**`greenhouse_ruined.glb`** — ✅ in the game: the greenhouse before repair
 > run-down old wooden greenhouse, same shape as a small gabled garden greenhouse with a water barrel at one side, several glass panes cracked or missing, grimy glass, peeling paint, a loose hanging door, ivy and weeds creeping up the frame, broken terracotta pots, single building, no ground base
 
 ## Later (Phase 6: NPCs)
@@ -223,7 +223,7 @@ Generate one batch at a time, in order. Add the **style line** to every prompt. 
 
 **`npc_captain_marlow.glb`**, **`npc_emma.glb`** — ✅ both in the game: see the villagers doc.
 
-**`grandpa_letter.glb`** — ⬜ not made yet
+**`grandpa_letter.glb`** — ✅ in the game: on Grandpa’s writing desk
 > folded old paper letter in a cream envelope with a red wax seal stamped with a little lighthouse, slightly worn edges
 
 **`travel_suitcase.glb`** — ✅ in the game as `suitcase.glb`
@@ -241,7 +241,7 @@ Generate one batch at a time, in order. Add the **style line** to every prompt. 
 **`driftwood.glb`** — ✅ in the game
 > twisted pale driftwood log, smooth sun-bleached wood, lying flat
 
-**`general_store.glb`** — ⬜ not made yet: prompt in Phase 3 above.
+**`general_store.glb`** — ✅ in the game: the village General Store
 
 ### Batch 2: prologue
 **`cottage_key.glb`** — ✅ in the game as `key.glb`
@@ -332,7 +332,7 @@ Generate one batch at a time, in order. Add the **style line** to every prompt. 
 
 **`npc_pip.glb`** — ✅ in the game: see the villagers doc.
 
-**`fish_moonfin_koi.glb`** — ⬜ not made yet: prompt in the Fishing section above.
+**`fish_moonfin_koi.glb`** — ✅ in the game: as `koi.glb`, used for Moonfin Koi catches
 
 ### Batch 5: chapter 2 (Fernwood Forest)
 **`stone_arch_bridge_ruined.glb`** — ✅ in the game as `bridge.glb`
@@ -369,62 +369,62 @@ Generate one batch at a time, in order. Add the **style line** to every prompt. 
 ## Realistic farming, slice 1: woodcutting and the blacksmith
 The game uses simple built-in shapes for these until the models exist.
 
-**`axe.glb`** — ⬜ not made yet (the game draws a plain axe in code)
+**`axe.glb`** — ✅ in the game: on Bram’s tool rack (held tool still uses the existing animated placeholder)
 > woodcutter's axe, single iron head with a bright sharpened edge, long slightly curved ash-wood handle with a leather grip wrap, lying flat, real-world proportions
 
-**`steel_axe.glb`** — ⬜ not made yet
+**`steel_axe.glb`** — ✅ in the game: on Bram’s tool rack (held tool still uses the existing animated placeholder)
 > fine felling axe, polished steel head with a gently flared blade and a small brass maker's stamp, dark oiled hardwood handle, lying flat
 
 **`blacksmith_forge.glb`** — ⬜ not made yet (the forge is built from simple blocks for now)
 > village blacksmith's open-fronted forge, stone back wall and stone hearth with glowing coals and a brick chimney, timber posts holding a sloping tiled roof, tools hanging on the back wall, a water barrel at the side, open to the front
 
-**`anvil.glb`** — ⬜ not made yet
+**`anvil.glb`** — ✅ in the game: Bram’s working forge counter
 > blacksmith's iron anvil with a pointed horn, sitting on a thick tree-stump base, a hammer resting on top
 
-**`npc_bram.glb`** — ⬜ not made yet (Bram borrows Theo's model, darkened, for now)
+**`npc_bram.glb`** — ✅ in the game: Bram, with his own retargeted animation library
 > burly friendly village blacksmith, broad shoulders, short dark beard, rolled-up sleeves, thick leather apron over a grey linen shirt, soot on his forearms, sturdy boots, T-pose, full body
 > Then put him through Mixamo like the other villagers (see the villagers doc) and tell Claude.
 
-**`log.glb`** — ⬜ not made yet (logs are drawn in code)
+**`log.glb`** — ✅ in the game: spare timber beside the forge (felled logs retain their existing visuals)
 > single cut log about one metre long, rough brown bark, pale wood rings showing on both cut ends, lying on its side
 
 ## Realistic farming, slice 2: rice
 The paddy, rice plants, thresher and huller are built in code until these exist.
 
-**`sickle.glb`** — ⬜ not made yet
+**`sickle.glb`** — ✅ in the game: on Bram’s tool rack
 > rice harvesting sickle, thin crescent-shaped steel blade with a finely serrated inner edge, short round wooden handle, lying flat
 
-**`rice_sheaf.glb`** — ⬜ not made yet
+**`rice_sheaf.glb`** — ✅ in the game: beside the thresher
 > bundle of freshly cut golden rice stalks tied around the middle with a twist of straw, drooping grain heads at one end, lying on its side
 
-**`pedal_thresher.glb`** — ⬜ not made yet
+**`pedal_thresher.glb`** — ✅ in the game: assembled from the four component models in `threshing_shed/`; drum retains its working animation
 > old wooden pedal-powered rice threshing machine, a wide drum studded with wire loops under a curved hood, red painted wooden side panels, a foot treadle at the front, a catching tray below
 
-**`rice_huller.glb`** — ⬜ not made yet
+**`rice_huller.glb`** — ✅ in the game: as `rice_huller/tripo_convert_c5ded7be-a1b0-4753-af6e-3e3a8026b04b.glb`, at the processing shed
 > small hand-cranked wooden rice huller, a square hopper on top, a big iron crank wheel on one side, a chute at the front pouring into a sack, standing on four legs
 
-**`threshing_shed.glb`** — ⬜ not made yet
+**`threshing_shed.glb`** — ✅ in the game: the farm processing shelter
 > open-sided farm shed, four rough timber posts, a thick golden thatched roof, packed-earth floor, open on all sides
 
-**`hand_pump_well.glb`** — ⬜ not made yet
+**`hand_pump_well.glb`** — ✅ in the game: as `hand_pump.glb`, at the rice paddy
 > old cast-iron farm hand pump painted green, on a low round stone well, with a short wooden water trough leading away from the spout
 
 ## Realistic farming, slice 3: wheat on Amber Plains
 Wheat plants, the hoe, the scythe and the millstone are built in code until these exist.
 
-**`hoe.glb`** — ⬜ not made yet
+**`hoe.glb`** — ✅ in the game: on Bram’s tool rack
 > farm hoe, a broad flat steel blade set at a right angle to a long straight ash handle, lying flat
 
-**`scythe.glb`** — ⬜ not made yet
+**`scythe.glb`** — ✅ in the game: as `scyth.glb`, on Bram’s tool rack
 > traditional farm scythe, long gently curved steel blade, long wooden snath (handle) with two small hand grips, lying flat
 
-**`wheat_sheaf.glb`** — ⬜ not made yet
+**`wheat_sheaf.glb`** — ✅ in the game: beside the thresher
 > bundle of cut golden wheat stalks tied round the middle with a twist of straw, plump bearded ears at one end, standing upright
 
-**`flour_sack.glb`** — ⬜ not made yet
+**`flour_sack.glb`** — ✅ in the game: at the restored windmill
 > plump cloth sack of flour tied at the top with string, a faint wheat-ear stamp on the front, a dusting of flour on the cloth
 
-**`millstone.glb`** — ⬜ not made yet
+**`millstone.glb`** — ✅ in the game: at the restored windmill
 > round grey stone millstone with a square hole in the centre and grooves cut across its face, leaning on its edge
 
 ## Realistic farming, slice 4: Grandpa's tractor and implements
@@ -432,18 +432,18 @@ The tractor and its implements are built in code until these exist. Models for v
 wheels as separate parts; if Tripo gives one solid mesh, Claude can still use it with spinning
 wheels drawn in code.
 
-**`tractor.glb`** — ⬜ not made yet
+**`tractor.glb`** — ✅ in the game: Grandpa’s drivable tractor; single mesh wheels are static
 > small vintage farm tractor from the 1950s, faded red paint, big ridged rear wheels and small front wheels, cream wheel hubs, rounded engine hood with a front grille, single tall exhaust pipe, open driver's seat with a little backrest, steering wheel, rear mudguards, no cab, side view friendly proportions
 
 **`tractor_rusty.glb`** — ⬜ not made yet
 > the same small vintage farm tractor, rusted and weathered, flaking red paint, one flat front tyre, weeds growing round the wheels, cracked seat
 
-**`plough_implement.glb`** — ⬜ not made yet
+**`plough_implement.glb`** — ✅ in the game: as `tractor_plough.glb`, the tractor’s plough
 > three-furrow tractor plough, sturdy grey steel frame with a towing drawbar, three curved polished mouldboard shares
 
-**`seed_drill.glb`** — ⬜ not made yet
+**`seed_drill.glb`** — ✅ in the game: the tractor’s seed drill
 > small tractor-towed seed drill, long green seed hopper box with a hinged lid, a row of small steel discs underneath, two little rubber wheels at the ends
 
-**`harvester_header.glb`** — ⬜ not made yet
+**`harvester_header.glb`** — ✅ in the game: the tractor’s harvester attachment
 > front-mounted grain harvester header for a small tractor, wide yellow cutting platform with a row of pointed guards, a red slatted reel turning above it
 

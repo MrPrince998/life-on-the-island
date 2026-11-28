@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/resources/npc_data.gd" id="1_data"]
 [ext_resource type="Script" path="res://scripts/resources/npc_schedule_entry.gd" id="2_entry"]
-[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_theo.glb" id="3_model"]
-[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_theo_library.tres" id="4_anims"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/npc_bram.glb" id="3_model"]
+[ext_resource type="AnimationLibrary" path="res://resources/animations/npc_bram_library.tres" id="4_anims"]
 
 [sub_resource type="Resource" id="Entry_0"]
 script = ExtResource("2_entry")
@@ -35,7 +35,7 @@ model = ExtResource("3_model")
 animations = ExtResource("4_anims")
 model_scale = 1.9
 walk_speed = 1.1
-tint = Color(0.78, 0.68, 0.6, 1)
+tint = Color(1, 1, 1, 1)
 intro_lines = PackedStringArray("Hah! A new face. Mind the sparks, they bite.", "Bram. Blacksmith. If it cuts, digs or chops, I made it, or I'll make it.", "Fancy felling a tree? You'll want an axe. Bring me a few bits of wood for the handle and a few coins, and I'll forge you one while you wait.", "Or pay a bit more and take one off the rack. Your choice. Press F at the anvil if you want a proper look at my wares.")
 later_lines = PackedStringArray("A sharp axe is a safe axe. A blunt one bounces.", "Logs from a good straight trunk make the best handles. Bring me those and I'll make you something special.", "Fell a tree, cut it up, carry it home. The stump'll sprout again in a week or so. The woods look after themselves.", "Grandpa's old paddy by the farm still holds water, you know. Flood it, plant it, and when it turns gold I'll have a sickle waiting for you.")
 schedule = Array[ExtResource("2_entry")]([SubResource("Entry_0"), SubResource("Entry_1"), SubResource("Entry_2")])

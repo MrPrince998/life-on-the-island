@@ -1,4 +1,6 @@
 [gd_resource type="Resource" script_class="CropData" format=3]
+[ext_resource type="PackedScene" path="res://scenes/props/crops/pumpkin_growing.tscn" id="growing"]
+[ext_resource type="PackedScene" path="res://scenes/props/crops/pumpkin_ready.tscn" id="ready"]
 
 [ext_resource type="Script" path="res://scripts/resources/crop_data.gd" id="1_crop"]
 
@@ -14,3 +16,4 @@ look = &"pumpkin"
 plants_per_row = 2
 plant_scale = 1.0
 seasons = Array[StringName]([&"autumn"])
+stage_models = Array[PackedScene]([null, ExtResource("growing"), ExtResource("growing"), ExtResource("ready")])

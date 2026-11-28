@@ -12,6 +12,7 @@ extends SceneTree
 ## direction is first rotated from the Mixamo body frame into the villager's body frame.
 
 const NPCS := {
+	"bram": "res://source_assets/tripo/npc_bram.glb",
 	"oliver": "res://source_assets/tripo/Oliver_character.glb",
 	"mia": "res://source_assets/tripo/Mia_character.glb",
 	"emma": "res://source_assets/tripo/npc_emma.glb",

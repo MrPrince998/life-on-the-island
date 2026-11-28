@@ -1,4 +1,6 @@
 [gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="new_fit"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/message_bottle.glb" id="new_bottle"]
 
 [ext_resource type="Script" path="res://scripts/world/ground_snap.gd" id="1_snap"]
 [ext_resource type="Script" path="res://scripts/world/journal_page.gd" id="2_page"]
@@ -56,24 +58,15 @@ script = ExtResource("2_page")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_read")
 
+
 [node name="Model" type="Node3D" parent="Page"]
-transform = Transform3D(-0.0349, -0.9994, 0, 0.9994, -0.0349, 0, 0, 0, 1, 0, 0.02, 0)
-
-[node name="Body" type="MeshInstance3D" parent="Page/Model"]
-mesh = SubResource("Mesh_body")
-
-[node name="Neck" type="MeshInstance3D" parent="Page/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
-mesh = SubResource("Mesh_neck")
-
-[node name="Cork" type="MeshInstance3D" parent="Page/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-mesh = SubResource("Mesh_cork")
-
-[node name="Paper" type="MeshInstance3D" parent="Page/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0, 0)
-mesh = SubResource("Mesh_paper")
-
+position = Vector3(0, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("new_bottle")
+size = 0.42
+fit = 1
+collision = 0
+snap_to_ground = false
 [node name="Glow" type="OmniLight3D" parent="Page"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 light_color = Color(1, 0.92, 0.7, 1)

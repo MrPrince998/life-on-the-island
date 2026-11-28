@@ -1,4 +1,14 @@
 [gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="new_fit"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/flour_sack.glb" id="new_flour_sack"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/millstone.glb" id="new_millstone"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/rock_cluster.glb" id="new_stone_0"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/pebb.glb" id="new_stone_1"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/cluster of three small smooth grey pebb.glb" id="new_stone_2"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/cluster of three small smooth grey pebb… #141.glb" id="new_stone_3"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/cluster of three small smooth grey pebb… #144.glb" id="new_stone_4"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/cluster of three small smooth grey pebb… #145.glb" id="new_stone_5"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/cluster of three small smooth grey pebb… #146.glb" id="new_stone_6"]
 
 [ext_resource type="Script" path="res://scripts/world/island_terrain.gd" id="1_terrain"]
 [ext_resource type="Script" path="res://scripts/world/notice_board_spot.gd" id="nb_spot"]
@@ -1200,26 +1210,32 @@ shape = SubResource("SphereShape3D_millstones")
 [node name="AfterFlourSacks" type="Node3D" parent="StoryPlaces/Farm/Windmill"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 0, 1.8)
 
-[node name="SackA" type="CSGSphere3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
-transform = Transform3D(1, 0, 0, 0, 1.35, 0, 0, 0, 1, 0, 0.3, 0)
-radius = 0.28
-radial_segments = 10
-rings = 6
-material = SubResource("Mat_flour_sack")
+[node name="SackA" type="Node3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
+position = Vector3(0, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("new_flour_sack")
+size = 0.65
+fit = 0
+collision = 0
+snap_to_ground = true
 
-[node name="SackB" type="CSGSphere3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
-transform = Transform3D(0.95, 0, 0.3, 0, 1.3, 0, -0.3, 0, 0.95, 0.55, 0.28, 0.2)
-radius = 0.26
-radial_segments = 10
-rings = 6
-material = SubResource("Mat_flour_sack")
+[node name="SackB" type="Node3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
+position = Vector3(0.65, 0, 0.2)
+script = ExtResource("new_fit")
+model = ExtResource("new_flour_sack")
+size = 0.6
+fit = 0
+collision = 0
+snap_to_ground = true
 
-[node name="Millstone" type="CSGCylinder3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
-transform = Transform3D(1, 0, 0, 0, 0.17, -0.985, 0, 0.985, 0.17, -0.6, 0.55, -0.4)
-radius = 0.55
-height = 0.2
-sides = 16
-material = SubResource("Mat_millstone")
+[node name="Millstone" type="Node3D" parent="StoryPlaces/Farm/Windmill/AfterFlourSacks"]
+position = Vector3(-0.9, 0, -0.4)
+script = ExtResource("new_fit")
+model = ExtResource("new_millstone")
+size = 1.0
+fit = 0
+collision = 0
+snap_to_ground = true
 
 [node name="Orchard1" type="Node3D" parent="StoryPlaces/Farm" groups=["keep_clear"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 87)
@@ -2144,7 +2160,7 @@ item_id = &"stone"
 verb_text = "Gather"
 count = 18
 areas = Array[Vector3]([Vector3(-20, -122, 55), Vector3(118, -58, 30), Vector3(-122, -62, 30), Vector3(-108, 160, 24)])
-models = Array[PackedScene]([ExtResource("sp_57")])
+models = Array[PackedScene]([ExtResource("new_stone_0"), ExtResource("new_stone_1"), ExtResource("new_stone_2"), ExtResource("new_stone_3"), ExtResource("new_stone_4"), ExtResource("new_stone_5"), ExtResource("new_stone_6")])
 size_range = Vector2(1, 1.5)
 amount_min = 1
 amount_max = 2

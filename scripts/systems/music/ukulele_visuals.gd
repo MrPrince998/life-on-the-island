@@ -1,7 +1,7 @@
 class_name UkuleleVisuals
 extends RefCounted
-## Builds Grandpa's ukulele mesh in code (warm koa wood, four nylon strings) until a
-## hand-made model exists. Mesh space: body centred on the origin, the neck runs along
+## Grandpa's imported ukulele, plus the original procedural mesh for previews.
+## Grip space: body centred on the origin, the neck runs along
 ## +X and the soundboard faces +Z.
 
 const KOA := Color(0.66, 0.40, 0.20)
@@ -64,3 +64,14 @@ static func _add(st: SurfaceTool, prim: PrimitiveMesh, xf: Transform3D, color: C
 		st.set_color(color)
 		st.set_normal((normal_basis * normals[i]).normalized())
 		st.add_vertex(xf * verts[i])
+
+
+static func model() -> Node3D:
+	var visual := preload("res://source_assets/tripo/ukulele.glb").instantiate() as Node3D
+	var rotation_basis := Basis(Vector3.FORWARD, deg_to_rad(40.0))
+	var bounds := Transform3D(rotation_basis, Vector3.ZERO) * FittedModel._bounds_of(visual)
+	var factor := LENGTH / bounds.size.x
+	visual.basis = rotation_basis.scaled(Vector3.ONE * factor)
+	# Body centre sits left of the centre of the complete instrument.
+	visual.position = -bounds.get_center() * factor + Vector3(0.17, 0, 0)
+	return visual

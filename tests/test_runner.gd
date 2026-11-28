@@ -800,8 +800,9 @@ func _run() -> void:
 	var gh := main.get_node("Island/Buildings/FarmField/Greenhouse/Restoration") as RestorationSite
 	var gh_root := main.get_node("Island/Buildings/FarmField/Greenhouse") as Node3D
 	var gh_trays := gh_root.get_node("SeedTrays") as DailyProduce
-	var gh_mesh: MeshInstance3D = gh_root.get_node("Model").find_children("*", "MeshInstance3D", true, false)[0]
-	check(not gh.is_restored() and gh.enabled and gh_mesh.material_overlay != null and gh.get_node("RunDown").visible, "the greenhouse starts run-down: grimy, with planks and weeds around it")
+	var gh_model := gh_root.get_node("Model") as Node3D
+	var gh_ruined := gh_root.get_node("RuinedModel") as Node3D
+	check(not gh.is_restored() and gh.enabled and gh_ruined.visible and not gh_model.visible and gh.get_node("RunDown").visible, "the greenhouse starts with the ruined model, planks and weeds")
 	check(not gh_trays.enabled and not (gh_root.get_node("GlowInside") as Node3D).visible, "its seedling trays and lights wait for the repair")
 	check(gh.get_prompt().contains("Wooden Plank 0/8") and gh.get_prompt().contains("250 coins"), "the prompt lists what the repair needs")
 	var gh_clock := ActivityClock.total_minutes
@@ -816,7 +817,7 @@ func _run() -> void:
 	check(gh.is_restored() and GameManager.has_flag(&"restored_greenhouse") and not player.is_input_locked(), "the greenhouse is restored")
 	check(InventoryManager.get_count(&"wooden_plank") == 0 and gh_money - InventoryManager.get_money() == 250, "the repair uses 8 planks and 250 coins")
 	check(ActivityClock.total_minutes - gh_clock == gh.building.work_minutes, "the work takes %d minutes" % gh.building.work_minutes)
-	check(gh_mesh.material_overlay == null and not gh.get_node("RunDown").visible and not gh.enabled, "the grime, planks and weeds are gone")
+	check(gh_model.visible and not gh_ruined.visible and not gh.get_node("RunDown").visible and not gh.enabled, "the grime, planks and weeds are gone")
 	check(gh_trays.enabled and gh_trays.stock.size() == 2 and (gh_root.get_node("GlowInside") as Node3D).visible, "seedling trays and a warm light appear")
 	gh_trays.interact(player)
 	var gh_seeds := 0
@@ -824,7 +825,7 @@ func _run() -> void:
 		gh_seeds += InventoryManager.get_count(seed_id)
 	check(gh_seeds == 2 and gh_trays.stock.is_empty(), "the trays give free seed packets")
 	GameManager.set_flag(&"restored_greenhouse", false)
-	check(gh_mesh.material_overlay != null and gh.get_node("RunDown").visible and not gh_trays.enabled, "a new game shows it run-down again")
+	check(gh_ruined.visible and not gh_model.visible and gh.get_node("RunDown").visible and not gh_trays.enabled, "a new game shows it run-down again")
 	for farm_p in wx_farm.get_plots():
 		farm_p.reset()
 	InventoryManager.reset()

@@ -1,4 +1,5 @@
 [gd_scene format=3]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/grandpa_letter.glb" id="new_letter"]
 
 [ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="1_r"]
 [ext_resource type="Script" path="res://scripts/world/interior_room.gd" id="2_r"]
@@ -513,7 +514,7 @@ prompt_text = "Pick up Grandpa's ukulele"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("Sphere_uke")
 
-[node name="Instrument" type="MeshInstance3D" parent="Ukulele"]
+[node name="Instrument" type="Node3D" parent="Ukulele"]
 transform = Transform3D(1.0392, -0.6, 0, 0, 0, 1.2, -0.6, -1.0392, 0, 0, 0.042, 0)
 script = ExtResource("97_uke")
 
@@ -524,3 +525,12 @@ interaction_id = &"grandpa_stove"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CookingSpot"]
 shape = SubResource("Sphere_stove")
+
+[node name="GrandpaLetter" type="Node3D" parent="Furniture"]
+position = Vector3(1.85, 0.78, -2.45)
+script = ExtResource("1_r")
+model = ExtResource("new_letter")
+size = 0.24
+fit = 0
+collision = 0
+snap_to_ground = false

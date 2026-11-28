@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://source_assets/tripo/steel_axe.glb" id="model"]
+
+[node name="UprightAxe" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("model")]
+rotation = Vector3(-1.5707963, 0, 0)

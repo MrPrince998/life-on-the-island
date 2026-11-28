@@ -11,7 +11,7 @@ extends CharacterBody3D
 ## finished row costs a little in-game time (CropField.MACHINE_MINUTES); driving itself,
 ## like walking, never does. Hitching a different implement takes HITCH_MINUTES.
 ##
-## The model is built in code (until a modelled tractor exists). Saved through the
+## Imported tractor and implements retain the gameplay pivots. Saved through the
 ## "persistent" group: where it's parked and what's hitched.
 
 signal engine_changed(on: bool)
@@ -21,12 +21,6 @@ signal row_worked(field: CropField, index: int, tool: StringName)
 
 const IMPLEMENTS: Array[StringName] = [&"plough", &"seed_drill", &"harvester"]
 const HITCH_MINUTES := 5
-const RED := Color(0.72, 0.19, 0.13)
-const IRON := Color(0.22, 0.22, 0.24)
-const RUBBER := Color(0.1, 0.1, 0.1)
-const CREAM := Color(0.93, 0.86, 0.66)
-const REAR_WHEEL := 0.72
-const FRONT_WHEEL := 0.42
 
 @export var tractor_id: StringName = &"grandpa_tractor"
 @export var restored_flag: StringName = &"restored_tractor"
@@ -54,11 +48,7 @@ var _status := ""
 var _prompt_timer := 0.0
 var _model: Node3D
 var _seat: Marker3D
-var _rear_wheels: Array[Node3D] = []
-var _front_pivots: Array[Node3D] = []
-var _front_wheels: Array[Node3D] = []
 var _implements: Dictionary = {}  # id -> Node3D (with a "WorkPoint" child)
-var _reel: Node3D
 var _smoke: CPUParticles3D
 var _seat_spot: TractorSeat
 
@@ -315,19 +305,10 @@ func _animate(delta: float) -> void:
 	var local_up := global_basis.inverse() * up
 	var tilt := Basis(Quaternion(Vector3.UP, local_up.normalized()))
 	_model.basis = _model.basis.slerp(tilt, 1.0 - exp(-6.0 * delta)).orthonormalized()
-	var travel := _speed * delta
-	for wheel in _rear_wheels:
-		wheel.rotate_object_local(Vector3.UP, -travel / REAR_WHEEL)
-	for wheel in _front_wheels:
-		wheel.rotate_object_local(Vector3.UP, -travel / FRONT_WHEEL)
-	for pivot in _front_pivots:
-		pivot.rotation.y = _steer
 	for id: StringName in _implements:
 		var node: Node3D = _implements[id]
 		var y := 0.0 if (lowered and id == implement) else 0.35
 		node.position.y = lerpf(node.position.y, y, 1.0 - exp(-5.0 * delta))
-	if _reel and implement == &"harvester":
-		_reel.rotate_object_local(Vector3.RIGHT, (3.0 if lowered else 0.6) * delta)
 	if _smoke:
 		_smoke.amount = 10
 		_smoke.initial_velocity_max = 0.8 + get_throttle() * 1.5
@@ -346,61 +327,11 @@ func _build() -> void:
 	_model = Node3D.new()
 	_model.name = "Model"
 	add_child(_model)
-	var red := _mat(RED, 0.55)
-	var iron := _mat(IRON, 0.6, 0.5)
-	var rubber := _mat(RUBBER, 0.95)
-	var cream := _mat(CREAM, 0.6)
-	var dark := _mat(Color(0.16, 0.13, 0.11), 0.9)
-	_box(_model, Vector3(0.75, 0.35, 2.7), Vector3(0, 0.78, 0.1), iron)  # chassis
-	_box(_model, Vector3(0.85, 0.72, 1.45), Vector3(0, 1.18, -0.62), red)  # hood
-	_box(_model, Vector3(0.88, 0.62, 0.07), Vector3(0, 1.12, -1.36), dark)  # grille
-	_box(_model, Vector3(0.95, 0.75, 0.8), Vector3(0, 1.12, 0.45), red)  # body under the seat
-	for side in [-1.0, 1.0]:
-		_box(_model, Vector3(0.42, 0.08, 1.15), Vector3(side * 0.82, 1.52, 0.55), red)  # fenders
-		_box(_model, Vector3(0.06, 0.55, 1.0), Vector3(side * 0.6, 1.25, 0.55), red)
-		var lamp := _cyl(_model, 0.08, 0.06, Vector3(side * 0.3, 1.38, -1.4), cream)
-		lamp.rotation = Vector3(PI * 0.5, 0, 0)
-	_cyl(_model, 0.05, 0.85, Vector3(0.28, 1.92, -0.95), iron)  # exhaust
-	_box(_model, Vector3(0.52, 0.1, 0.46), Vector3(0, 1.48, 0.62), dark)  # seat
-	_box(_model, Vector3(0.52, 0.42, 0.08), Vector3(0, 1.72, 0.86), dark)
-	var column := _cyl(_model, 0.03, 0.7, Vector3(0, 1.6, 0.1), iron)
-	column.rotation = Vector3(-0.5, 0, 0)
-	var wheel := MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = 0.17
-	torus.outer_radius = 0.21
-	wheel.mesh = torus
-	wheel.material_override = dark
-	wheel.position = Vector3(0, 1.88, 0.25)
-	wheel.rotation = Vector3(0.5, 0, 0)
-	_model.add_child(wheel)
+	_add_model(_model, preload("res://source_assets/tripo/tractor.glb"), 3.3, PI)
 	_seat = Marker3D.new()
 	_seat.name = "Seat"
 	_seat.position = Vector3(0, 1.62, 0.62)
 	_model.add_child(_seat)
-	for side in [-1.0, 1.0]:
-		var rear := Node3D.new()
-		rear.position = Vector3(side * 0.84, REAR_WHEEL, 0.55)
-		rear.rotation = Vector3(0, 0, PI * 0.5)
-		_model.add_child(rear)
-		_cyl(rear, REAR_WHEEL, 0.4, Vector3.ZERO, rubber)
-		_cyl(rear, REAR_WHEEL * 0.5, 0.42, Vector3.ZERO, cream)
-		for i in 6:
-			var tread := _box(rear, Vector3(0.12, 0.42, 0.08), Vector3.ZERO, rubber)
-			var a := TAU * i / 6.0
-			tread.position = Vector3(cos(a) * REAR_WHEEL, 0, sin(a) * REAR_WHEEL)
-			tread.rotation = Vector3(0, -a, 0)
-		_rear_wheels.append(rear)
-		var pivot := Node3D.new()
-		pivot.position = Vector3(side * 0.58, FRONT_WHEEL, -1.2)
-		_model.add_child(pivot)
-		var front := Node3D.new()
-		front.rotation = Vector3(0, 0, PI * 0.5)
-		pivot.add_child(front)
-		_cyl(front, FRONT_WHEEL, 0.22, Vector3.ZERO, rubber)
-		_cyl(front, FRONT_WHEEL * 0.5, 0.24, Vector3.ZERO, cream)
-		_front_pivots.append(pivot)
-		_front_wheels.append(front)
 	_smoke = CPUParticles3D.new()
 	_smoke.name = "Smoke"
 	_smoke.position = Vector3(0.28, 2.38, -0.95)
@@ -425,7 +356,7 @@ func _build() -> void:
 	puff.material = puff_mat
 	_smoke.mesh = puff
 	_model.add_child(_smoke)
-	_build_implements(iron, dark)
+	_build_implements()
 	# The "drive" spot.
 	_seat_spot = TractorSeat.new()
 	_seat_spot.name = "SeatSpot"
@@ -440,46 +371,25 @@ func _build() -> void:
 	add_child(_seat_spot)
 
 
-func _build_implements(iron: Material, dark: Material) -> void:
-	var green := _mat(Color(0.25, 0.45, 0.25), 0.6)
-	var yellow := _mat(Color(0.88, 0.68, 0.18), 0.55)
-	var steel := _mat(Color(0.7, 0.72, 0.74), 0.4, 0.6)
-	# Plough: a drawbar, a frame and three curved shares that bite into the soil.
+func _build_implements() -> void:
 	var plough := _implement_node(&"plough", Vector3(0, 0, 2.35))
-	_box(plough, Vector3(0.1, 0.1, 0.9), Vector3(0, 0.62, -0.55), iron)
-	_box(plough, Vector3(2.4, 0.12, 0.16), Vector3(0, 0.6, 0), iron)
-	for x in [-0.8, 0.0, 0.8]:
-		_box(plough, Vector3(0.08, 0.5, 0.08), Vector3(x, 0.32, 0.05), iron)
-		var share := _box(plough, Vector3(0.3, 0.05, 0.38), Vector3(x + 0.08, 0.08, 0.15), steel)
-		share.rotation = Vector3(0.35, 0.5, 0.2)
-	# Seed drill: a long green seed box over a row of little discs.
+	_add_model(plough, preload("res://source_assets/tripo/tractor_plough.glb"), 2.4)
 	var drill := _implement_node(&"seed_drill", Vector3(0, 0, 2.35))
-	_box(drill, Vector3(0.1, 0.1, 0.9), Vector3(0, 0.62, -0.55), iron)
-	_box(drill, Vector3(2.5, 0.5, 0.6), Vector3(0, 0.95, 0.05), green)
-	_box(drill, Vector3(2.55, 0.06, 0.66), Vector3(0, 1.22, 0.05), dark)
-	for i in 7:
-		var disc := _cyl(drill, 0.17, 0.03, Vector3(-1.05 + i * 0.35, 0.18, 0.2), steel)
-		disc.rotation = Vector3(0, 0, PI * 0.5)
-	for side in [-1.0, 1.0]:
-		var w := _cyl(drill, 0.3, 0.12, Vector3(side * 1.35, 0.3, 0.05), _mat(RUBBER, 0.95))
-		w.rotation = Vector3(0, 0, PI * 0.5)
-	# Harvester: a wide header out front with a turning reel that gathers the crop in.
+	_add_model(drill, preload("res://source_assets/tripo/seed_drill.glb"), 2.7)
 	var header := _implement_node(&"harvester", Vector3(0, 0, -2.3))
-	_box(header, Vector3(2.9, 0.3, 0.8), Vector3(0, 0.4, 0), yellow)
-	_box(header, Vector3(2.9, 0.6, 0.08), Vector3(0, 0.75, 0.38), yellow)
-	for side in [-1.0, 1.0]:
-		_box(header, Vector3(0.08, 0.9, 0.9), Vector3(side * 1.46, 0.7, 0), yellow)
-		_box(header, Vector3(0.08, 0.08, 0.8), Vector3(side * 1.2, 1.0, 0.6), iron)
-	_reel = Node3D.new()
-	_reel.name = "Reel"
-	_reel.position = Vector3(0, 0.95, -0.15)
-	header.add_child(_reel)
-	var axle := _cyl(_reel, 0.05, 2.8, Vector3.ZERO, iron)
-	axle.rotation = Vector3(0, 0, PI * 0.5)
-	for i in 5:
-		var a := TAU * i / 5.0
-		_box(_reel, Vector3(2.7, 0.05, 0.12), Vector3(0, sin(a) * 0.38, cos(a) * 0.38), _mat(Color(0.8, 0.2, 0.15), 0.6))
+	_add_model(header, preload("res://source_assets/tripo/harvester_header.glb"), 3.0, PI)
 	_show_implement()
+
+
+func _add_model(parent: Node3D, scene: PackedScene, size: float, yaw: float = 0.0) -> void:
+	var visual := FittedModel.new()
+	visual.name = "ImportedModel"
+	visual.model = scene
+	visual.size = size
+	visual.rotation.y = yaw
+	visual.snap_to_ground = false
+	visual.collision = FittedModel.Collision.NONE
+	parent.add_child(visual)
 
 
 func _implement_node(id: StringName, at: Vector3) -> Node3D:
@@ -497,39 +407,6 @@ func _implement_node(id: StringName, at: Vector3) -> Node3D:
 func _show_implement() -> void:
 	for id: StringName in _implements:
 		(_implements[id] as Node3D).visible = id == implement
-
-
-func _mat(color: Color, roughness: float, metallic: float = 0.0) -> StandardMaterial3D:
-	var m := StandardMaterial3D.new()
-	m.albedo_color = color
-	m.roughness = roughness
-	m.metallic = metallic
-	return m
-
-
-func _box(parent: Node3D, size: Vector3, pos: Vector3, material: Material) -> MeshInstance3D:
-	var mi := MeshInstance3D.new()
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	mi.mesh = mesh
-	mi.material_override = material
-	mi.position = pos
-	parent.add_child(mi)
-	return mi
-
-
-func _cyl(parent: Node3D, radius: float, height: float, pos: Vector3, material: Material) -> MeshInstance3D:
-	var mi := MeshInstance3D.new()
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = radius
-	mesh.bottom_radius = radius
-	mesh.height = height
-	mesh.radial_segments = 14
-	mi.mesh = mesh
-	mi.material_override = material
-	mi.position = pos
-	parent.add_child(mi)
-	return mi
 
 
 # ---- SaveManager hook ---------------------------------------------------------

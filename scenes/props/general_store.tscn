@@ -1,6 +1,7 @@
 [gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="new_fit"]
 
-[ext_resource type="PackedScene" path="res://source_assets/tripo/house.glb" id="1_house"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/general_store.glb" id="1_house"]
 [ext_resource type="Script" path="res://scripts/systems/shop/shop_counter.gd" id="2_counter"]
 [ext_resource type="PackedScene" path="res://scenes/props/wooden_crate.tscn" id="3_crate"]
 [ext_resource type="PackedScene" path="res://scenes/props/wooden_barrel.tscn" id="4_barrel"]
@@ -8,7 +9,7 @@
 
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_body"]
-size = Vector3(8.370, 6.0, 5.643)
+size = Vector3(3.8, 6.8, 3.0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_porch"]
 size = Vector3(2.100, 0.6, 1.112)
@@ -22,23 +23,25 @@ radius = 1.4
 [node name="GeneralStore" type="Node3D" groups=["keep_clear"]]
 metadata/clear_radius = 10.0
 
-[node name="Model" parent="." instance=ExtResource("1_house")]
-transform = Transform3D(9.0, 0, 0, 0, 9.0, 0, 0, 0, 9.0, 0, 0, 0)
+[node name="Model" type="Node3D" parent="."]
+position = Vector3(0, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("1_house")
+size = 7.0
+fit = 1
+collision = 0
+snap_to_ground = false
 
 [node name="Collision" type="StaticBody3D" parent="."]
 collision_mask = 0
 
 [node name="Body" type="CollisionShape3D" parent="Collision"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.689)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, -0.3)
 shape = SubResource("BoxShape3D_body")
 
-[node name="Porch" type="CollisionShape3D" parent="Collision"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.270, 0.240, 2.664)
-shape = SubResource("BoxShape3D_porch")
 
-[node name="Ramp" type="CollisionShape3D" parent="Collision"]
-transform = Transform3D(1, 0, 0, 0, 0.8941, -0.4479, 0, 0.4479, 0.8941, 0.270, 0.181, 3.734)
-shape = SubResource("BoxShape3D_ramp")
+
+
 
 [node name="ShopCounter" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.270, 1.440, 2.9)

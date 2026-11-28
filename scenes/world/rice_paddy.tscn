@@ -1,4 +1,6 @@
 [gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="new_fit"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/hand_pump.glb" id="new_pump"]
 
 [ext_resource type="Script" path="res://scripts/systems/fields/crop_field.gd" id="1_field"]
 [ext_resource type="Resource" path="res://data/field_crops/rice.tres" id="2_rice"]
@@ -60,22 +62,11 @@ height = 0.04
 sides = 14
 material = SubResource("Mat_water")
 
-[node name="Post" type="CSGBox3D" parent="Pump"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.85, 0.45)
-size = Vector3(0.18, 1.7, 0.18)
-material = SubResource("Mat_iron")
 
-[node name="Spout" type="CSGCylinder3D" parent="Pump"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.45, 1.25, 0.7)
-radius = 0.05
-height = 0.4
-sides = 8
-material = SubResource("Mat_iron")
 
-[node name="Handle" type="CSGBox3D" parent="Pump"]
-transform = Transform3D(0.94, 0.34, 0, -0.34, 0.94, 0, 0, 0, 1, 0.1, 1.72, 0.45)
-size = Vector3(0.9, 0.06, 0.06)
-material = SubResource("Mat_iron")
+
+
+
 
 [node name="Flume" type="CSGBox3D" parent="Pump"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0.62, 1.55)
@@ -114,3 +105,12 @@ prompt_text = "Paddy pump"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pump/PaddyPump"]
 shape = SubResource("Shape_pump")
+
+[node name="PumpModel" type="Node3D" parent="Pump"]
+position = Vector3(0.45, 0.0, 0.45)
+script = ExtResource("new_fit")
+model = ExtResource("new_pump")
+size = 1.5
+fit = 1
+collision = 0
+snap_to_ground = false

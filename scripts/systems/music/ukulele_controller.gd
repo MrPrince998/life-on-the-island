@@ -36,7 +36,7 @@ var _skeleton: Skeleton3D
 var _left_hand: int = -1
 var _right_hand: int = -1
 var _synth: UkuleleSynth
-var _instrument: MeshInstance3D
+var _instrument: Node3D
 var _hud: CanvasLayer
 var _keys: Array[PanelContainer] = []
 var _recent_label: Label
@@ -59,9 +59,9 @@ func _ready() -> void:
 	_synth = UkuleleSynth.new()
 	_synth.name = "Synth"
 	add_child(_synth)
-	_instrument = MeshInstance3D.new()
+	_instrument = Node3D.new()
 	_instrument.name = "Instrument"
-	_instrument.mesh = UkuleleVisuals.mesh()
+	_instrument.add_child(UkuleleVisuals.model())
 	_instrument.top_level = true
 	_instrument.visible = false
 	_player.add_child.call_deferred(_instrument)

@@ -1,4 +1,14 @@
 [gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/world/fitted_model.gd" id="new_fit"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/threshing_shed.glb" id="new_shelter"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/rice_huller/tripo_convert_c5ded7be-a1b0-4753-af6e-3e3a8026b04b.glb" id="new_huller"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/rice_sheaf.glb" id="new_rice"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/wheat_sheaf.glb" id="new_wheat"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/seed_sack.glb" id="new_seeds"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/threshing_shed/tripo_convert_f83a96ce-1e0e-49f9-a2ae-12ff8413f107.glb" id="part_panel"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/threshing_shed/tripo_convert_b09247a2-b23f-4559-9050-fac35b205f95.glb" id="part_drum"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/threshing_shed/tripo_convert_33cc85ce-5ee4-4650-9b18-f033a59469a5.glb" id="part_pedal"]
+[ext_resource type="PackedScene" path="res://source_assets/tripo/threshing_shed/tripo_convert_9e75f6cb-673b-4cd3-ab57-a6d371f9f214.glb" id="part_tray"]
 
 [ext_resource type="Script" path="res://scripts/systems/fields/processing_machine.gd" id="1_machine"]
 [ext_resource type="PackedScene" path="res://scenes/props/wooden_barrel.tscn" id="2_barrel"]
@@ -88,96 +98,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16, 0)
 size = Vector3(7.0, 0.36, 5.0)
 material = SubResource("Mat_earth")
 
-[node name="PostA" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 1.4, -2.2)
-radius = 0.12
-height = 2.8
-sides = 8
-material = SubResource("Mat_wood")
 
-[node name="PostB" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 1.4, -2.2)
-radius = 0.12
-height = 2.8
-sides = 8
-material = SubResource("Mat_wood")
 
-[node name="PostC" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 1.2, 2.2)
-radius = 0.12
-height = 2.4
-sides = 8
-material = SubResource("Mat_wood")
 
-[node name="PostD" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 1.2, 2.2)
-radius = 0.12
-height = 2.4
-sides = 8
-material = SubResource("Mat_wood")
 
-[node name="Roof" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9806, 0.1961, 0, -0.1961, 0.9806, 0, 2.72, 0)
-size = Vector3(7.8, 0.16, 5.8)
-material = SubResource("Mat_thatch")
+
+
+
+
+
 
 [node name="Thresher" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -0.4)
 
-[node name="SideL" type="CSGBox3D" parent="Thresher"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58, 0.5, 0)
-size = Vector3(0.06, 1.0, 0.85)
-material = SubResource("Mat_red")
 
-[node name="SideR" type="CSGBox3D" parent="Thresher"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.58, 0.5, 0)
-size = Vector3(0.06, 1.0, 0.85)
-material = SubResource("Mat_red")
 
-[node name="Hood" type="CSGBox3D" parent="Thresher"]
-transform = Transform3D(1, 0, 0, 0, 0.7071, 0.7071, 0, -0.7071, 0.7071, 0, 1.0, -0.25)
-size = Vector3(1.2, 0.06, 0.7)
-material = SubResource("Mat_red")
+
+
+
 
 [node name="Drum" type="Node3D" parent="Thresher"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0.05)
 
-[node name="Barrel" type="CSGCylinder3D" parent="Thresher/Drum"]
-transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
-radius = 0.28
-height = 1.08
-sides = 12
-material = SubResource("Mat_wood")
 
-[node name="Slat1" type="CSGBox3D" parent="Thresher/Drum"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-size = Vector3(1.08, 0.04, 0.05)
-material = SubResource("Mat_iron")
 
-[node name="Slat2" type="CSGBox3D" parent="Thresher/Drum"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
-size = Vector3(1.08, 0.04, 0.05)
-material = SubResource("Mat_iron")
 
-[node name="Slat3" type="CSGBox3D" parent="Thresher/Drum"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
-size = Vector3(1.08, 0.05, 0.04)
-material = SubResource("Mat_iron")
 
-[node name="Slat4" type="CSGBox3D" parent="Thresher/Drum"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
-size = Vector3(1.08, 0.05, 0.04)
-material = SubResource("Mat_iron")
 
-[node name="Pedal" type="CSGBox3D" parent="Thresher"]
-transform = Transform3D(1, 0, 0, 0, 0.9659, 0.2588, 0, -0.2588, 0.9659, 0.3, 0.12, 0.55)
-size = Vector3(0.3, 0.04, 0.45)
-material = SubResource("Mat_wood_dark")
 
-[node name="Tray" type="CSGBox3D" parent="Thresher"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, -0.15)
-size = Vector3(1.1, 0.1, 0.6)
-material = SubResource("Mat_wood_dark")
+
+
+
+
+
+
+
 
 [node name="Chaff" type="CPUParticles3D" parent="Thresher"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -0.2)
@@ -221,76 +176,32 @@ shape = SubResource("Shape_use")
 [node name="Huller" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0, -0.4)
 
-[node name="LegA" type="CSGBox3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.35, -0.25)
-size = Vector3(0.08, 0.7, 0.08)
-material = SubResource("Mat_wood_dark")
 
-[node name="LegB" type="CSGBox3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.35, -0.25)
-size = Vector3(0.08, 0.7, 0.08)
-material = SubResource("Mat_wood_dark")
 
-[node name="LegC" type="CSGBox3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.35, 0.25)
-size = Vector3(0.08, 0.7, 0.08)
-material = SubResource("Mat_wood_dark")
 
-[node name="LegD" type="CSGBox3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.35, 0.25)
-size = Vector3(0.08, 0.7, 0.08)
-material = SubResource("Mat_wood_dark")
 
-[node name="Box" type="CSGBox3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88, 0)
-size = Vector3(0.7, 0.36, 0.6)
-material = SubResource("Mat_wood")
 
-[node name="Hopper" type="CSGCylinder3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22, 0)
-radius = 0.36
-height = 0.32
-sides = 4
-cone = true
-material = SubResource("Mat_wood")
+
+
+
+
+
+
 
 [node name="Wheel" type="Node3D" parent="Huller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42, 0.88, 0)
 
-[node name="Rim" type="CSGTorus3D" parent="Huller/Wheel"]
-transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
-inner_radius = 0.26
-outer_radius = 0.31
-sides = 16
-ring_sides = 6
-material = SubResource("Mat_iron")
 
-[node name="SpokeA" type="CSGBox3D" parent="Huller/Wheel"]
-size = Vector3(0.03, 0.56, 0.03)
-material = SubResource("Mat_iron")
 
-[node name="SpokeB" type="CSGBox3D" parent="Huller/Wheel"]
-size = Vector3(0.03, 0.03, 0.56)
-material = SubResource("Mat_iron")
 
-[node name="Crank" type="CSGCylinder3D" parent="Huller/Wheel"]
-transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.06, 0.24, 0)
-radius = 0.025
-height = 0.14
-sides = 8
-material = SubResource("Mat_wood_dark")
 
-[node name="Chute" type="CSGBox3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 0.8660, 0.5, 0, -0.5, 0.8660, 0, 0.62, 0.38)
-size = Vector3(0.22, 0.04, 0.3)
-material = SubResource("Mat_wood")
 
-[node name="Sack" type="CSGSphere3D" parent="Huller"]
-transform = Transform3D(1, 0, 0, 0, 1.3, 0, 0, 0, 1, 0, 0.26, 0.62)
-radius = 0.22
-radial_segments = 10
-rings = 6
-material = SubResource("Mat_sack")
+
+
+
+
+
+
 
 [node name="Husks" type="CPUParticles3D" parent="Huller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.5)
@@ -327,12 +238,7 @@ prompt_text = "Rice huller"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Huller/Use"]
 shape = SubResource("Shape_use")
 
-[node name="StrawPile" type="CSGSphere3D" parent="."]
-transform = Transform3D(1.4, 0, 0, 0, 0.55, 0, 0, 0, 1.1, -2.6, 0.05, -1.5)
-radius = 0.6
-radial_segments = 12
-rings = 6
-material = SubResource("Mat_straw")
+
 
 [node name="WaterBarrel" parent="." instance=ExtResource("2_barrel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, -1.6)
@@ -363,3 +269,96 @@ shape = SubResource("Shape_thresher")
 [node name="Huller" type="CollisionShape3D" parent="Collision"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0.65, -0.4)
 shape = SubResource("Shape_huller")
+
+[node name="ShelterModel" type="Node3D" parent="."]
+position = Vector3(0, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("new_shelter")
+size = 7.8
+fit = 0
+collision = 0
+snap_to_ground = false
+
+[node name="Model" type="Node3D" parent="Huller"]
+position = Vector3(0, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("new_huller")
+size = 1.3
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="RiceSheaves" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.03, 1.5)
+script = ExtResource("new_fit")
+model = ExtResource("new_rice")
+size = 0.85
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="WheatSheaves" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.03, -1.5)
+script = ExtResource("new_fit")
+model = ExtResource("new_wheat")
+size = 0.9
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="SeedSack" type="Node3D" parent="."]
+position = Vector3(2.5, 0.03, 1.5)
+script = ExtResource("new_fit")
+model = ExtResource("new_seeds")
+size = 0.65
+fit = 1
+collision = 0
+snap_to_ground = false
+
+[node name="SideL" type="Node3D" parent="Thresher"]
+position = Vector3(-0.6, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("part_panel")
+size = 1.1
+fit = 1
+collision = 0
+snap_to_ground = false
+rotation = Vector3(0, 1.5707963, 0)
+
+[node name="SideR" type="Node3D" parent="Thresher"]
+position = Vector3(0.6, 0, 0)
+script = ExtResource("new_fit")
+model = ExtResource("part_panel")
+size = 1.1
+fit = 1
+collision = 0
+snap_to_ground = false
+rotation = Vector3(0, 1.5707963, 0)
+
+[node name="ImportedDrum" type="Node3D" parent="Thresher/Drum"]
+position = Vector3(0, -0.3, 0)
+script = ExtResource("new_fit")
+model = ExtResource("part_drum")
+size = 1.08
+fit = 0
+collision = 0
+snap_to_ground = false
+
+[node name="Pedal" type="Node3D" parent="Thresher"]
+position = Vector3(0.74, 0, 0.2)
+script = ExtResource("new_fit")
+model = ExtResource("part_pedal")
+size = 0.7
+fit = 1
+collision = 0
+snap_to_ground = false
+rotation = Vector3(0, 1.5707963, 0)
+
+[node name="GrainTray" type="Node3D" parent="Thresher"]
+position = Vector3(0, 0.03, -0.35)
+script = ExtResource("new_fit")
+model = ExtResource("part_tray")
+size = 0.8
+fit = 0
+collision = 0
+snap_to_ground = false

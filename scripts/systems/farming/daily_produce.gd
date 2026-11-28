@@ -35,9 +35,19 @@ func _ready() -> void:
 		if is_active():
 			stock.append(_item_for(i))
 	for i in mini(max_stock, spots.size()):
-		var mesh := MeshInstance3D.new()
+		var mesh: Node3D
+		if look == &"seed_tray":
+			var tray := FittedModel.new()
+			tray.model = preload("res://source_assets/tripo/seed_tray.glb")
+			tray.size = 0.48
+			tray.collision = FittedModel.Collision.NONE
+			tray.snap_to_ground = false
+			mesh = tray
+		else:
+			var sack := MeshInstance3D.new()
+			sack.mesh = CropVisuals.sack_mesh()
+			mesh = sack
 		mesh.name = "Waiting%d" % (i + 1)
-		mesh.mesh = CropVisuals.seed_tray_mesh() if look == &"seed_tray" else CropVisuals.sack_mesh()
 		mesh.position = spots[i]
 		mesh.rotation.y = 0.6 * i
 		add_child(mesh)
